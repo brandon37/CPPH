@@ -27,3 +27,4 @@
         <link rel="apple-touch-icon-precomposed" href="<?=base_url()?>/assets/ico/apple-touch-icon-57-precomposed.png">
 	
 </head>
+<body>
