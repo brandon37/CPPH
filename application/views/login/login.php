@@ -5,12 +5,9 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-8 col-sm-offset-2 text">
-                            <h1><strong>Bootstrap</strong> Login Form</h1>
+                            <h1><strong>Control De Pagos De Proyectos Hydralab</strong></h1>
                             <div class="description">
-                                <p>
-                                    This is a free responsive login form made with Bootstrap. 
-                                    Download it on <a href="http://azmind.com"><strong>AZMIND</strong></a>, customize and use it as you like!
-                                </p>
+                              
                             </div>
                         </div>
                     </div>
@@ -26,17 +23,31 @@
                                 </div>
                             </div>
                             <div class="form-bottom">
-                                <form role="form" action="" method="post" class="login-form">
+                               <?= validation_errors() ?>
+                               <?= form_open('verifylogin') ?>
+                                    <div class="form-group">
+                                         <label class="sr-only" for="username">Username:</label>
+                                        <input type="text" size="20" id="username" name="username"/>
+                                     </div>
+                                     <div class="form-group">
+                                        <label class="sr-only" for="password">Password:</label>
+                                        <input type="password" size="20" id="passowrd" name="password"/>
+                                     </div>
+                                     <input type="submit" class="btn-primary" value="Login"/>
+                               </form>
+
+                            <!--    <form action="application/controllers/login.php" method="post" class="login-form">
                                     <div class="form-group">
                                         <label class="sr-only" for="form-username">Username</label>
-                                        <input type="text" name="form-username" placeholder="Username..." class="form-username form-control" id="form-username">
+                                        <input type="text" name="name" placeholder="Username..." class="form-username form-control" id="name">
                                     </div>
                                     <div class="form-group">
                                         <label class="sr-only" for="form-password">Password</label>
-                                        <input type="password" name="form-password" placeholder="Password..." class="form-password form-control" id="form-password">
+                                        <input type="password" name="pass" placeholder="Password..." class="form-password form-control" id="pass">
                                     </div>
                                     <button type="submit" class="btn">Sign in!</button>
-                                </form>
+                                    </form>
+                                -->
                             </div>
                         </div>
                     </div>
