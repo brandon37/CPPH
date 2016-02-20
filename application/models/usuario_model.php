@@ -2,13 +2,12 @@
 
 class Usuario_model extends CI_Model {
 
-	public function __construct(){
+	 function __construct(){
 		parent::__construct();
-		
-
+		$this->load->database();
 	}
 
-	function login($username, $password)
+	 function login($username, $password)
 	 {
 	   $this->db->select('idusuarios, nombre, email, pass, tipo');
 	   $this->db->from('usuarios');
@@ -27,6 +26,12 @@ class Usuario_model extends CI_Model {
 	     return false;
 	   }
 	 }
+	  function obtenerUsuarios($tipo){
+	  	$this->db->where('tipo',$tipo);
+		$query = $this->db->get('usuarios');
+		if($query->num_rows() >0) return $query;
+		else return false;
+	}
 	
 }
 ?>
