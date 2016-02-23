@@ -1,8 +1,9 @@
+<div class="">
 <?php 
 	if ($users){
 	foreach ($users->result() as $opc) { ?>
 		<ul>
-			<li><a href="<?= $opc->idusuarios;?>"><?= $opc->nombre?> </a>  </li>
+			<li><?= $opc->nombre?></li>
 		</ul>
 
 
@@ -11,3 +12,4 @@
 		echo "Error en la aplicacion ";
 	}
 ?>
+</div>

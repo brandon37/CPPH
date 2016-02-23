@@ -8,8 +8,6 @@
         <!-- CSS -->
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
         <link rel="stylesheet" href="<?=base_url()?>/assets/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="<?=base_url()?>/assets/css/style.css">
-
 	
 </head>
 <body>

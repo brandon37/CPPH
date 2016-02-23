@@ -15,14 +15,15 @@ class Login extends CI_Controller {
 			$this->load->view("ehtml/headerL");
 			$this->load->helper(array('form'));
 			$this->load->view("login/login");
-			$this->load->view("ehtml/footerl");
+			$this->load->view("ehtml/footerL");
 		}
 			
 		}
 			$this->load->view("ehtml/headerL");
 			$this->load->helper(array('form'));
 			$this->load->view("login/login");
-			$this->load->view("ehtml/footerl");
+			$this->load->view("ehtml/footerL");
 		 
 	}
+	
 }

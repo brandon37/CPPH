@@ -21,7 +21,7 @@ class VerifyLogin extends CI_Controller {
      //Field validation failed.  User redirected to login page
       $this->load->view("ehtml/headerL");
       $this->load->view("login/login");
-      $this->load->view("ehtml/footerl");
+      $this->load->view("ehtml/footerL");
    }
    else
    {

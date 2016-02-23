@@ -10,12 +10,22 @@ class Users extends CI_Controller {
  
  function index()
  {
+
+ 	 if($this->session->userdata('logged_in'))
+   {
      $session_data = $this->session->userdata('logged_in');
      $tipo = 'General';
      $data['users'] = $this->usuario_model->obtenerUsuarios($tipo);
      $this->load->view('ehtml/header');
      $this->load->view('users_view', $data);
      $this->load->view('ehtml/footer');
+   }
+   else
+   {
+     //If no session, redirect to login page
+     redirect('login', 'refresh');
+   }
+ 	
 
  }
  

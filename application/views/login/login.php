@@ -1,5 +1,4 @@
-        <!-- Top content -->
-        <div class="top-content">
+       <div class="top-content">
             
             <div class="inner-bg">
                 <div class="container">
@@ -27,46 +26,19 @@
                                <?= form_open('verifylogin') ?>
                                     <div class="form-group">
                                          <label class="sr-only" for="username">Username:</label>
-                                        <input type="text" size="20" id="username" name="username"/>
+                                         <input type="text" size="20" id="username" name="username" placeholder="Username" class="form-username form-control"/>
                                      </div>
                                      <div class="form-group">
                                         <label class="sr-only" for="password">Password:</label>
-                                        <input type="password" size="20" id="passowrd" name="password"/>
+                                        <input type="password" size="20" id="passowrd" name="password"placeholder="Password" class="form-password form-control"/>
                                      </div>
-                                     <input type="submit" class="btn-primary" value="Login"/>
-                               </form>
-
-                            <!--    <form action="application/controllers/login.php" method="post" class="login-form">
-                                    <div class="form-group">
-                                        <label class="sr-only" for="form-username">Username</label>
-                                        <input type="text" name="name" placeholder="Username..." class="form-username form-control" id="name">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="sr-only" for="form-password">Password</label>
-                                        <input type="password" name="pass" placeholder="Password..." class="form-password form-control" id="pass">
-                                    </div>
-                                    <button type="submit" class="btn">Sign in!</button>
-                                    </form>
-                                -->
+                                   <button type="submit" class="btn">Login</button>  
+                               </form> <br>
+                                <a href="<?=base_url()?>recuperapass">Recuperar contraseña</a>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-6 col-sm-offset-3 social-login">
-                            <h3>...or login with:</h3>
-                            <div class="social-login-buttons">
-                                <a class="btn btn-link-2" href="#">
-                                    <i class="fa fa-facebook"></i> Facebook
-                                </a>
-                                <a class="btn btn-link-2" href="#">
-                                    <i class="fa fa-twitter"></i> Twitter
-                                </a>
-                                <a class="btn btn-link-2" href="#">
-                                    <i class="fa fa-google-plus"></i> Google Plus
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+               
                 </div>
             </div>
             
