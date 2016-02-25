@@ -1,10 +1,10 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
-$config['protocol'] = 'smtp';
-$config['charset']  = 'iso-8859-1'; //Change this you your preferred charset 
-$config['wordwrap'] = TRUE;
-$config['mailtype'] = 'html'; //Use 'text' if you don't need html tags and images
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-$config['smtp_host'] = 'smtp.mandrillapp.com';
-$config['smtp_user'] = 'brandon@hydralab.mx';
-$config['smtp_pass'] = 'p5pHCEbFBDDK-WUxRCQuAg';
-$config['smtp_port'] = '587';
+            $config['protocol'] = 'smtp';  // protocolo de envio de correo
+            $config['smtp_host'] = 'ssl://smtp.googlemail.com'; // dirección SMTP del servidor                               
+            $config['smtp_user'] = 'mi-correo@gmail.com'; // remplazarlo por un cuenta real de Gmail - usuario SMTP 
+            $config['smtp_pass'] = 'mi-password';  
+            $config['smtp_port'] = '465'; // o el '587' --  Puerto SMTP  
+            $config['smtp_timeout'] = '6';  // Tiempo de espera SMTP(segundos)
+            //$config['email']['newline']  = '\r\n';
+            $config['mailtype'] = 'html'; // o text para texto sin HTML
