@@ -5,10 +5,25 @@ class Login extends CI_Controller {
 		parent::__construct();
 
 	}
-
+	
 	public function index(){
-		$this->load->view("ehtml/headers");
-		$this->load->view("login/login");
-		$this->load->view("ehtml/footer");
+		if (isset($_POST['pass'])) {
+			$this->load->model("usuario_model");
+		if ($this->usuario_model->login($_POST['name'],$_POST['pass'])) {
+			$this->load->view('welcome_message');
+		}else{
+			$this->load->view("ehtml/headerL");
+			$this->load->helper(array('form'));
+			$this->load->view("login/login");
+			$this->load->view("ehtml/footerL");
+		}
+			
+		}
+			$this->load->view("ehtml/headerL");
+			$this->load->helper(array('form'));
+			$this->load->view("login/login");
+			$this->load->view("ehtml/footerL");
+		 
 	}
+	
 }
