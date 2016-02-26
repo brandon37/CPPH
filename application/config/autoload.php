@@ -80,7 +80,7 @@ $autoload['helper'] = array('url');
 |
 */
 
-$autoload['config'] = array('mandrill');
+$autoload['config'] = array('email');
 
 
 /*

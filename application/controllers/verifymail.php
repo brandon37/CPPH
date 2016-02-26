@@ -6,7 +6,6 @@ class Verifymail extends CI_Controller {
  {
    parent::__construct();
    $this->load->model('usuario_model','',TRUE);
-
  }
  private $email;
  function index()
@@ -36,7 +35,6 @@ class Verifymail extends CI_Controller {
  {
    //Field validation succeeded.  Validate against database
   
- 
    //query the database
    $result = $this->usuario_model->obtenerUsuarioPass($email);
  
