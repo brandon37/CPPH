@@ -7,7 +7,9 @@ class Sendmail extends CI_Controller  {
    parent::__construct();
    $this->load->helper('form');
    $this->load->model('usuario_model','',TRUE);
-   
+   $this->load->library(array('form_validation','email'));
+   $this->load->helper(array('url','html'));
+   $this->load->library('email','','correo');
  }
  
 public function index(){
@@ -34,27 +36,7 @@ public function index(){
 */
 
 	//This method will have the credentials validation
-   
 
-
-
-	$this->load->config('mandrill');
-	$this->load->library('mandrill');
-
-	$mandrill_ready = NULL;
-
-	try {
-
-	    $this->mandrill->init( $this->config->item('mandrill_api_key') );
-	    $mandrill_ready = TRUE;
-
-	} catch(Mandrill_Exception $e) {
-
-	    $mandrill_ready = FALSE;
-
-	}
-
-	if( $mandrill_ready ) {
 
 	    //Send us some email!
 	    $flash_data  = $this->session->flashdata('my_data');
@@ -74,10 +56,22 @@ public function index(){
 			 
 		     $data['passwd'] =  $this->usuario_model->obtenerUsuarioPass($mail);
 		     if ($data['passwd']) {*/
-		    	 $this->load->view('ehtml/headerL');
-				 $this->load->helper(array('form'));
-				 $this->load->view('login/emailsent',$data);
-				 $this->load->view('ehtml/footerL');
+		     $this->email->from('brandon@hydralab.mx', 'Hydralab');
+             $this->email->to($data['passwd']);
+             $this->email->subject('Email enviado con CI y Gmail');     
+             $message = 'Tu contraseña es:<?= $pass ?> <br> <a href="http://localhost:8888/CPPH/"> Ingresa tu contraseña</a>.';      
+             $this->email->message($message); 
+           
+            if($this->email->send()){
+			 redirect('sendmail');
+			 echo($this->email->print_debugger());
+		}
+		else{
+			 echo($this->email->print_debugger());
+			}	
+
+		 }else{
+				 redirect('login');
 				 }
 		     	/*
 		     }else{
@@ -87,7 +81,6 @@ public function index(){
 
 */
 
-	}
 
     
    /* $this->load->library('email');
