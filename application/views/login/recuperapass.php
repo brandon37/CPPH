@@ -19,13 +19,32 @@
                                 </div>
                             </div>
                             <div class="form-bottom">
-                               <?= form_open('sendmail') ?>
+                             <?= validation_errors() ?>
+                               <?= form_open('verifymail') ?>
                                     <div class="form-group">
-                                         <label class="sr-only" for="username">Username:</label>
-                                         <input type="text" size="20" id="user" name="name" placeholder="Username" class="form-username form-control"/>
-                                     </div>
-                                   <button type="submit" class="btn">Recuperar</button>  
-                               </form> <br>
+                                     <?php
+                                     $email = array(
+                                     'size'=>"20",
+                                     'type' => "email",
+                                     'id' => "user", 
+                                     'name' => 'mail',
+                                     'placeholder' => 'Email',
+                                     'class'=>"form-username form-control",
+
+                                    );
+
+                                    ?>
+                                    <?= form_label('', '')?>
+                                    <?= form_input($email)?>
+                                  
+                               <br>
+                                     <?= form_button(array(
+                                        'type'=>"submit",
+                                        'class'=>"btn",
+                                        'name' => 'Enviar',
+                                        'content' => 'Recuperar'
+                                        )); ?>
+                                    <?= form_close() ?>
                                 <a href="<?=base_url()?>">Regresar</a>
                             </div>
                         </div>

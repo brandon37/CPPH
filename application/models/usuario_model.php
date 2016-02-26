@@ -36,7 +36,7 @@ class Usuario_model extends CI_Model {
 		function obtenerUsuarioPass($mail){
 	  	$this->db->where('email',$mail);
 		$query = $this->db->get('usuarios');
-		if($query->num_rows() >0) return $query;
+		if($query->num_rows() >0) return $query->result();
 		else return false;
 		}
 	
