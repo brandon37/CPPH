@@ -1,4 +1,4 @@
-<div class="hero-unit center">
+<div class="hero-unit text-center">
           <h1>Page Not Found <small><font face="Tahoma" color="red">Error 404</font></small></h1>
           <br />
           <p>The page you requested could not be found, either contact your webmaster or try again. Use your browsers <b>Back</b> button to navigate to the page you have prevously come from</p>
