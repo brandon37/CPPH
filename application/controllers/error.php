@@ -9,9 +9,9 @@ class Error extends CI_Controller
 
     public function error404() 
     { 
-        $this->load->view('ehtml/header');
+        $this->load->view('ehtml/headerError');
         $this->load->view('error/error404');
-        $this->load->view('ehtml/footer');
+        $this->load->view('ehtml/footerError');
     } 
 } 
 ?>

@@ -15,9 +15,10 @@ class Users extends CI_Controller {
    {
      $session_data = $this->session->userdata('logged_in');
      $tipo = 'General';
+     $data['username'] = $session_data['nombre'];
      $data['users'] = $this->usuario_model->obtenerUsuarios($tipo);
-     $this->load->view('ehtml/header');
-     $this->load->view('users_view', $data);
+     $this->load->view('ehtml/header',$data);
+     $this->load->view('home/users',$data);
      $this->load->view('ehtml/footer');
    }
    else
