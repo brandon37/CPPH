@@ -7,29 +7,29 @@ class Facturas_model extends CI_Model {
 		$this->load->database();
 	}
 
-	 function crearFactura($data){
+	 function newFactura($data){
 		$this->db->insert('facturas',array('numFactura'=>$data['numF'],'estado'=>$data['estado']), 
 			'idordenCompras'=>$data['idordenCompras']);
 	}
 
-	 function eliminarFactura($id){
+	 function deleteFactura($id){
 		$this->db->delete('facturas', array('idfactura'=>$id));
 	}
 
-	function obtenerFactura($id){
+	function getAllFacturas($id){
 		$query = $this->db->get('facturas');
 		if($query->num_rows() >0) return $query;
 		else return false;
 	}
 
-	 function obtenerFactura($id){
+	 function getFactura($id){
 		$this->db->where('idfactura',$id);
 		$query = $this->db->get('facturas');
 		if($query->num_rows() >0) return $query;
 		else return false;
 	}
 
-	 function actualizarFactura($id,$data){
+	 function updateFactura($id,$data){
 		$datos = array(
 			'numFactura'=>$data['numF'],
 			'estado'=>$data['estado'],
