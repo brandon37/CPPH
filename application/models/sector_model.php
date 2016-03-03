@@ -7,29 +7,29 @@ class Sector_model extends CI_Model {
 		$this->load->database();
 	}
 
-	 function crearSector($data){
+	 function newSector($data){
 		$this->db->insert('sector',array('tipoSector'=>$data['tipoSector']);
 	}
 
-	 function eliminarSector($id){
+	 function deleteSector($id){
 		
 		$this->db->delete('sector', array('idsector'=>$id));
 	}
 
-	 function obtenerSectores(){
+	 function getAllSectores(){
 		$query = $this->db->get('sector');
 		if($query->num_rows()>0) return $query;
 		else return false;
 	}
 
-	 function obtenerSector($id){
+	 function getSector($id){
 		$this->db->where('idsector',$id);
 		$query = $this->db->get('sector');
 		if($query->num_rows() >0) return $query;
 		else return false;
 	}
 
-	 function actualizarSector($id,$data){
+	 function updateSector($id,$data){
 		$datos = array(
 			'tipoSector'=>$data['tipoSector']
 		 );

@@ -7,30 +7,30 @@ class Cliente_model extends CI_Model {
 		$this->load->database();
 	}
 
-	 function crearCliente($data){
+	 function newCliente($data){
 		$this->db->insert('clientes',array('nomCliente'=>$data['nombrec'],
 			'status'=>$data['status']), 
 			'idsector'=>$data['sector']);
 	}
 
-	 function eliminarCliente($id){
+	 function deleteCliente($id){
 		
 		$this->db->delete('clientes', array('idCliente'=>$id));
 	}
-	function obtenerClientes($id){
+	function getAllClientes($id){
 		$query = $this->db->get('clientes');
 		if($query->num_rows() >0) return $query;
 		else return false;
 	}
 
-	 function obtenerCliente($id){
+	 function getCliente($id){
 		$this->db->where('idCliente',$id);
 		$query = $this->db->get('clientes');
 		if($query->num_rows() >0) return $query;
 		else return false;
 	}
 
-	 function actualizarCliente($id,$data){
+	 function updateCliente($id,$data){
 		$datos = array(
 			'nomCliente'=>$data['nombre'],
 			'status'=>$data['status'],

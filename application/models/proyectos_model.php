@@ -7,30 +7,30 @@ class Proyectos_model extends CI_Model {
 		$this->load->database();
 	}
 
-	 function crearProyecto($data){
+	 function newProyecto($data){
 		$this->db->insert('proyectos',array('nomProyecto'=>$data['nombrep'],'departamento'=>$data['depa'], 
 			'precio'=>$data['precio'],'fCreacion'=>$data['fC'],'fTerm'=>$data['fT'],'idCliente'=>$data['idClient']);
 	}
 
-	 function eliminarProyecto($id){
+	 function deleteProyecto($id){
 		
 		$this->db->delete('proyectos', array('idproyecto'=>$id));
 	}
 
-	 function obtenerProyectos($id){
+	 function getAllProyectos($id){
 		$query = $this->db->get('proyectos');
 		if($query->num_rows() >0) return $query;
 		else return false;
 	}
 
-	 function obtenerProyecto($id){
+	 function getProyecto($id){
 		$this->db->where('idproyecto',$id);
 		$query = $this->db->get('proyectos');
 		if($query->num_rows() >0) return $query;
 		else return false;
 	}
 
-	 function actualizarProyecto($id,$data){
+	 function updateProyecto($id,$data){
 		$datos = array(
 			'nomProyecto'=>$data['nombrep'],
 			'departamento'=>$data['depa'], 
