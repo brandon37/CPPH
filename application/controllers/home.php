@@ -12,7 +12,7 @@ class Home extends CI_Controller {
    if($this->session->userdata('logged_in'))
    {
      $session_data = $this->session->userdata('logged_in');
-     $data['username'] = $session_data['nombre'];
+     $data['nameUser'] = $session_data['nameUser'];
      $this->load->view('ehtml/header',$data);
      $this->load->view('home/index');
      $this->load->view('ehtml/footer');

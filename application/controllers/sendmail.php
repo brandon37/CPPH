@@ -6,7 +6,7 @@ class Sendmail extends CI_Controller  {
  {
    parent::__construct();
    $this->load->helper('form');
-   $this->load->model('usuario_model','',TRUE);
+   $this->load->model('user_model','',TRUE);
    $this->load->library(array('form_validation','email'));
    $this->load->helper(array('url','html'));
    $this->load->library('email','','correo');

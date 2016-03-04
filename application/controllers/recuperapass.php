@@ -5,7 +5,7 @@ class Recuperapass extends CI_Controller {
  function __construct()
  {
    parent::__construct();
-   $this->load->model('usuario_model','',TRUE);
+   $this->load->model('user_model','',TRUE);
  }
  
 public function index(){  
