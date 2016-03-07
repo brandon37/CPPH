@@ -44,7 +44,6 @@ class User_model extends CI_Model {
 	}
 
 	function deleteUser($id){
-		
 		$this->db->delete('user', array('idUser'=>$id));
 	}
 
@@ -56,8 +55,8 @@ class User_model extends CI_Model {
 	}
 
 	 function updateUser($id,$data){
-		$info = array('name'=>$data['nomre'],'email'=>$data['email'],
-		'pass'=>$data['passwd'],'type'=>$data['type']);
+		$info = array('nameUser'=>$data['nameUser'],'email'=>$data['email'],
+		'pass'=>MD5($data['passwd']),'type'=>$data['type']);
 		$this->db->where('idUser',$id);
 		$this->db->update('user',$info);
 	}
