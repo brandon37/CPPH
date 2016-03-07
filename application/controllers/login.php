@@ -9,7 +9,7 @@ class Login extends CI_Controller {
 	public function index(){
 		if (isset($_POST['pass'])) {
 			$this->load->model("usuario_model");
-		if ($this->usuario_model->login($_POST['name'],$_POST['pass'])) {
+		if ($this->user_model->login($_POST['name'],$_POST['pass'])) {
 			$this->load->view('welcome_message');
 		}else{
 			$this->load->view("ehtml/headerL");
