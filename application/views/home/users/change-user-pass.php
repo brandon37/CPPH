@@ -1,7 +1,7 @@
               <?= validation_errors() ?>
-                       <?= form_open('verifypass'); ?>     
+                       <?= form_open('users/updateUserPass/'.$idUser); ?>     
                       <?php 
-                          if ($user){
+                          if (true){
                           foreach ($user->result() as $opc) { 
                              ?>
                             
@@ -17,13 +17,13 @@
                               <label class="sr-only" for="password">Repeat Password:</label>
                               <input type="password" size="20" id="passowrd2" name="password2"placeholder="Repeat Password:" class="form-password form-control" value="" required/>
                             </div>
-                           
-
+                            <button type="submit" class="btn btn-primary">Save Changes</button> 
+                      </form>
                           <?php } 
                           }else{
-                              echo "Error No Existe Ningun Usuario Favor De Agregar";
+                              echo "Error No Se Encontro En La Base de Datos";
                           }
                       ?>           
-                               <button type="submit" class="btn btn-primary">Save Changes</button> 
+                              
                      
-                 </form>
+          

@@ -24,9 +24,10 @@ class Verifypass extends CI_Controller {
      
      $data['nameUser'] = $session_data['nameUser'];
      $data['idUser'] =  $session_data['idUser'];
+     $data['email'] = $session_data['email'];
      $this->load->view('ehtml/header',$data);
      $this->load->helper(array('form'));
-     $this->load->view('home/change-user-pass/'.$data['idUser'],$data);
+     $this->load->view('home/change-user-pass',$data);
      $this->load->view('ehtml/footer');
    }
    else

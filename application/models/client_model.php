@@ -9,15 +9,15 @@ class Client_model extends CI_Model {
 
 	 function newClient($data){
 		$this->db->insert('clients',array('nameClient'=>$data['nameClient'],
-			'status'=>$data['status']), 
-			'idSector'=>$data['sector']);
+			'status'=>$data['status'], 
+			'idSector'=>$data['sector']));
 	}
 
 	 function deleteClient($id){
 		
 		$this->db->delete('clients', array('idClient'=>$id));
 	}
-	function getAllClients($id){
+	function getAllClients(){
 		$query = $this->db->get('clients');
 		if($query->num_rows() >0) return $query;
 		else return false;
