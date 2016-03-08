@@ -110,7 +110,7 @@
                             <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
+                            <a href="<?=base_url()?>users/runViewChangePassUser/<?=$idUser ?>"><i class="fa fa-fw fa-gear"></i> Change Pass</a>
                         </li>
                         <li class="divider"></li>
                         <li>
@@ -119,6 +119,9 @@
                     </ul>
                 </li>
             </ul>
+
+
+
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
