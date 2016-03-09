@@ -49,7 +49,7 @@
                                             <tr>
                                                 <td><?= $opc->nameClient?></td>
                                                 <td><?= $opc->status?></td>
-                                                <td><?= $opc->idSector?></td>
+                                                <td><?= $opc->typeSector?></td>
                                                 <td><a href="<?=base_url()?>clients/runViewEditClient/<?=$opc->idClient?>" >Edit</a></td>
                                                 <td class="text-center text-danger">
                                                     <a href="<?=base_url()?>clients/deleteClient/<?=$opc->idClient?>">X</a>  
@@ -100,7 +100,7 @@
                            </div>
                            <div class="form-group">
                               <label class="sr-only" for="sector">Sector:</label>
-                              <input type="sector" size="20" id="sector" name="sector" placeholder="sector" value="1" class="form-sector form-control" required/>
+                              <input type="text" size="20" id="sector" name="sector" placeholder="sector" value="1" class="form-sector form-control" required/>
                            </div>
                          <div class="modal-footer">
                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

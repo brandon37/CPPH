@@ -10,7 +10,7 @@ class Client_model extends CI_Model {
 	 function newClient($data){
 		$this->db->insert('clients',array('nameClient'=>$data['nameClient'],
 			'status'=>$data['status'], 
-			'idSector'=>$data['sector']));
+			'idSector'=>$data['idSector']));
 	}
 
 	 function deleteClient($id){
@@ -18,7 +18,10 @@ class Client_model extends CI_Model {
 		$this->db->delete('clients', array('idClient'=>$id));
 	}
 	function getAllClients(){
-		$query = $this->db->get('clients');
+		$this->db->select('*');
+		$this->db->from('clients');
+		$this->db->join('sector', 'sector.idSector = clients.idSector');
+		$query = $this->db->get();
 		if($query->num_rows() >0) return $query;
 		else return false;
 	}
@@ -34,7 +37,7 @@ class Client_model extends CI_Model {
 		$info = array(
 			'nameClient'=>$data['nameClient'],
 			'status'=>$data['status'],
-			'idSector'=>$data['sector']
+			'idSector'=>$data['idSector']
 		 );
 		$this->db->where('idClient',$id);
 		$this->db->update('clients',$info);
