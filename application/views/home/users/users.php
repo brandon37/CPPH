@@ -21,12 +21,6 @@
                        <p class="text-right">
                             <button type="button" class="btn btn-large btn-info" data-toggle="modal" data-target="#createUserModal" data-whatever="@fat">New User</button>
                        </p>
-
-
-
-
-
-
                        
                         </ol>
                     </div>

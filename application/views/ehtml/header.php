@@ -110,7 +110,7 @@
                             <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
+                            <a href="<?=base_url()?>users/runViewChangePassUser"><i class="fa fa-fw fa-gear"></i> Change Pass</a>
                         </li>
                         <li class="divider"></li>
                         <li>
@@ -119,17 +119,20 @@
                     </ul>
                 </li>
             </ul>
+
+
+
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li class="active">
-                        <a href="<?=base_url()?>home"><i class="fa fa-fw fa-dashboard"></i> Inicio</a>
+                        <a href="<?=base_url()?>home"><i class="fa fa-fw fa-dashboard"></i>Inicio</a>
                     </li>
                     <li>
-                        <a href="<?=base_url()?>users"><i class="fa fa-fw fa-bar-chart-o"></i> Usuarios</a>
+                        <a href="<?=base_url()?>users"><i class="fa fa-fw fa-bar-chart-o"></i>Usuarios</a>
                     </li>
                     <li>
-                        <a href="tables.html"><i class="fa fa-fw fa-table"></i>Clientes</a>
+                        <a href="<?=base_url()?>clients"><i class="fa fa-fw fa-table"></i>Clientes</a>
                     </li>
                     <li>
                         <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Proyectos</a>

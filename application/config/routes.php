@@ -38,7 +38,7 @@
 |
 */
 
-$route['default_controller'] = "login";
+$route['default_controller'] = "login/login";
 $route['mailing'] = "email_controller";
 //$route['index'] = '';
 $route['404_override'] = 'error/error404';

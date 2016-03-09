@@ -54,6 +54,4 @@ class Verifymail extends CI_Controller {
 
 
 
-
-
 ?>

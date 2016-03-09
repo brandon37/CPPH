@@ -34,7 +34,7 @@
                                      </div>
                                    <button type="submit" class="btn">Login</button>  
                                </form> <br>
-                                <a href="<?=base_url()?>recuperapass">Recuperar contraseña</a>
+                                <a href="<?=base_url()?>login/recuperapass">Recuperar contraseña</a>
                             </div>
                         </div>
                     </div>
