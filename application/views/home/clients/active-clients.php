@@ -11,15 +11,15 @@
                         <ol class="breadcrumb">
                             <li>
                                 <i class="fa fa-dashboard"></i>  <a href="index.php">Dashboard</a>
-
-                
                             </li>
                             <li class="active">
                                 <i class="fa fa-table"></i> Clientes
                             </li>
 
                        <p class="text-right">
-                            <button type="button" class="btn btn-large btn-info" data-toggle="modal" data-target="#createUserModal" data-whatever="@fat">New Client</button>
+                            <a href="<?=base_url()?>clients/inactiveClients" class="btn btn-large btn-info"><i class="icon-home icon-white"></i>Inactive Clients</a>
+                      
+                            <button type="button" class="btn btn-large btn-info" data-toggle="modal" data-target="#createClientModal" data-whatever="">New Client</button>
                        </p>
                        
                         </ol>
@@ -50,9 +50,9 @@
                                                 <td><?= $opc->nameClient?></td>
                                                 <td><?= $opc->status?></td>
                                                 <td><?= $opc->typeSector?></td>
-                                                <td><a href="<?=base_url()?>clients/runViewEditClient/<?=$opc->idClient?>" >Edit</a></td>
+                                                <td><a href="<?=base_url()?>clients/runViewEditActiveClient/<?=$opc->idClient?>" >Edit</a></td>
                                                 <td class="text-center text-danger">
-                                                    <a href="<?=base_url()?>clients/deleteClient/<?=$opc->idClient?>">X</a>  
+                                                    <a href="<?=base_url()?>clients/deleteActiveClient/<?=$opc->idClient?>" class="confirmationDeleteClient">X</a>  
                                                 </td>
                                             </tr>
 
@@ -80,12 +80,12 @@
     <!-- /#wrapper -->
 
 
-        <div class="modal fade" id="createUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal fade" id="createClientModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
              <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <h3 class="modal-title text-center" id="exampleModalLabel">New Client</h3>
+                      <h3 class="myModalLabel text-center" id="exampleModalLabel">New Client</h3>
                     </div>
                     <div class="modal-body">
                        <?= validation_errors() ?>
@@ -96,11 +96,12 @@
                            </div>
                            <div class="form-group">
                               <label class="sr-only" for="text">Status:</label>
-                              <input type="text" size="20" id="status" name="status"placeholder=""value="Activo"  class="form-status form-control "required/>
+                              <input type="text" size="20" id="status" name="status"placeholder="Activo" value="Activo"  class="form-status form-control "required/>
                            </div>
                            <div class="form-group">
                               <label class="sr-only" for="sector">Sector:</label>
-                              <input type="text" size="20" id="sector" name="sector" placeholder="sector" value="1" class="form-sector form-control" required/>
+                              <input type="text" size="20" id="sector" name="sector" placeholder="1" value="1" class="form-sector form-control" required/>
+                              
                            </div>
                          <div class="modal-footer">
                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

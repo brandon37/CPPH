@@ -20,10 +20,10 @@ class Users extends CI_Controller {
      $data['idUser'] =  $session_data['idUser'];
      $data['email'] = $session_data['email'];
      $data['users'] = $this->user_model->getAllUsers($type);
-     $this->load->view('ehtml/header',$data);
+     $this->load->view('ehtml/headercrud',$data);
      $this->load->helper(array('form'));
      $this->load->view('home/users/users',$data);
-     $this->load->view('ehtml/footer');
+     $this->load->view('ehtml/footercrud');
    }
    else
    {
@@ -58,17 +58,16 @@ class Users extends CI_Controller {
   function runViewEditUser($id){
    if($this->session->userdata('logged_in'))
      {
-      $session_data = $this->session->userdata('logged_in');
         $session_data = $this->session->userdata('logged_in');
         $data['nameUser'] = $session_data['nameUser'];
         $data['idUser'] =  $session_data['idUser'];
         $data['email'] = $session_data['email'];
         $data['user'] = $this->user_model->getUser($id);
         $data['id'] = $id;
-        $this->load->view('ehtml/header',$data);
+        $this->load->view('ehtml/headercrud',$data);
         $this->load->helper(array('form'));
         $this->load->view('home/users/edit-user',$data);
-        $this->load->view('ehtml/footer');
+        $this->load->view('ehtml/footercrud');
      }
      else
      {
@@ -85,11 +84,31 @@ class Users extends CI_Controller {
         $data['nameUser'] = $session_data['nameUser'];
         $data['idUser'] =  $session_data['idUser'];
         $data['email'] = $session_data['email'];
-        $data['user'] = $this->user_model->getUser(3);
-        $this->load->view('ehtml/header',$data);
+        $data['user'] = $this->user_model->getUser($data['idUser']);
+        $this->load->view('ehtml/headercrud',$data);
         $this->load->helper(array('form'));
         $this->load->view('home/users/change-user-pass',$data);
-        $this->load->view('ehtml/footer');
+        $this->load->view('ehtml/footercrud');
+     }
+     else
+     {
+       //If no session, redirect to login page
+       redirect('login', 'refresh');
+     }
+  
+  }
+  function runViewChangeProfileUser(){
+   if($this->session->userdata('logged_in'))
+     {
+        $session_data = $this->session->userdata('logged_in');
+        $data['nameUser'] = $session_data['nameUser'];
+        $data['idUser'] =  $session_data['idUser'];
+        $data['email'] = $session_data['email'];
+        $data['user'] = $this->user_model->getUser($data['idUser']);
+        $this->load->view('ehtml/headercrud',$data);
+        $this->load->helper(array('form'));
+        $this->load->view('home/users/change-user-profile',$data);
+        $this->load->view('ehtml/footercrud');
      }
      else
      {
@@ -132,4 +151,23 @@ class Users extends CI_Controller {
      }
  
 }
+
+  function updateUserProfile(){
+      if($this->session->userdata('logged_in'))
+     {
+        $session_data = $this->session->userdata('logged_in');
+          $data = array(
+          'nameUser'=>$session_data['nameUser'],
+          'email'=>$this->input->post['email']
+        );
+        $this->user_model->updateUser($this->uri->segment(3),$data);
+        redirect('users');
+    } else{
+       //If no session, redirect to login page
+       redirect('login', 'refresh');
+     }
+ 
+}
+
+
 }

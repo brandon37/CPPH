@@ -19,7 +19,7 @@
                             </li>
 
                        <p class="text-right">
-                            <button type="button" class="btn btn-large btn-info" data-toggle="modal" data-target="#createUserModal" data-whatever="@fat">New User</button>
+                            <button type="button" class="btn btn-large btn-info" data-toggle="modal" data-target="#createUserModal">New User</button>
                        </p>
                        
                         </ol>
@@ -83,7 +83,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <h3 class="modal-title text-center" id="exampleModalLabel">New User</h3>
+                      <h3 class="myModalLabel text-center" id="exampleModalLabel">New User</h3>
                     </div>
                     <div class="modal-body">
                        <?= validation_errors() ?>
@@ -112,9 +112,13 @@
          <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
              <div class="modal-dialog" role="document">
                 <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                      <h3 id="myModalLabel">We'd Love to Hear From You</h3>
+                    </div>
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <h3 class="modal-title text-center" id="exampleModalLabel">Edit User</h3>
+                      <h3 class="myModalLabel text-center">New User</h3>
                     </div>
                     <div class="modal-body">
                        <?= validation_errors() ?>
