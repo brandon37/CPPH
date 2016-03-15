@@ -36,7 +36,7 @@ class Clients extends CI_Controller {
       $data = array(
       'nameClient'=>$this->input->post('clientname'),
       'status'=>$this->input->post('status'),
-      'idSector'=>$this->input->post('idSector')
+      'idSector'=>$this->input->post('sector')
     );
 
     $this->client_model->newclient($data);
@@ -46,7 +46,7 @@ class Clients extends CI_Controller {
     $data = array(
       'nameClient'=>$this->input->post('clientname'),
       'status'=>$this->input->post('status'),
-      'idSector'=>$this->input->post('idSector')
+      'idSector'=>$this->input->post('sector')
     );
     $this->client_model->updateClient($this->uri->segment(3),$data);
     redirect('clients');
@@ -58,7 +58,7 @@ class Clients extends CI_Controller {
         $session_data = $this->session->userdata('logged_in');
         $data['nameUser'] = $session_data['nameUser'];
         $data['idUser'] =  $session_data['idUser'];
-        $data['user'] = $this->user_model->getUser($id);
+        $data['client'] = $this->client_model->getClient($id);
         $data['id'] = $id;
         $this->load->view('ehtml/header',$data);
         $this->load->helper(array('form'));

@@ -5,7 +5,7 @@ class User_model extends CI_Model {
 	 function __construct(){
 		parent::__construct();
 		$this->load->database();
-	}
+	 }
 
 	 function login($username, $password)
 	 {
@@ -26,6 +26,7 @@ class User_model extends CI_Model {
 	     return false;
 	   }
 	 }
+    
     function getAllUsers($type){
 	  	$this->db->where('type',$type);
 		$query = $this->db->get('user');
@@ -39,6 +40,8 @@ class User_model extends CI_Model {
 		if($query->num_rows() >0) return $query->result();
 		else return false;
 	}
+
+
 	function newUser($data){
 		$this->db->insert('user',array('nameUser'=>$data['nameUser'], 'email'=>$data['email'],'pass'=>MD5($data['passwd']),'type'=>$data['type']));
 	}
@@ -53,10 +56,10 @@ class User_model extends CI_Model {
 		if($query->num_rows() >0) return $query;
 		else return false;
 	}
-
-	 function updateUser($id,$data){
+	
+	function updateUser($id,$data){
 		$info = array('nameUser'=>$data['nameUser'],'email'=>$data['email'],
-		'pass'=>MD5($data['passwd']),'type'=>$data['type']);
+		'pass'=>MD5($data['pass']),'type'=>$data['type']);
 		$this->db->where('idUser',$id);
 		$this->db->update('user',$info);
 	}

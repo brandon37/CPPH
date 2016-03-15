@@ -6,6 +6,7 @@ class Users extends CI_Controller {
  {
    parent::__construct();
    $this->load->model('user_model','',TRUE);
+
  }
  
  function index()
@@ -57,6 +58,7 @@ class Users extends CI_Controller {
   function runViewEditUser($id){
    if($this->session->userdata('logged_in'))
      {
+      $session_data = $this->session->userdata('logged_in');
         $session_data = $this->session->userdata('logged_in');
         $data['nameUser'] = $session_data['nameUser'];
         $data['idUser'] =  $session_data['idUser'];
@@ -115,6 +117,7 @@ class Users extends CI_Controller {
   function updateUserPass(){
       if($this->session->userdata('logged_in'))
      {
+        $session_data = $this->session->userdata('logged_in');
           $data = array(
           'nameUser'=>$session_data['nameUser'],
           'email'=>$session_data['email'],
