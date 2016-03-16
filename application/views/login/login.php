@@ -43,15 +43,7 @@
             </div>
             
         </div>
+        
 
+        
 
-
-        DOMINIO: controldepagoshydra.com
-        PASS: hydra@2016
-
-
-        otro hosting
-        http://freehostia.com/cart/#
-
-        http://fernando-gaitan.com.ar/codeigniter-parte-6-modelos/
-        https://ellislab.com/codeigniter/user-guide/database/active_record.html

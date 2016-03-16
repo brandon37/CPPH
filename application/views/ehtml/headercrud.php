@@ -116,7 +116,10 @@
                         <a href="<?=base_url()?>clients"><i class="fa fa-fw fa-table"></i>Clientes</a>
                     </li>
                     <li>
-                        <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Proyectos</a>
+                        <a href="<?=base_url()?>departments"><i class="fa fa-fw fa-table"></i>Departamentos</a>
+                    </li>
+                    <li>
+                        <a href="<?=base_url()?>proyects"><i class="fa fa-fw fa-table"></i>Proyectos</a>
                     </li>
                     <li>
                         <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Pagos</a>
