@@ -63,5 +63,11 @@ class User_model extends CI_Model {
 		$this->db->where('idUser',$id);
 		$this->db->update('user',$info);
 	}
+	function updateProfile($id,$data){
+		$info = array('nameUser'=>$data['nameUser'],'email'=>$data['email']);
+		$this->db->where('idUser',$id);
+		$this->db->set('nameUser','email');
+		$this->db->update('user',$info);
+	}
 	}
 ?>

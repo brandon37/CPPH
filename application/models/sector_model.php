@@ -8,7 +8,7 @@ class Sector_model extends CI_Model {
 	}
 
 	 function newSector($data){
-		$this->db->insert('sector',array('typeSector'=>$data['typeSector']);
+		$this->db->insert('sector',array('typeSector'=>$data['typeSector']));
 	}
 
 	 function deleteSector($id){

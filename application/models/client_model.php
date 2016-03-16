@@ -17,9 +17,19 @@ class Client_model extends CI_Model {
 		
 		$this->db->delete('clients', array('idClient'=>$id));
 	}
-	function getAllClients(){
+	function getAllActiveClients(){
 		$this->db->select('*');
 		$this->db->from('clients');
+		$this->db->where('status',"Activo");
+		$this->db->join('sector', 'sector.idSector = clients.idSector');
+		$query = $this->db->get();
+		if($query->num_rows() >0) return $query;
+		else return false;
+	}
+	function getAllInactiveClients(){
+		$this->db->select('*');
+		$this->db->from('clients');
+		$this->db->where('status',"Inactivo");
 		$this->db->join('sector', 'sector.idSector = clients.idSector');
 		$query = $this->db->get();
 		if($query->num_rows() >0) return $query;
