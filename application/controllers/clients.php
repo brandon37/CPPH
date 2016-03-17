@@ -15,6 +15,8 @@ class Clients extends CI_Controller {
    {
      $session_data = $this->session->userdata('logged_in');
      $type = 'General';
+     $data = array('titulo' => 'Buscador con múltiples criterios', 
+            'clients' => $this->busqueda());
      $data['nameUser'] = $session_data['nameUser'];
      $data['idUser'] =  $session_data['idUser'];
      $data['email'] = $session_data['email'];
@@ -31,7 +33,8 @@ class Clients extends CI_Controller {
    }
  	
  }
- 
+
+
  function inactiveClients()
  {
 

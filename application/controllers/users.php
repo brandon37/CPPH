@@ -19,6 +19,8 @@ class Users extends CI_Controller {
      $data['nameUser'] = $session_data['nameUser'];
      $data['idUser'] =  $session_data['idUser'];
      $data['email'] = $session_data['email'];
+     $data['pass'] = $session_data['pass'];
+     $data['type'] = $session_data['type'];
      $data['users'] = $this->user_model->getAllUsers($type);
      $this->load->view('ehtml/headercrud',$data);
      $this->load->helper(array('form'));
@@ -62,6 +64,8 @@ class Users extends CI_Controller {
         $data['nameUser'] = $session_data['nameUser'];
         $data['idUser'] =  $session_data['idUser'];
         $data['email'] = $session_data['email'];
+        $data['pass'] = $session_data['pass'];
+        $data['type'] = $session_data['type'];
         $data['user'] = $this->user_model->getUser($id);
         $data['id'] = $id;
         $this->load->view('ehtml/headercrud',$data);
@@ -84,6 +88,8 @@ class Users extends CI_Controller {
         $data['nameUser'] = $session_data['nameUser'];
         $data['idUser'] =  $session_data['idUser'];
         $data['email'] = $session_data['email'];
+        $data['pass'] = $session_data['pass'];
+        $data['type'] = $session_data['type'];
         $data['user'] = $this->user_model->getUser($data['idUser']);
         $this->load->view('ehtml/headercrud',$data);
         $this->load->helper(array('form'));
@@ -104,6 +110,8 @@ class Users extends CI_Controller {
         $data['nameUser'] = $session_data['nameUser'];
         $data['idUser'] =  $session_data['idUser'];
         $data['email'] = $session_data['email'];
+        $data['pass'] = $session_data['pass'];
+        $data['type'] = $session_data['type'];
         $data['user'] = $this->user_model->getUser($data['idUser']);
         $this->load->view('ehtml/headercrud',$data);
         $this->load->helper(array('form'));
@@ -141,7 +149,7 @@ class Users extends CI_Controller {
           'nameUser'=>$session_data['nameUser'],
           'email'=>$session_data['email'],
           'pass'=>$this->input->post('password'),
-          'type'=>"Admin"
+          'type'=>$session_data['type']
         );
         $this->user_model->updateUser($this->uri->segment(3),$data);
         redirect('users');
@@ -157,10 +165,12 @@ class Users extends CI_Controller {
      {
         $session_data = $this->session->userdata('logged_in');
           $data = array(
-          'nameUser'=>$session_data['nameUser'],
-          'email'=>$this->input->post['email']
+          'nameUser'=>$this->input->post('username'),
+          'email'=>$this->input->post('mail'),
+          'pass'=>$session_data['pass'],
+          'type'=>$session_data['type']
         );
-        $this->user_model->updateUser($this->uri->segment(3),$data);
+        $this->user_model->updateProfile($this->uri->segment(3),$data);
         redirect('users');
     } else{
        //If no session, redirect to login page

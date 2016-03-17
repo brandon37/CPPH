@@ -52,6 +52,8 @@ class Client_model extends CI_Model {
 		$this->db->where('idClient',$id);
 		$this->db->update('clients',$info);
 	}
+
+
 	
 }
 ?>
