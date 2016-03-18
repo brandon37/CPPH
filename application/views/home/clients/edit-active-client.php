@@ -1,3 +1,4 @@
+
         <?= validation_errors() ?>
         <?= form_open('clients/updateActiveClient/'.$id); ?>    
           <?php 
