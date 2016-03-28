@@ -7,20 +7,42 @@ class Clients extends CI_Controller {
    parent::__construct();
    $this->load->model('client_model','',TRUE);
  }
- 
- function index()
- {
-
- 	 if($this->session->userdata('logged_in'))
+ function index(){
+   if($this->session->userdata('logged_in'))
    {
      $session_data = $this->session->userdata('logged_in');
      $type = 'General';
-     $data = array('titulo' => 'Buscador con múltiples criterios', 
-            'clients' => $this->busqueda());
      $data['nameUser'] = $session_data['nameUser'];
      $data['idUser'] =  $session_data['idUser'];
      $data['email'] = $session_data['email'];
-     $data['clients'] = $this->client_model->getAllActiveClients();
+     $this->load->library("pagination");
+     $config['base_url'] = base_url()."clients/index/";
+     $config['total_rows'] = $this->client_model->no_pageActiveClients();
+     $config['per_page'] = 5;
+     $config['use_page_numbers'] = TRUE;
+     $config['num_links'] = 5;
+     $config['full_tag_open'] = '<ul class="pagination">';
+     $config['full_tag_close'] = '</ul>';
+     $config['first_link'] = false;
+     $config['last_link'] = false;
+     $config['first_tag_open'] = '<li>';
+     $config['first_tag_close'] = '</li>';
+     $config['prev_link'] = '&laquo';
+     $config['prev_tag_open'] = '<li class="prev">';
+     $config['prev_tag_close'] = '</li>';
+     $config['next_link'] = '&raquo';
+     $config['next_tag_open'] = '<li>';
+     $config['next_tag_close'] = '</li>';
+     $config['last_tag_open'] = '<li>';
+     $config['last_tag_close'] = '</li>';
+     $config['cur_tag_open'] = '<li class="active"><a href="#">';
+     $config['cur_tag_close'] = '</a></li>';
+     $config['num_tag_open'] = '<li>';
+     $config['num_tag_close'] = '</li>';
+     $this->pagination->initialize($config);
+     $result = $this->client_model->get_paginationActiveClients($config['per_page']);
+     $data['query'] = $result;
+     $data['pagination'] = $this->pagination->create_links();
      $this->load->view('ehtml/headercrud',$data);
      $this->load->helper(array('form'));
      $this->load->view('home/clients/active-clients',$data);
@@ -31,8 +53,11 @@ class Clients extends CI_Controller {
      //If no session, redirect to login page
      redirect('login', 'refresh');
    }
- 	
+  
  }
+ 
+ 
+ 
 
 
  function inactiveClients()
@@ -45,7 +70,34 @@ class Clients extends CI_Controller {
      $data['nameUser'] = $session_data['nameUser'];
      $data['idUser'] =  $session_data['idUser'];
      $data['email'] = $session_data['email'];
-     $data['clients'] = $this->client_model->getAllInactiveClients();
+     $this->load->library("pagination");
+     $config['base_url'] = base_url()."clients/inactiveClients/";
+     $config['total_rows'] = $this->client_model->no_pageInactiveClients();
+     $config['per_page'] = 5;
+     $config['use_page_numbers'] = TRUE;
+     $config['num_links'] = 5;
+     $config['full_tag_open'] = '<ul class="pagination">';
+     $config['full_tag_close'] = '</ul>';
+     $config['first_link'] = false;
+     $config['last_link'] = false;
+     $config['first_tag_open'] = '<li>';
+     $config['first_tag_close'] = '</li>';
+     $config['prev_link'] = '&laquo';
+     $config['prev_tag_open'] = '<li class="prev">';
+     $config['prev_tag_close'] = '</li>';
+     $config['next_link'] = '&raquo';
+     $config['next_tag_open'] = '<li>';
+     $config['next_tag_close'] = '</li>';
+     $config['last_tag_open'] = '<li>';
+     $config['last_tag_close'] = '</li>';
+     $config['cur_tag_open'] = '<li class="active"><a href="#">';
+     $config['cur_tag_close'] = '</a></li>';
+     $config['num_tag_open'] = '<li>';
+     $config['num_tag_close'] = '</li>';
+     $this->pagination->initialize($config);
+     $result = $this->client_model->get_paginationInactiveClients($config['per_page']);
+     $data['query'] = $result;
+     $data['pagination'] = $this->pagination->create_links();
      $this->load->view('ehtml/headercrud',$data);
      $this->load->helper(array('form'));
      $this->load->view('home/clients/inactive-clients',$data);

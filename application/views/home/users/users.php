@@ -18,7 +18,7 @@
                                 <i class="fa fa-table"></i> Usuarios
                             </li>
 
-                       <p class="text-right">
+                       <p class="text-right"> 
                             <button type="button" class="btn btn-large btn-info" data-toggle="modal" data-target="#createUserModal">New User</button>
                        </p>
                        
@@ -26,6 +26,37 @@
                     </div>
                 </div>
                 <!-- /.row -->
+
+
+                <div class="container">
+                     
+                     <div class="buscador">
+                       <aside>
+                          <div class="noticias linea">
+                          <h3>Buscador</h3>
+                        </aside>
+                     </div>
+
+                    <article>
+                       <div class="formulario">
+                          <input type="text" name="autocompletar" id="autocompletar" class="form-control" placeholder="Buscar...." /> 
+                       </div>
+                     </article>
+                     
+                     <aside>
+                       <div class="formulario">
+                          <div class="contenedor" id="contenedor"></div>
+                       </div>
+                     </aside>
+                     
+                    
+                   
+                   <div class="espacio"></div>
+                   
+                   
+                  </div>
+
+
 
                 <div class="row">
                     <div class="col-lg-6">
@@ -43,14 +74,15 @@
                                 <tbody>
                                    
                                     <?php 
-                                        if ($users){
-                                        foreach ($users->result() as $opc) { ?>
+                                        if ($query){
+                                        foreach ($query->result() as $opc) { ?>
                                             <tr>
                                                 <td><?= $opc->nameUser?></td>
                                                 <td><?= $opc->email?></td>
                                                 <td><a href="<?=base_url()?>users/runViewEditUser/<?=$opc->idUser?>" >Edit</a></td>
                                                 <td class="text-center text-danger">
-                                                    <a href="<?=base_url()?>users/deleteUser/<?=$opc->idUser?>">X</a>  
+                                                    <a href="<?=base_url()?>users/deleteUser/<?=$opc->idUser?>"
+                                                    class="confirmationDeleteUser">X</a>  
                                                 </td>
                                             </tr>
 
@@ -62,12 +94,15 @@
                                     ?>           
                                    
                                 </tbody>
+
                             </table>
+
                         </div>
                     </div>
                 </div>
                 <!-- /.row -->
-
+                
+                        <?= $pagination ?>
             </div>
             <!-- /.container-fluid -->
 

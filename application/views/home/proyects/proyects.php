@@ -26,10 +26,10 @@
                 <!-- /.row -->
 
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-10">
                         <h2>Proyectos</h2>
                         <div class="table-responsive">
-                            <table class="table table-hover table-striped">
+                            <table class="table table-striped">
                                 <thead>
                                     <tr>
                                         <th>Name</th>
@@ -45,8 +45,8 @@
                                 <tbody>
                                    
                                     <?php 
-                                        if ($proyects){
-                                        foreach ($proyects->result() as $opc) { ?>
+                                        if ($query){
+                                        foreach ($query->result() as $opc) { ?>
                                             <tr>
                                                 <td><?= $opc->nameProyect?></td>
                                                 <td><?= $opc->department?></td>
@@ -57,7 +57,7 @@
                                                 <td><a href="<?=base_url()?>proyects/runViewEditProyect/<?=$opc->idProyect?>" >Edit</a>
                                                 </td>
                                                 <td class="text-center text-danger">
-                                                    <a href="<?=base_url()?>proyects/deleteProyect/<?=$opc->idProyect?>" class="confirmationDeleteClient">X</a>  
+                                                    <a href="<?=base_url()?>proyects/deleteProyect/<?=$opc->idProyect?>" class="confirmationDeleteProyect">X</a>  
                                                 </td>
                                             </tr>
 
@@ -74,7 +74,7 @@
                     </div>
                 </div>
                 <!-- /.row -->
-
+                     <?= $pagination ?>
             </div>
             <!-- /.container-fluid -->
 

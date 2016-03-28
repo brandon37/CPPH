@@ -8,7 +8,7 @@ class Department_model extends CI_Model {
 	}
 
 	 function newDepartment($data){
-		$this->db->insert('department',array('nameDepartment'=>$data['namedepartment']));
+		$this->db->insert('department',array('nameDepartment'=>$data['nameDepartment']));
 	}
 
 	 function deleteDepartment($id){
@@ -35,6 +35,17 @@ class Department_model extends CI_Model {
 		 );
 		$this->db->where('idDepartament',$id);
 		$this->db->update('department',$info);
+	}
+	function no_page(){
+		$number = $this->db->query("SELECT count(*) as number FROM department")->row()->number;
+
+		return intval($number);
+	}
+
+	function get_pagination($number_per_page){
+
+		return $this->db->get("department", $number_per_page, $this->uri->segment(3));
+
 	}
 	
 }

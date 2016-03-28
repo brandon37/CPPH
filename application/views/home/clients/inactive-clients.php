@@ -42,8 +42,8 @@
                                 <tbody>
                                    
                                     <?php 
-                                        if ($clients){
-                                        foreach ($clients->result() as $opc) { ?>
+                                        if ($query){
+                                        foreach ($query->result() as $opc) { ?>
                                             <tr>
                                                 <td><?= $opc->nameClient?></td>
                                                 <td><?= $opc->status?></td>
@@ -67,7 +67,7 @@
                     </div>
                 </div>
                 <!-- /.row -->
-
+                    <?= $pagination ?>
             </div>
             <!-- /.container-fluid -->
 

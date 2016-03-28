@@ -6,20 +6,20 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                         Control De Clientes
+                         Control De Facturas
                         </h1>
                         <ol class="breadcrumb">
                             <li>
                                 <i class="fa fa-dashboard"></i>  <a href="index.php">Dashboard</a>
+
+                
                             </li>
                             <li class="active">
-                                <i class="fa fa-table"></i> Clientes
+                                <i class="fa fa-table"></i> Facturas
                             </li>
 
                        <p class="text-right">
-                            <a href="<?=base_url()?>clients/inactiveClients" class="btn btn-large btn-info"><i class="icon-home icon-white"></i>Inactive Clients</a>
-                      
-                            <button type="button" class="btn btn-large btn-info" data-toggle="modal" data-target="#createClientModal" data-whatever="">New Client</button>
+                            <button type="button" class="btn btn-large btn-info" data-toggle="modal" data-target="#createinvoiceModal" data-whatever="">New invoice</button>
                        </p>
                        
                         </ol>
@@ -27,17 +27,14 @@
                 </div>
                 <!-- /.row -->
 
-
                 <div class="row">
                     <div class="col-lg-6">
-                        <h2>Clientes</h2>
+                        <h2>Facturas</h2>
                         <div class="table-responsive">
-                            <table class="table table-striped">
+                            <table class="table table-hover table-striped">
                                 <thead>
                                     <tr>
                                         <th>Name</th>
-                                        <th>Satuts</th>
-                                        <th>Sector</th>
                                         <th>Edit</th>
                                         <th class="text-center">Delete</th>
                                     </tr>
@@ -48,12 +45,10 @@
                                         if ($query){
                                         foreach ($query->result() as $opc) { ?>
                                             <tr>
-                                                <td><?= $opc->nameClient?></td>
-                                                <td><?= $opc->status?></td>
-                                                <td><?= $opc->typeSector?></td>
-                                                <td><a href="<?=base_url()?>clients/runViewEditActiveClient/<?=$opc->idClient?>" >Edit</a></td>
+                                                <td><?= $opc->noinvoice?></td>
+                                                <td><a href="<?=base_url()?>invoices/runViewEditinvoice/<?=$opc->idInvoice?>" >Edit</a></td>
                                                 <td class="text-center text-danger">
-                                                    <a href="<?=base_url()?>clients/deleteActiveClient/<?=$opc->idClient?>" class="confirmationDeleteClient">X</a>  
+                                                    <a href="<?=base_url()?>invoices/deleteinvoice/<?=$opc->idInvoice?>" class="confirmationDeleteInvoice">X</a>  
                                                 </td>
                                             </tr>
 
@@ -70,7 +65,7 @@
                     </div>
                 </div>
                 <!-- /.row -->
-                   <?= $pagination ?>
+                  <?= $pagination?>
             </div>
             <!-- /.container-fluid -->
 
@@ -81,27 +76,24 @@
     <!-- /#wrapper -->
 
 
-        <div class="modal fade" id="createClientModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal fade" id="createinvoiceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
              <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <h3 class="myModalLabel text-center" id="exampleModalLabel">New Client</h3>
+                      <h3 class="myModalLabel text-center" id="exampleModalLabel">New invoice</h3>
                     </div>
                     <div class="modal-body">
                        <?= validation_errors() ?>
-                       <?= form_open('clients/newClient') ?>
-                          <div class="form-group">
-                               <label class="sr-only" for="clientname">NameClient:</label>
-                               <input type="text" size="20" id="clientname" name="clientname" placeholder="Name Client" class="form-clientname form-control "required/>
-                           </div>
+                       <?= form_open('invoices/newinvoice') ?>
                            <div class="form-group">
-                              <label class="sr-only" for="text">Status:</label>
-                              <input type="text" size="20" id="status" name="status"placeholder="Activo" value="Activo"  class="form-status form-control "required/>
+                              <label class="sr-only" for="invoice">invoice:</label>
+                              <input type="text" size="20" id="invoice" name="noinvoice" placeholder="Factura" value="" class="form-invoice form-control" required/>
+                              
                            </div>
-                           <div class="form-group">
-                              <label class="sr-only" for="sector">Sector:</label>
-                              <input type="text" size="20" id="sector" name="sector" placeholder="1" value="1" class="form-sector form-control" required/>
+                            <div class="form-group">
+                              <label class="sr-only" for="status">status:</label>
+                              <input type="text" size="20" id="status" name="status" placeholder="Estado" value="" class="form-status form-control" required/>
                               
                            </div>
                          <div class="modal-footer">
@@ -113,4 +105,3 @@
                 </div>
              </div>
         </div>
-         

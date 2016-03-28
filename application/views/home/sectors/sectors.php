@@ -42,8 +42,8 @@
                                 <tbody>
                                    
                                     <?php 
-                                        if ($sectors){
-                                        foreach ($sectors->result() as $opc) { ?>
+                                        if ($query){
+                                        foreach ($query->result() as $opc) { ?>
                                             <tr>
                                                 <td><?= $opc->typeSector?></td>
                                                 <td><a href="<?=base_url()?>sectors/runViewEditSector/<?=$opc->idSector?>" >Edit</a></td>
@@ -65,7 +65,7 @@
                     </div>
                 </div>
                 <!-- /.row -->
-
+                <?= $pagination ?>
             </div>
             <!-- /.container-fluid -->
 

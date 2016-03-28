@@ -34,16 +34,22 @@ class User_model extends CI_Model {
 		else return false;
 	}
 
-	function getUserPass($mail){
-	  	$this->db->where('email',$mail);
+	function getUserPass($pass){
+	  	$this->db->where('pass',$pass);
 		$query = $this->db->get('user');
 		if($query->num_rows() >0) return $query->result();
 		else return false;
 	}
-
+	function getUserEmail($email)
+	{
+		$this->db->where('email',$email);
+		$query = $this->db->get('user');
+		if($query->num_rows() > 0) return $query->result();
+		else return false;
+	}
 
 	function newUser($data){
-		$this->db->insert('user',array('nameUser'=>$data['nameUser'], 'email'=>$data['email'],'pass'=>MD5($data['passwd']),'type'=>$data['type']));
+		$this->db->insert('user',array('nameUser'=>$data['nameUser'], 'email'=>$data['email'],'pass'=>MD5($data['pass']),'type'=>$data['type']));
 	}
 
 	function deleteUser($id){
@@ -69,5 +75,37 @@ class User_model extends CI_Model {
 		$this->db->where('idUser',$id);
 		$this->db->update('user',$info);
 	}
+	
+	function no_page(){
+		$this->db->where('type','General');
+		$number = $this->db->query("SELECT count(*) as number FROM user")->row()->number;
+
+		return intval($number);
 	}
+
+	function get_pagination($number_per_page){
+
+		$this->db->where('type','General');
+		return $this->db->get("user", $number_per_page, $this->uri->segment(3));
+
+	}
+
+
+	public function search($cadena){
+        $this->db->like('nameUser', $cadena, 'both');
+        $this->db->or_like('nameUser', $cadena, 'before');
+        $this->db->or_like('nameUser', $cadena, 'after');
+ 
+ 
+        $consulta = $this->db->get('user');
+ 
+        if($consulta->num_rows() > 0){
+            return $consulta->result();
+        }else{       
+            return FALSE;
+        }
+    }
+
+
+}
 ?>

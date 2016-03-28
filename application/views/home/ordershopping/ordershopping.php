@@ -6,20 +6,18 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                         Control De Clientes
+                         Control De ordershoppingos
                         </h1>
                         <ol class="breadcrumb">
                             <li>
                                 <i class="fa fa-dashboard"></i>  <a href="index.php">Dashboard</a>
                             </li>
                             <li class="active">
-                                <i class="fa fa-table"></i> Clientes
+                                <i class="fa fa-table">ordershoppingos</i>
                             </li>
 
                        <p class="text-right">
-                            <a href="<?=base_url()?>clients/inactiveClients" class="btn btn-large btn-info"><i class="icon-home icon-white"></i>Inactive Clients</a>
-                      
-                            <button type="button" class="btn btn-large btn-info" data-toggle="modal" data-target="#createClientModal" data-whatever="">New Client</button>
+                            <button type="button" class="btn btn-large btn-info" data-toggle="modal" data-target="#createordershopping" data-whatever="">New ordershopping</button>
                        </p>
                        
                         </ol>
@@ -27,17 +25,19 @@
                 </div>
                 <!-- /.row -->
 
-
                 <div class="row">
-                    <div class="col-lg-6">
-                        <h2>Clientes</h2>
+                    <div class="col-lg-10">
+                        <h2>ordershoppingos</h2>
                         <div class="table-responsive">
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
                                         <th>Name</th>
-                                        <th>Satuts</th>
-                                        <th>Sector</th>
+                                        <th>concept</th>
+                                        <th>amount</th>
+                                        <th>DC</th>
+                                        <th>DT</th>
+                                        <th>Cliente</th>
                                         <th>Edit</th>
                                         <th class="text-center">Delete</th>
                                     </tr>
@@ -48,12 +48,16 @@
                                         if ($query){
                                         foreach ($query->result() as $opc) { ?>
                                             <tr>
+                                                <td><?= $opc->nameordershopping?></td>
+                                                <td><?= $opc->concept?></td>
+                                                <td><?= $opc->amount?></td>
+                                                <td><?= $opc->dateCreation?></td>
+                                                <td><?= $opc->dateTermination?></td>
                                                 <td><?= $opc->nameClient?></td>
-                                                <td><?= $opc->status?></td>
-                                                <td><?= $opc->typeSector?></td>
-                                                <td><a href="<?=base_url()?>clients/runViewEditActiveClient/<?=$opc->idClient?>" >Edit</a></td>
+                                                <td><a href="<?=base_url()?>ordershopping/runViewEditordershopping/<?=$opc->idordershopping?>" >Edit</a>
+                                                </td>
                                                 <td class="text-center text-danger">
-                                                    <a href="<?=base_url()?>clients/deleteActiveClient/<?=$opc->idClient?>" class="confirmationDeleteClient">X</a>  
+                                                    <a href="<?=base_url()?>ordershopping/deleteordershopping/<?=$opc->idordershopping?>" class="confirmationDeleteOrderShopping">X</a>  
                                                 </td>
                                             </tr>
 
@@ -70,7 +74,7 @@
                     </div>
                 </div>
                 <!-- /.row -->
-                   <?= $pagination ?>
+                     <?= $pagination ?>
             </div>
             <!-- /.container-fluid -->
 
@@ -81,28 +85,35 @@
     <!-- /#wrapper -->
 
 
-        <div class="modal fade" id="createClientModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal fade" id="createordershopping" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
              <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <h3 class="myModalLabel text-center" id="exampleModalLabel">New Client</h3>
+                      <h3 class="myModalLabel text-center" id="exampleModalLabel">New ordershopping</h3>
                     </div>
                     <div class="modal-body">
                        <?= validation_errors() ?>
-                       <?= form_open('clients/newClient') ?>
+                       <?= form_open('ordershopping/newordershopping') ?>
                           <div class="form-group">
-                               <label class="sr-only" for="clientname">NameClient:</label>
-                               <input type="text" size="20" id="clientname" name="clientname" placeholder="Name Client" class="form-clientname form-control "required/>
+                               <label class="sr-only" for="ordershoppingname">Nameordershopping:</label>
+                               <input type="text" size="20" id="ordershoppingname" name="ordershoppingname" placeholder="Name ordershopping" class="form-ordershoppingname form-control" required/>
                            </div>
                            <div class="form-group">
-                              <label class="sr-only" for="text">Status:</label>
-                              <input type="text" size="20" id="status" name="status"placeholder="Activo" value="Activo"  class="form-status form-control "required/>
+                              <label class="sr-only" for="text">concept:</label>
+                              <input type="text" size="20" id="concept" name="concept"placeholder="Departamento" class="form-concept form-control" required/>
                            </div>
                            <div class="form-group">
-                              <label class="sr-only" for="sector">Sector:</label>
-                              <input type="text" size="20" id="sector" name="sector" placeholder="1" value="1" class="form-sector form-control" required/>
-                              
+                              <label class="sr-only" for="amount">amount:</label>
+                              <input type="text" size="20" id="amount" name="amount" placeholder="amount" class="form-amount form-control" required/>
+                           </div>
+                           <div class="form-group">
+                              <label class="sr-only" for="dateCreation">Date Creation:</label>
+                              <input type="date" size="20" id="dateCreation" name="dateCreation" class="form-dateCreation form-control" required/>
+                           </div>
+                           <div class="form-group">
+                              <label class="sr-only" for="idproyect">idproyect:</label>
+                              <input type="text" size="20" id="idproyect" name="idClient" placeholder="idproyect" class="form-idproyect form-control" required/>
                            </div>
                          <div class="modal-footer">
                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

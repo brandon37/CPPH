@@ -19,7 +19,7 @@
                             </li>
 
                        <p class="text-right">
-                            <button type="button" class="btn btn-large btn-info" data-toggle="modal" data-target="#createdepartamentModal" data-whatever="">New Departament</button>
+                            <button type="button" class="btn btn-large btn-info" data-toggle="modal" data-target="#createdepartamentModal" data-whatever="">New Department</button>
                        </p>
                        
                         </ol>
@@ -42,13 +42,13 @@
                                 <tbody>
                                    
                                     <?php 
-                                        if ($departments){
-                                        foreach ($departments->result() as $opc) { ?>
+                                        if ($query){
+                                        foreach ($query->result() as $opc) { ?>
                                             <tr>
                                                 <td><?= $opc->nameDepartment?></td>
-                                                <td><a href="<?=base_url()?>departments/runViewEditdepartament/<?=$opc->idDepartament?>" >Edit</a></td>
+                                                <td><a href="<?=base_url()?>departments/runViewEditdepartment/<?=$opc->idDepartament?>" >Edit</a></td>
                                                 <td class="text-center text-danger">
-                                                    <a href="<?=base_url()?>departments/deletedepartament/<?=$opc->idDepartament?>" class="confirmationDeletedepartament">X</a>  
+                                                    <a href="<?=base_url()?>departments/deletedepartment/<?=$opc->idDepartament?>" class="confirmationDeleteDepartment">X</a>  
                                                 </td>
                                             </tr>
 
@@ -65,7 +65,7 @@
                     </div>
                 </div>
                 <!-- /.row -->
-
+                  <?= $pagination?>
             </div>
             <!-- /.container-fluid -->
 
@@ -81,14 +81,14 @@
                 <div class="modal-content">
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <h3 class="myModalLabel text-center" id="exampleModalLabel">New departament</h3>
+                      <h3 class="myModalLabel text-center" id="exampleModalLabel">New department</h3>
                     </div>
                     <div class="modal-body">
                        <?= validation_errors() ?>
                        <?= form_open('departments/newDepartment') ?>
                            <div class="form-group">
-                              <label class="sr-only" for="departament">departament:</label>
-                              <input type="text" size="20" id="departament" name="departament" placeholder="Departamento" value="" class="form-departament form-control" required/>
+                              <label class="sr-only" for="department">department:</label>
+                              <input type="text" size="20" id="department" name="department" placeholder="Departamento" value="" class="form-department form-control" required/>
                               
                            </div>
                          <div class="modal-footer">

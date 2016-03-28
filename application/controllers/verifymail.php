@@ -14,7 +14,7 @@ class Verifymail extends CI_Controller {
   //This method will have the credentials validation
    $this->load->library('form_validation');
  
-   $this->form_validation->set_rules('mail', 'email', 'trim|required|xss_clean|callback_check_database');
+   $this->form_validation->set_rules('email', 'email', 'trim|required|xss_clean|callback_check_database');
  
    if($this->form_validation->run() == FALSE)
    {
@@ -36,7 +36,7 @@ class Verifymail extends CI_Controller {
    //Field validation succeeded.  Validate against database
   
    //query the database
-   $result = $this->user_model->getUserPass($email);
+   $result = $this->user_model->getUserEmail($email);
  
    if($result)
    {

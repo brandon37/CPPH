@@ -8,8 +8,8 @@ class OrderShopping_model extends CI_Model {
 	}
 
 	 function newOrderShopping($data){
-		$this->db->insert('orderShopping',array('concept'=>$data['concept'],'amount'=>$data['amount']), 
-			'dateCreation'=>$data['dateCreation'],'dateTermination'=>$data['dateTermination'],'idProyect'=>$data['idProyect']);
+		$this->db->insert('orderShopping',array('concept'=>$data['concept'],'amount'=>$data['amount'], 
+			'dateCreation'=>$data['dateCreation'],'dateTermination'=>$data['dateTermination'],'idProyect'=>$data['idProyect']));
 	}
 
 	 function deleteOrderShopping($id){
@@ -38,6 +38,18 @@ class OrderShopping_model extends CI_Model {
 		 );
 		$this->db->where('idorderShopping',$id);
 		$this->db->update('orderShopping',$info);
+	}
+	function no_page(){
+
+		$number = $this->db->query("SELECT count(*) as number FROM orderShopping")->row()->number;
+
+		return intval($number);
+	}
+
+	function get_pagination($number_per_page){
+
+		$this->db->join('proyects', 'orderShopping.idproyect = proyects.idproyect');
+		return $this->db->get("orderShopping", $number_per_page, $this->uri->segment(3));
 	}
 	
 }

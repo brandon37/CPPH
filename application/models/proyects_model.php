@@ -24,7 +24,7 @@ class Proyects_model extends CI_Model {
 	 function getAllProyects(){
 	 	$this->db->select('*');
 		$this->db->from('proyects');
-		$this->db->join('clients', 'clients.idClient = proyects.idClient');
+		$this->db->join('proyects', 'proyects.idClient = proyects.idClient');
 		$query = $this->db->get();
 		if($query->num_rows() >0) return $query;
 		else return false;
@@ -49,6 +49,20 @@ class Proyects_model extends CI_Model {
 		$this->db->where('idProyect',$id);
 		$this->db->update('proyects',$info);
 	}
+
+	function no_page(){
+
+		$number = $this->db->query("SELECT count(*) as number FROM proyects")->row()->number;
+
+		return intval($number);
+	}
+
+	function get_pagination($number_per_page){
+
+		$this->db->join('clients', 'proyects.idClient = clients.idClient');
+		return $this->db->get("proyects", $number_per_page, $this->uri->segment(3));
+	}
+	
 	
 }
 ?>

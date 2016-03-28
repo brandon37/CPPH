@@ -1,22 +1,22 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 session_start(); //we need to call PHP's session object to access it through CI
-class Departments extends CI_Controller {
+class invoices extends CI_Controller {
  
   function __construct(){
       parent::__construct();
-      $this->load->model('department_model','',TRUE);
+      $this->load->model('invoice_model','',TRUE);
   }
 
   function index(){
-	  if($this->session->userdata('logged_in')){
-	     $session_data = $this->session->userdata('logged_in');
-	     $name = 'General';
-	     $data['nameUser'] = $session_data['nameUser'];
-	     $data['idUser'] =  $session_data['idUser'];
-	     $data['email'] = $session_data['email'];
+    if($this->session->userdata('logged_in')){
+       $session_data = $this->session->userdata('logged_in');
+       $name = 'General';
+       $data['nameUser'] = $session_data['nameUser'];
+       $data['idUser'] =  $session_data['idUser'];
+       $data['email'] = $session_data['email'];
        $this->load->library("pagination");
-       $config['base_url'] = base_url()."departments/index/";
-       $config['total_rows'] = $this->department_model->no_page();
+       $config['base_url'] = base_url()."invoices/index/";
+       $config['total_rows'] = $this->invoice_model->no_page();
        $config['per_page'] = 5;
        $config['use_page_numbers'] = TRUE;
        $config['num_links'] = 2;
@@ -39,46 +39,49 @@ class Departments extends CI_Controller {
        $config['num_tag_open'] = '<li>';
        $config['num_tag_close'] = '</li>';
        $this->pagination->initialize($config);
-       $result = $this->department_model->get_pagination($config['per_page']);
+       $result = $this->invoice_model->get_pagination($config['per_page']);
        $data['query'] = $result;
        $data['pagination'] = $this->pagination->create_links();
-	     $this->load->view('ehtml/headercrud',$data);
-	     $this->load->helper(array('form'));
-	     $this->load->view('home/departments/departments',$data);
-	     $this->load->view('ehtml/footercrud');
-	   }
-    else
-     {
-       //If no session, redirect to login page
-       redirect('login', 'refresh');
-     }
-	 	
-	}
-
-  function newDepartment(){
-    if($this->session->userdata('logged_in')){
-      $data = array(
-      'nameDepartment'=>$this->input->post('department')
-    );
-
-      $this->department_model->newDepartment($data);
-      redirect('departments');
+       $this->load->view('ehtml/headercrud',$data);
+       $this->load->helper(array('form'));
+       $this->load->view('home/invoice/invoice',$data);
+       $this->load->view('ehtml/footercrud');
      }
     else
      {
        //If no session, redirect to login page
        redirect('login', 'refresh');
      }
-	
+    
   }
 
-  function updateDepartment(){
+  function newinvoice(){
     if($this->session->userdata('logged_in')){
-  	    $data = array(
-  	      'nameDepartment'=>$this->input->post('department')
-  	    );
-  	    $this->department_model->updateDepartment($this->uri->segment(3),$data);
-  	    redirect('departments');
+      $data = array(
+      'noinvoice'=>$this->input->post('noinvoice'),
+      'status'=>$this->input->post('status')
+
+    );
+
+      $this->invoice_model->newinvoice($data);
+      redirect('invoices');
+     }
+    else
+     {
+       //If no session, redirect to login page
+       redirect('login', 'refresh');
+     }
+  
+  }
+
+  function updateinvoice(){
+    if($this->session->userdata('logged_in')){
+        $data = array(
+          'noinvoice'=>$this->input->post('noinvoice'),
+          'status'=>$this->input->post('status')
+        );
+        $this->invoice_model->updateinvoice($this->uri->segment(3),$data);
+        redirect('invoices');
       }
     else
      {
@@ -87,16 +90,16 @@ class Departments extends CI_Controller {
      }
   }
 
-  function runViewEditDepartment($id){
+  function runViewEditinvoice($id){
      if($this->session->userdata('logged_in')){
         $session_data = $this->session->userdata('logged_in');
         $data['nameUser'] = $session_data['nameUser'];
         $data['idUser'] =  $session_data['idUser'];
-        $data['department'] = $this->department_model->getDepartment($id);
+        $data['invoice'] = $this->invoice_model->getinvoice($id);
         $data['id'] = $id;
         $this->load->view('ehtml/headercrud',$data);
         $this->load->helper(array('form'));
-        $this->load->view('home/departments/edit-department',$data);
+        $this->load->view('home/invoice/edit-invoice',$data);
         $this->load->view('ehtml/footercrud');
       }
      else
@@ -107,11 +110,11 @@ class Departments extends CI_Controller {
   
   }
 
-  function deleteDepartment(){
+  function deleteinvoice(){
     if($this->session->userdata('logged_in')){
         $id = $this->uri->segment(3);
-        $this->department_model->deleteDepartment($id);
-        redirect('departments');
+        $this->invoice_model->deleteinvoice($id);
+        redirect('invoices');
       }
     else
      {
