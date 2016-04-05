@@ -10,7 +10,7 @@
                         </h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-dashboard"></i>  <a href="index.php">Dashboard</a>
+                                <i class="fa fa-dashboard"></i>  <a href="<?=base_url()?>home">Dashboard</a>
 
                 
                             </li>
@@ -121,19 +121,26 @@
                       <h3 class="myModalLabel text-center" id="exampleModalLabel">New User</h3>
                     </div>
                     <div class="modal-body">
-                       <?= validation_errors() ?>
                        <?= form_open('users/newUser') ?>
                           <div class="form-group">
+                               <?=form_error('username') ?>
                                <label class="sr-only" for="username">Username:</label>
                                <input type="text" size="20" id="username" name="username" placeholder="Username" class="form-username form-control "required/>
                            </div>
                            <div class="form-group">
+                              <?= form_error('email') ?>
                               <label class="sr-only" for="email">Email:</label>
                               <input type="email" size="20" id="email" name="email"placeholder="Email" class="form-email form-control "required/>
                            </div>
                            <div class="form-group">
+                              <?= form_error('password') ?>
                               <label class="sr-only" for="password">Password:</label>
                               <input type="password" size="20" id="passowrd" name="password"placeholder="Password" class="form-password form-control" required/>
+                           </div>
+                           <div class="form-group">
+                              <?= form_error('passwordconf') ?>
+                              <label class="sr-only" for="password">Repeat Password:</label>
+                              <input type="password" size="20" id="passowrd" name="passwordconf"placeholder="Repeat Password" class="form-password form-control" required/>
                            </div>
                          <div class="modal-footer">
                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -156,7 +163,6 @@
                       <h3 class="myModalLabel text-center">New User</h3>
                     </div>
                     <div class="modal-body">
-                       <?= validation_errors() ?>
                        <?= form_open('users/newUser') ?>     
                       <?php 
                           if ($users){
@@ -164,14 +170,17 @@
                             if($idUserSelect==$opc->idUser){ ?>
                             
                             <div class="form-group">
+                               <?= form_error('username') ?>
                                <label class="sr-only" for="username">Username:</label>
                                <input type="text" size="20" id="username" name="username" placeholder="Username" class="form-username form-control" value="<?= $opc->nameUser?>" required/>
                             </div>
                             <div class="form-group">
+                              <?= form_error('email') ?>
                               <label class="sr-only" for="email">Email:</label>
                               <input type="email" size="20" id="passowrd" name="email"placeholder="Email" class="form-email form-control" value="<?= $opc->email?>" required/>
                             </div>
                             <div class="form-group">
+                              <?= form_error('password') ?>
                               <label class="sr-only" for="password">Password:</label>
                               <input type="password" size="20" id="passowrd" name="password"placeholder="Password" class="form-password form-control" value="<?= $opc->pass?>" required/>
                             </div>

@@ -25,7 +25,14 @@ class Sector_model extends CI_Model {
 	function getSector($id){
 		$this->db->where('idSector',$id);
 		$query = $this->db->get('sector');
-		if($query->num_rows() >0) return $query;
+		if($query->num_rows() >0) return $query->row();
+		else return false;
+	}
+
+	function getSectorId($typeSector){
+		$this->db->where('typeSector',$typeSector);
+		$query = $this->db->get('sector');
+		if($query->num_rows() >0) return $query->row();
 		else return false;
 	}
 

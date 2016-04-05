@@ -58,9 +58,9 @@ class invoices extends CI_Controller {
   function newinvoice(){
     if($this->session->userdata('logged_in')){
       $data = array(
-      'noinvoice'=>$this->input->post('noinvoice'),
-      'status'=>$this->input->post('status')
-
+      'noInvoice'=>$this->input->post('noInvoice'),
+      'status'=>$this->input->post('status'),
+      'idOrderShopping'=>1
     );
 
       $this->invoice_model->newinvoice($data);

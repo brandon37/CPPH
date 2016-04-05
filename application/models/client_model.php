@@ -2,21 +2,22 @@
 
 class Client_model extends CI_Model {
 
-	 function __construct(){
+	function __construct(){
 		parent::__construct();
 		$this->load->database();
 	}
 
-	 function newClient($data){
+	function newClient($data){
 		$this->db->insert('clients',array('nameClient'=>$data['nameClient'],
 			'status'=>$data['status'], 
 			'idSector'=>$data['idSector']));
 	}
 
-	 function deleteClient($id){
+	function deleteClient($id){
 		
 		$this->db->delete('clients', array('idClient'=>$id));
 	}
+
 	function getAllActiveClients(){
 		$this->db->select('*');
 		$this->db->from('clients');
@@ -26,6 +27,7 @@ class Client_model extends CI_Model {
 		if($query->num_rows() >0) return $query;
 		else return false;
 	}
+	
 	function getAllInactiveClients(){
 		$this->db->select('*');
 		$this->db->from('clients');
@@ -36,14 +38,22 @@ class Client_model extends CI_Model {
 		else return false;
 	}
 
-	 function getClient($id){
+	function getClient($id){
 		$this->db->where('idClient',$id);
+		$this->db->join('sector', 'clients.idSector = sector.idSector');
 		$query = $this->db->get('clients');
-		if($query->num_rows() >0) return $query;
+		if($query->num_rows() >0) return $query->row();
 		else return false;
 	}
 
-	 function updateClient($id,$data){
+	function getClientId($nameClient){
+		$this->db->where('nameClient',$nameClient);
+		$query = $this->db->get('clients');
+		if($query->num_rows() >0) return $query->row();
+		else return false;
+	}
+
+	function updateClient($id,$data){
 		$info = array(
 			'nameClient'=>$data['nameClient'],
 			'status'=>$data['status'],
@@ -57,11 +67,11 @@ class Client_model extends CI_Model {
 		$number = $this->db->query("SELECT count(*) as number FROM clients WHERE status='Activo'")->row()->number;
 		return intval($number);
 	}
+	
 	function no_pageInactiveClients(){
 		$number = $this->db->query("SELECT count(*) as number FROM clients WHERE status='Inactivo'")->row()->number;
 		return intval($number);
 	}
-
 
 	function get_paginationActiveClients($number_per_page){
 		$this->db->where('status',"Activo");
@@ -77,7 +87,5 @@ class Client_model extends CI_Model {
 
 	}
 
-
-	
 }
 ?>

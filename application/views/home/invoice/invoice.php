@@ -10,7 +10,7 @@
                         </h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-dashboard"></i>  <a href="index.php">Dashboard</a>
+                                <i class="fa fa-dashboard"></i>  <a href="<?=base_url()?>home">Dashboard</a>
 
                 
                             </li>
@@ -45,7 +45,7 @@
                                         if ($query){
                                         foreach ($query->result() as $opc) { ?>
                                             <tr>
-                                                <td><?= $opc->noinvoice?></td>
+                                                <td><?= $opc->noInvoice?></td>
                                                 <td><a href="<?=base_url()?>invoices/runViewEditinvoice/<?=$opc->idInvoice?>" >Edit</a></td>
                                                 <td class="text-center text-danger">
                                                     <a href="<?=base_url()?>invoices/deleteinvoice/<?=$opc->idInvoice?>" class="confirmationDeleteInvoice">X</a>  
@@ -84,14 +84,14 @@
                       <h3 class="myModalLabel text-center" id="exampleModalLabel">New invoice</h3>
                     </div>
                     <div class="modal-body">
-                       <?= validation_errors() ?>
                        <?= form_open('invoices/newinvoice') ?>
                            <div class="form-group">
-                              <label class="sr-only" for="invoice">invoice:</label>
-                              <input type="text" size="20" id="invoice" name="noinvoice" placeholder="Factura" value="" class="form-invoice form-control" required/>
-                              
+                              <?= form_error('noInvoice') ?>
+                              <label class="sr-only" for="invoice">Invoice:</label>
+                              <input type="text" size="20" id="invoice" name="noInvoice" placeholder="Factura" value="" class="form-invoice form-control" required/>
                            </div>
                             <div class="form-group">
+                              <?= form_error('status') ?>
                               <label class="sr-only" for="status">status:</label>
                               <input type="text" size="20" id="status" name="status" placeholder="Estado" value="" class="form-status form-control" required/>
                               

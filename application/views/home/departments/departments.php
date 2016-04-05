@@ -10,7 +10,7 @@
                         </h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-dashboard"></i>  <a href="index.php">Dashboard</a>
+                                <i class="fa fa-dashboard"></i>  <a href="<?=base_url()?>home">Dashboard</a>
 
                 
                             </li>
@@ -46,9 +46,9 @@
                                         foreach ($query->result() as $opc) { ?>
                                             <tr>
                                                 <td><?= $opc->nameDepartment?></td>
-                                                <td><a href="<?=base_url()?>departments/runViewEditdepartment/<?=$opc->idDepartament?>" >Edit</a></td>
+                                                <td><a href="<?=base_url()?>departments/runViewEditdepartment/<?=$opc->idDepartment?>" >Edit</a></td>
                                                 <td class="text-center text-danger">
-                                                    <a href="<?=base_url()?>departments/deletedepartment/<?=$opc->idDepartament?>" class="confirmationDeleteDepartment">X</a>  
+                                                    <a href="<?=base_url()?>departments/deletedepartment/<?=$opc->idDepartment?>" class="confirmationDeleteDepartment">X</a>  
                                                 </td>
                                             </tr>
 
@@ -84,9 +84,9 @@
                       <h3 class="myModalLabel text-center" id="exampleModalLabel">New department</h3>
                     </div>
                     <div class="modal-body">
-                       <?= validation_errors() ?>
                        <?= form_open('departments/newDepartment') ?>
                            <div class="form-group">
+                              <?= form_error('department')?>
                               <label class="sr-only" for="department">department:</label>
                               <input type="text" size="20" id="department" name="department" placeholder="Departamento" value="" class="form-department form-control" required/>
                               

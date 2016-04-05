@@ -40,6 +40,7 @@ class User_model extends CI_Model {
 		if($query->num_rows() >0) return $query->result();
 		else return false;
 	}
+
 	function getUserEmail($email)
 	{
 		$this->db->where('email',$email);
@@ -56,10 +57,10 @@ class User_model extends CI_Model {
 		$this->db->delete('user', array('idUser'=>$id));
 	}
 
-	 function getUser($id){
+	function getUser($id){
 		$this->db->where('idUser',$id);
 		$query = $this->db->get('user');
-		if($query->num_rows() >0) return $query;
+		if($query->num_rows() >0) return $query->row();
 		else return false;
 	}
 	
@@ -69,6 +70,7 @@ class User_model extends CI_Model {
 		$this->db->where('idUser',$id);
 		$this->db->update('user',$info);
 	}
+
 	function updateProfile($id,$data){
 		$info = array('nameUser'=>$data['nameUser'],'email'=>$data['email'],
 		'pass'=>$data['pass'],'type'=>$data['type']);
@@ -89,9 +91,8 @@ class User_model extends CI_Model {
 		return $this->db->get("user", $number_per_page, $this->uri->segment(3));
 
 	}
-
-
-	public function search($cadena){
+	
+	function search($cadena){
         $this->db->like('nameUser', $cadena, 'both');
         $this->db->or_like('nameUser', $cadena, 'before');
         $this->db->or_like('nameUser', $cadena, 'after');

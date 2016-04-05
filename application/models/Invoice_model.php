@@ -8,7 +8,8 @@ class Invoice_model extends CI_Model {
 	}
 
 	function newInvoice($data){
-		$this->db->insert('invoice',array('noinvoice'=>$data['noinvoice'],'status'=>$data['status']));
+		$this->db->insert('invoice',array('noInvoice'=>$data['noInvoice'],'status'=>$data['status'],
+			'idOrderShopping'=>$data['idOrderShopping']));
 	}
 
 	function deleteInvoice($id){
@@ -24,18 +25,20 @@ class Invoice_model extends CI_Model {
 	function getInvoice($id){
 		$this->db->where('idInvoice',$id);
 		$query = $this->db->get('invoice');
-		if($query->num_rows() >0) return $query;
+		if($query->num_rows() >0) return $query->row();
 		else return false;
 	}
 
 	function updateInvoice($id,$data){
 		$info = array(
 			'noinvoice'=>$data['noinvoice'],
-			'status'=>$data['status']
+			'status'=>$data['status'],
+
 		 );
 		$this->db->where('idInvoice',$id);
 		$this->db->update('invoice',$info);
 	}
+
 	function no_page(){
 		$number = $this->db->query("SELECT count(*) as number FROM invoice")->row()->number;
 

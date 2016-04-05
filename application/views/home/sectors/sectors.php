@@ -10,7 +10,7 @@
                         </h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-dashboard"></i>  <a href="index.php">Dashboard</a>
+                                <i class="fa fa-dashboard"></i>  <a href="<?=base_url()?>home">Dashboard</a>
 
                 
                             </li>
@@ -88,7 +88,7 @@
                        <?= form_open('sectors/newSector') ?>
                            <div class="form-group">
                               <label class="sr-only" for="sector">Sector:</label>
-                              <input type="text" size="20" id="sector" name="sector" placeholder="1" value="1" class="form-sector form-control" required/>
+                              <input type="text" size="20" id="sector" name="sector" placeholder="Name Sector" value="" class="form-sector form-control" required/>
                               
                            </div>
                          <div class="modal-footer">

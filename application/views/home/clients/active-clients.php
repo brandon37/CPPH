@@ -10,7 +10,7 @@
                         </h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-dashboard"></i>  <a href="index.php">Dashboard</a>
+                                <i class="fa fa-dashboard"></i>  <a href="<?=base_url()?>home">Dashboard</a>
                             </li>
                             <li class="active">
                                 <i class="fa fa-table"></i> Clientes
@@ -89,19 +89,24 @@
                       <h3 class="myModalLabel text-center" id="exampleModalLabel">New Client</h3>
                     </div>
                     <div class="modal-body">
-                       <?= validation_errors() ?>
                        <?= form_open('clients/newClient') ?>
                           <div class="form-group">
-                               <label class="sr-only" for="clientname">NameClient:</label>
-                               <input type="text" size="20" id="clientname" name="clientname" placeholder="Name Client" class="form-clientname form-control "required/>
+                              <?= form_error('clientname') ?>
+                              <label class="sr-only" for="clientname">NameClient:</label>
+                              <input type="text" size="20" id="clientname" name="clientname" placeholder="Name Client" class="form-clientname form-control "required/>
                            </div>
                            <div class="form-group">
+                              <?= form_error('status') ?>
                               <label class="sr-only" for="text">Status:</label>
-                              <input type="text" size="20" id="status" name="status"placeholder="Activo" value="Activo"  class="form-status form-control "required/>
+                              <select name="status"  class="form-control" required>
+                                 <option value="Activo">Activo</option> 
+                                 <option value="Inactivo">Inactivo</option> 
+                              </select>
                            </div>
                            <div class="form-group">
+                              <?= form_error('typeSector') ?>
                               <label class="sr-only" for="sector">Sector:</label>
-                              <input type="text" size="20" id="sector" name="sector" placeholder="1" value="1" class="form-sector form-control" required/>
+                              <input type="text" size="20" id="sector" name="typeSector" placeholder="Sector" value="" class="form-sector form-control" required/>
                               
                            </div>
                          <div class="modal-footer">
