@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+c<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Email_controller extends CI_Controller {
 
@@ -22,12 +22,12 @@ function index(){
        $this->form_validation->set_message('required', 'el campo %s es requerido');
        $this->form_validation->set_message('valid_email', 'El email no es válido');
           
-           $this -> form_validation -> set_error_delimiters('<ul><li>', '</li></ul>');
+           $this->form_validation->set_error_delimiters('<ul><li>', '</li></ul>');
       
        $this->form_validation->set_message('required', 'el campo %s es requerido');
        $this->form_validation->set_message('valid_email', 'El email no es válido');
           
-           $this -> form_validation -> set_error_delimiters('<ul><li>', '</li></ul>');
+           $this->form_validation->set_error_delimiters('<ul><li>', '</li></ul>');
        
        
     if ($this->form_validation->run() == FALSE)

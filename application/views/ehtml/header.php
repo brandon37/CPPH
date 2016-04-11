@@ -119,7 +119,13 @@
                         <a href="<?=base_url()?>departments"><i class="fa fa-fw fa-table"></i>Departamentos</a>
                     </li>
                     <li>
-                        <a href="<?=base_url()?>proyects"><i class="fa fa-fw fa-table"></i>Proyectos</a>
+                        <a href="<?=base_url()?>projects"><i class="fa fa-fw fa-table"></i>Proyectos</a>
+                    </li>
+                    <li>
+                        <a href="<?=base_url()?>ordershopping"><i class="fa fa-fw fa-table"></i>Orden De Compra</a>
+                    </li>
+                    <li>
+                        <a href="<?=base_url()?>invoices"><i class="fa fa-fw fa-table"></i>Factura</a>
                     </li>
                     <li>
                         <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Pagos</a>

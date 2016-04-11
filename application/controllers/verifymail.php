@@ -6,6 +6,7 @@ class Verifymail extends CI_Controller {
  {
    parent::__construct();
    $this->load->model('user_model','',TRUE);
+
  }
  private $email;
  function index()
@@ -14,8 +15,9 @@ class Verifymail extends CI_Controller {
   //This method will have the credentials validation
    $this->load->library('form_validation');
  
-   $this->form_validation->set_rules('mail', 'email', 'trim|required|xss_clean|callback_check_database');
- 
+   $this->form_validation->set_rules('mail', 'email', 'trim|required|xss_clean|callback_check_database|valid_email');
+   //$this->form_validation->set_rules('mail', 'email', 'is_unique[user.email]');
+   //$this->form_validation->set_rules('name', 'Username', 'trim|required|min_length[4]|is_unique[admin.username]'); 
    if($this->form_validation->run() == FALSE)
    {
      
@@ -35,8 +37,9 @@ class Verifymail extends CI_Controller {
  {
    //Field validation succeeded.  Validate against database
   
+ 
    //query the database
-   $result = $this->user_model->getUserPass($email);
+   $result = $this->user_model->getUserEmail($email);
  
    if($result)
    {
@@ -51,7 +54,5 @@ class Verifymail extends CI_Controller {
 
 
 }
-
-
 
 ?>

@@ -10,7 +10,7 @@
                         </h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-dashboard"></i>  <a href="index.php">Dashboard</a>
+                                <i class="fa fa-dashboard"></i>  <a href="<?=base_url()?>home">Dashboard</a>
 
                 
                             </li>
@@ -35,6 +35,8 @@
                                 <thead>
                                     <tr>
                                         <th>Name</th>
+                                        <th>Clientes</th>
+                                        <th>Proyectos</th>
                                         <th>Edit</th>
                                         <th class="text-center">Delete</th>
                                     </tr>
@@ -42,10 +44,12 @@
                                 <tbody>
                                    
                                     <?php 
-                                        if ($sectors){
-                                        foreach ($sectors->result() as $opc) { ?>
+                                        if ($query){
+                                        foreach ($query->result() as $opc) { ?>
                                             <tr>
                                                 <td><?= $opc->typeSector?></td>
+                                                <td><a href="<?=base_url()?>sectors/runViewSectorClients/<?=$opc->idSector ?>">Mostrar</a></td>
+                                                <td><a href="<?=base_url()?>sectors/runViewSectorProyects/<?= $opc->idSector?>">Mostrar</a></td>
                                                 <td><a href="<?=base_url()?>sectors/runViewEditSector/<?=$opc->idSector?>" >Edit</a></td>
                                                 <td class="text-center text-danger">
                                                     <a href="<?=base_url()?>sectors/deleteSector/<?=$opc->idSector?>" class="confirmationDeleteSector">X</a>  
@@ -65,7 +69,7 @@
                     </div>
                 </div>
                 <!-- /.row -->
-
+                <?= $pagination ?>
             </div>
             <!-- /.container-fluid -->
 
@@ -88,7 +92,7 @@
                        <?= form_open('sectors/newSector') ?>
                            <div class="form-group">
                               <label class="sr-only" for="sector">Sector:</label>
-                              <input type="text" size="20" id="sector" name="sector" placeholder="1" value="1" class="form-sector form-control" required/>
+                              <input type="text" size="20" id="sector" name="sector" placeholder="Name Sector" value="" class="form-sector form-control" required/>
                               
                            </div>
                          <div class="modal-footer">

@@ -15,7 +15,7 @@
                             <div class="form-top">
                                 <div class="form-top-left text-justify">
                                     <h3>Recuperar contraseña</h3>
-                                    <p>Introduce tu Usuario para recibir un enlace para rescuperar tu contraseña.</p>
+                                    <p>Introduce tu Email para recibir un enlace para rescuperar tu contraseña.</p>
                                 </div>
                             </div>
                             <div class="form-bottom">

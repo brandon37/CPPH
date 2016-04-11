@@ -15,7 +15,7 @@
                 
                             </li>
                             <li class="active">
-                                <i class="fa fa-table"></i>Clientes Inactivos
+                                <i class="fa fa-table"></i> Clientes Inactivos
                             </li>
                              <p class="text-right">
                                 <a href="<?=base_url()?>clients" class="btn btn-large btn-info"><i class="icon-home icon-white"></i>Active Clients</a>
@@ -42,8 +42,8 @@
                                 <tbody>
                                    
                                     <?php 
-                                        if ($clients){
-                                        foreach ($clients->result() as $opc) { ?>
+                                        if ($query){
+                                        foreach ($query->result() as $opc) { ?>
                                             <tr>
                                                 <td><?= $opc->nameClient?></td>
                                                 <td><?= $opc->status?></td>
@@ -67,7 +67,7 @@
                     </div>
                 </div>
                 <!-- /.row -->
-
+                    <?= $pagination ?>
             </div>
             <!-- /.container-fluid -->
 
