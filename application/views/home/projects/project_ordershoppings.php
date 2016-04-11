@@ -6,7 +6,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                         Control De Ordenes De Compras
+                         Control De Ordenes De Compras de Proyecto
                         </h1>
                         <ol class="breadcrumb">
                             <li>
@@ -74,7 +74,6 @@
                     </div>
                 </div>
                 <!-- /.row -->
-                     <?= $pagination ?>
             </div>
             <!-- /.container-fluid -->
 

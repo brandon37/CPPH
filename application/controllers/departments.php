@@ -52,7 +52,6 @@ class Departments extends CI_Controller {
        //If no session, redirect to login page
        redirect('login', 'refresh');
      }
-	 	
 	}
 
   function newDepartment(){
@@ -116,7 +115,6 @@ class Departments extends CI_Controller {
        //If no session, redirect to login page
        redirect('login', 'refresh');
      }
-	
   }
 
   function updateDepartment(){
@@ -165,6 +163,19 @@ class Departments extends CI_Controller {
       }
   }
 
+  function runViewDeparmentProyects($id){
+    $session_data = $this->session->userdata('logged_in');
+    $data['nameUser'] = $session_data['nameUser'];
+    $data['idUser'] =  $session_data['idUser'];
+    $data['id'] = $id;
+    $this->load->model('projects_model','',TRUE);
+    $data['query'] = $this->projects_model->getDepartmentProjects($data['id']);
+    $this->load->view('ehtml/headercrud',$data);
+    $this->load->helper(array('form'));
+    $this->load->view('home/departments/department_projects',$data);
+    $this->load->view('ehtml/footercrud');
+  }
+
   function runViewEditDepartment($id){
      if($this->session->userdata('logged_in')){
         $session_data = $this->session->userdata('logged_in');
@@ -182,7 +193,6 @@ class Departments extends CI_Controller {
          //If no session, redirect to login page
          redirect('login', 'refresh');
        }
-  
   }
 
   function deleteDepartment(){

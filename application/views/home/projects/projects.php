@@ -6,19 +6,19 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                         Control De Ordenes De Compras
+                         Control De Proyectos
                         </h1>
                         <ol class="breadcrumb">
                             <li>
                                 <i class="fa fa-dashboard"></i>  <a href="<?=base_url()?>home">Dashboard</a>
                             </li>
                             <li class="active">
-                                <i class="fa fa-table"> Ordenes De Compras</i>
+                                <i class="fa fa-table"> Proyectos</i>
                             </li>
 
-                       <p class="text-right">
-                            <button type="button" class="btn btn-large btn-info" data-toggle="modal" data-target="#createordershopping" data-whatever="">New Ordershopping</button>
-                       </p>
+                            <p class="text-right">
+                                <button type="button" class="btn btn-large btn-info" data-toggle="modal" data-target="#createProjectModal" data-whatever="">New Project</button>
+                            </p>
                        
                         </ol>
                     </div>
@@ -27,19 +27,20 @@
 
                 <div class="row">
                     <div class="col-lg-10">
-                        <h2>Ordenes De Compras</h2>
+                        <h2>Proyectos</h2>
                         <div class="table-responsive">
                             <table class="table table-striped">
-                                <thead class="text-center">
-                                    <tr class="text-center">
-                                        <th>Cliente</th>
+                                <thead>
+                                    <tr>
                                         <th>Name</th>
-                                        <th>Concepto</th>
-                                        <th>Monto</th>
+                                        <th>Department</th>
+                                        <th>Price</th>
                                         <th>DC</th>
                                         <th>DT</th>
+                                        <th>Cliente</th>
+                                        <th>Ordenes de Compra</th>
                                         <th>Edit</th>
-                                        <th >Delete</th>
+                                        <th class="text-center">Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -48,16 +49,17 @@
                                         if ($query){
                                         foreach ($query->result() as $opc) { ?>
                                             <tr>
-                                                <td><?= $opc->nameClient?></td>
                                                 <td><?= $opc->nameProject?></td>
-                                                <td><?= $opc->concept?></td>
-                                                <td><?= $opc->amount?></td>
+                                                <td><?= $opc->nameDepartment?></td>
+                                                <td><?= $opc->price?></td>
                                                 <td><?= $opc->dateCreation?></td>
                                                 <td><?= $opc->dateTermination?></td>
-                                                <td><a href="<?=base_url()?>ordershopping/runViewEditordershopping/<?=$opc->idOrderShopping?>" >Edit</a>
+                                                <td><?= $opc->nameClient?></td>
+                                                <td><a href="<?=base_url()?>projects/runViewProyectOrderShoppings/<?=$opc->idProject?>">Mostrar</a></td>
+                                                <td><a href="<?=base_url()?>projects/runViewEditProject/<?=$opc->idProject?>" >Edit</a>
                                                 </td>
                                                 <td class="text-center text-danger">
-                                                    <a href="<?=base_url()?>ordershopping/deleteordershopping/<?=$opc->idOrderShopping?>" class="confirmationDeleteOrderShopping">X</a>  
+                                                    <a href="<?=base_url()?>projects/deleteProject/<?=$opc->idProject?>" class="confirmationDeleteProject">X</a>  
                                                 </td>
                                             </tr>
 
@@ -85,34 +87,39 @@
     <!-- /#wrapper -->
 
 
-        <div class="modal fade" id="createordershopping" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal fade" id="createProjectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
              <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <h3 class="myModalLabel text-center" id="exampleModalLabel">New Ordershopping</h3>
+                      <h3 class="myModalLabel text-center" id="exampleModalLabel">New Project</h3>
                     </div>
                     <div class="modal-body">
-                       <?= form_open('ordershopping/newordershopping') ?>
+                       <?= form_open('projects/newProject') ?>
                           <div class="form-group">
-                               <?= form_error('nameProyect') ?>
-                               <label class="sr-only" for="nameProyect">Name Proyect:</label>
-                               <input type="text" size="20" id="nameProyect" name="nameProyect" placeholder="Name Proyect" class="form-nameProyect form-control" required/>
+                              <?=  form_error('projectname') ?>
+                               <label class="sr-only" for="projectname">NameProject:</label>
+                               <input type="text" size="20" id="projectname" name="projectname" placeholder="Name Project" class="form-projectname form-control" required/>
                            </div>
                            <div class="form-group">
-                              <?= form_error('concept') ?>
-                              <label class="sr-only" for="text">concept:</label>
-                              <input type="text" size="20" id="concept" name="concept"placeholder="Concepto" class="form-concept form-control" required/>
+                              <?= form_error('department')?>
+                              <label class="sr-only" for="text">Departament:</label>
+                              <input type="text" size="20" id="department" name="department"placeholder="Departamento" class="form-department form-control" required/>
                            </div>
                            <div class="form-group">
-                              <?= form_error('amount') ?>
-                              <label class="sr-only" for="amount">amount:</label>
-                              <input type="text" size="20" id="amount" name="amount" placeholder="Amount" class="form-amount form-control" required/>
+                              <?= form_error('price')?>
+                              <label class="sr-only" for="price">Price:</label>
+                              <input type="text" size="20" id="price" name="price" placeholder="Price" class="form-price form-control" required/>
                            </div>
                            <div class="form-group">
-                              <?= form_error('dateCreation') ?>
+                              <?= form_error('dateCreation')?>
                               <label class="sr-only" for="dateCreation">Date Creation:</label>
                               <input type="date" size="20" id="dateCreation" name="dateCreation" class="form-dateCreation form-control" required/>
+                           </div>
+                           <div class="form-group">
+                              <?= form_error('nameClient')?>
+                              <label class="sr-only" for="client">Client:</label>
+                              <input type="text" size="20" id="client" name="nameClient" placeholder="Client" class="form-client form-control" required/>
                            </div>
                          <div class="modal-footer">
                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

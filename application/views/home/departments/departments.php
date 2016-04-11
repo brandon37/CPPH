@@ -11,16 +11,14 @@
                         <ol class="breadcrumb">
                             <li>
                                 <i class="fa fa-dashboard"></i>  <a href="<?=base_url()?>home">Dashboard</a>
-
-                
                             </li>
                             <li class="active">
                                 <i class="fa fa-table"></i> Departamentos
                             </li>
 
-                       <p class="text-right">
-                            <button type="button" class="btn btn-large btn-info" data-toggle="modal" data-target="#createdepartamentModal" data-whatever="">New Department</button>
-                       </p>
+                             <p class="text-right">
+                                  <button type="button" class="btn btn-large btn-info" data-toggle="modal" data-target="#createdepartamentModal" data-whatever="">New Department</button>
+                             </p>
                        
                         </ol>
                     </div>
@@ -35,6 +33,7 @@
                                 <thead>
                                     <tr>
                                         <th>Name</th>
+                                        <th>Proyectos</th>
                                         <th>Edit</th>
                                         <th class="text-center">Delete</th>
                                     </tr>
@@ -46,6 +45,7 @@
                                         foreach ($query->result() as $opc) { ?>
                                             <tr>
                                                 <td><?= $opc->nameDepartment?></td>
+                                                <td><a href="<?=base_url()?>departments/runViewDeparmentProyects/<?=$opc->idDepartment?>">Mostrar</a></td>
                                                 <td><a href="<?=base_url()?>departments/runViewEditdepartment/<?=$opc->idDepartment?>" >Edit</a></td>
                                                 <td class="text-center text-danger">
                                                     <a href="<?=base_url()?>departments/deletedepartment/<?=$opc->idDepartment?>" class="confirmationDeleteDepartment">X</a>  
@@ -65,7 +65,6 @@
                     </div>
                 </div>
                 <!-- /.row -->
-                  <?= $pagination?>
             </div>
             <!-- /.container-fluid -->
 

@@ -35,6 +35,8 @@
                                 <thead>
                                     <tr>
                                         <th>Name</th>
+                                        <th>Clientes</th>
+                                        <th>Proyectos</th>
                                         <th>Edit</th>
                                         <th class="text-center">Delete</th>
                                     </tr>
@@ -46,6 +48,8 @@
                                         foreach ($query->result() as $opc) { ?>
                                             <tr>
                                                 <td><?= $opc->typeSector?></td>
+                                                <td><a href="<?=base_url()?>sectors/runViewSectorClients/<?=$opc->idSector ?>">Mostrar</a></td>
+                                                <td><a href="<?=base_url()?>sectors/runViewSectorProyects/<?= $opc->idSector?>">Mostrar</a></td>
                                                 <td><a href="<?=base_url()?>sectors/runViewEditSector/<?=$opc->idSector?>" >Edit</a></td>
                                                 <td class="text-center text-danger">
                                                     <a href="<?=base_url()?>sectors/deleteSector/<?=$opc->idSector?>" class="confirmationDeleteSector">X</a>  

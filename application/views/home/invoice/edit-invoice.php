@@ -1,4 +1,30 @@
+      <div id="page-wrapper">
 
+          <div class="container-fluid">
+
+              <!-- Page Heading -->
+              <div class="row">
+                  <div class="col-lg-12">
+                      <h1 class="page-header">
+                       Control De Facturas
+                      </h1>
+                      <ol class="breadcrumb">
+                          <li>
+                              <i class="fa fa-dashboard"></i>  <a href="<?=base_url()?>home">Dashboard</a>
+
+              
+                          </li>
+                           <li>
+                             <i class="fa fa-table"> <a href="<?=base_url()?>invoices"> Facturas </a></i> 
+                          </li>
+                           
+                          <li class="active">
+                              <i class="fa fa-edit"></i> Edit Facturas
+                          </li>
+                     
+                      </ol>
+                  </div>
+              </div>
         <?= form_open('invoices/updateinvoice/'.$id); ?>    
           <?php 
               if ($invoice){
@@ -20,7 +46,7 @@
                  </form>
               <?php 
               }else{
-                  echo "Error No Existe Ninguna Factura Favor De Agregar";
+                  redirect('invoices');
               }
           ?>           
                                

@@ -1,3 +1,28 @@
+    <div id="page-wrapper">
+
+        <div class="container-fluid">
+
+            <!-- Page Heading -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">
+                     Control De Ordenes De Compras
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li>
+                            <i class="fa fa-dashboard"></i>  <a href="<?=base_url()?>home">Dashboard</a>
+                          </li>
+
+                          <li>
+                             <i class="fa fa-table"> <a href="<?=base_url()?>ordershopping"> Ordenes De Coḿpra </a></i> 
+                          </li>
+                           
+                          <li class="active">
+                              <i class="fa fa-edit"></i> Edit Ordenes de Compra
+                          </li> 
+                    </ol>
+                </div>
+            </div>
       <?= form_open('ordershopping/updateordershopping/'.$id); ?>    
         <?php 
             if ($ordershopping){
@@ -5,7 +30,15 @@
                  <div class="form-group">
                      <?= form_error('nameProyect') ?>
                      <label class="sr-only" for="nameProyect">Name Proyect:</label>
-                     <input type="text" size="20" id="nameProyect" name="nameProyect" placeholder="Name Proyect" class="form-nameProyect form-control" value="<?=$ordershopping->nameProyect ?>" required/>
+                     <select name="nameProyect"  class="form-control" value="<?= $ordershopping->nameProyect ?>" required>
+                        <?php 
+                        foreach ($proyects->result() as $opt) { 
+                        ?>
+                          <option value="<?=$opt->nameProyect ?>"><?=$opt->nameProyect?></option> 
+                       <?php
+                        }
+                        ?>
+                     </select>
                      
                  </div>
                  <div class="form-group">
@@ -37,7 +70,7 @@
              </form>
             <?php 
             }else{
-                echo "Error No Existe Ningun Usuario Favor De Agregar";
+                redirect('ordershopping');
             }
         ?>           
                            

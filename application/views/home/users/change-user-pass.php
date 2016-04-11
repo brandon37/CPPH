@@ -1,3 +1,26 @@
+    <div id="page-wrapper">
+
+        <div class="container-fluid">
+
+            <!-- Page Heading -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">
+                     Control De Usuarios
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li>
+                            <i class="fa fa-dashboard"></i>  <a href="<?=base_url()?>home">Dashboard </a>
+                            <i class="fa fa-table"> <a href="<?=base_url()?>users"> Usuarios </a></i> 
+            
+                        </li>
+                        <li class="active">
+                            <i class="fa fa-edit">Editar Usuario</i>
+                        </li>
+                   
+                    </ol>
+                </div>
+            </div>
          <?= form_open('users/updateUserPass/'.$idUser); ?>     
           <?php 
               if ($user){
@@ -22,7 +45,7 @@
           </form>
               <?php 
               }else{
-                  echo "Error No Se Encontro En La Base de Datos";
+                  redirect('home');
               }
      ?>           
                     

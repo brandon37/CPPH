@@ -1,4 +1,29 @@
-      <?= validation_errors() ?>
+  <div id="page-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                         Control De Clientes
+                        </h1>
+                        <ol class="breadcrumb">
+                          <li>
+                            <i class="fa fa-dashboard"></i>  <a href="<?=base_url()?>home">Dashboard</a>
+                          </li>
+
+                          <li>
+                             <i class="fa fa-table"> <a href="<?=base_url()?>clients/InactiveClients"> Clientes </a></i> 
+                          </li>
+                           
+                          <li class="active">
+                              <i class="fa fa-edit"></i> Edit Clientes
+                          </li> 
+                       
+                        </ol>
+                    </div>
+                </div>
       <?= form_open('clients/updateInactiveClient/'.$id); ?>    
         <?php 
             if ($client){
@@ -26,7 +51,7 @@
          </form>
             <?php 
             }else{
-                echo "Error No Existe Ningun Usuario Favor De Agregar";
+                redirect('clients/inactiveClients');
             }
         ?>           
                            

@@ -38,6 +38,7 @@
                                         <th>Name</th>
                                         <th>Satuts</th>
                                         <th>Sector</th>
+                                        <th>Proyectos</th>
                                         <th>Edit</th>
                                         <th class="text-center">Delete</th>
                                     </tr>
@@ -51,6 +52,7 @@
                                                 <td><?= $opc->nameClient?></td>
                                                 <td><?= $opc->status?></td>
                                                 <td><?= $opc->typeSector?></td>
+                                                <td><a href="<?= base_url()?>clients/runViewClientProjects/<?= $opc->idClient?>">Mostrar</a></td>
                                                 <td><a href="<?=base_url()?>clients/runViewEditActiveClient/<?=$opc->idClient?>" >Edit</a></td>
                                                 <td class="text-center text-danger">
                                                     <a href="<?=base_url()?>clients/deleteActiveClient/<?=$opc->idClient?>" class="confirmationDeleteClient">X</a>  
