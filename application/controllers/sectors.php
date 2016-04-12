@@ -130,7 +130,7 @@ class Sectors extends CI_Controller {
     $this->load->view('ehtml/footercrud');
   }
 
-  function runViewSectorClients($id){
+  function runViewSectorInClients($id){
     $session_data = $this->session->userdata('logged_in');
     $data['nameUser'] = $session_data['nameUser'];
     $data['idUser'] =  $session_data['idUser'];

@@ -93,26 +93,13 @@ class Clients extends CI_Controller {
           'typeSector'=>$this->input->post('typeSector'),
           'idSector'=>''
           );
-    $this->form_validation->set_rules('typeSector', 'Sector', 'required|trim|callback_check_database');
+    $this->form_validation->set_rules('typeSector', 'Sector', 'required|trim|callback_check_sector');
     $this->form_validation->set_rules('clientname', 'Name Client', 'is_unique[clients.nameClient]|required');
-    $this->form_validation->set_rules('status', 'Status', 'required|callback_check_word');
+    $this->form_validation->set_rules('status', 'Status', 'required|callback_check_status');
 
      if($this->form_validation->run() == FALSE)
       {
-         $session_data = $this->session->userdata('logged_in');
-         $type = 'General';
-         $data['nameUser'] = $session_data['nameUser'];
-         $data['idUser'] =  $session_data['idUser'];
-         $data['email'] = $session_data['email'];
-         $config = $this->pagination(TRUE);
-         $this->pagination->initialize($config);
-         $result = $this->client_model->get_paginationActiveClients($config['per_page']);
-         $data['query'] = $result;
-         $data['pagination'] = $this->pagination->create_links();
-
-         $this->load->view('ehtml/headercrud',$data);
-         $this->load->view('home/clients/active-clients',$data);
-         $this->load->view('ehtml/footercrud');
+        $this->index();
       }else{           
           $data['idSector'] = $this->sector_model->getSectorId($data['typeSector'])->idSector;
           $this->client_model->newclient($data);
@@ -122,8 +109,10 @@ class Clients extends CI_Controller {
   }
  
  function check_status($status){
-     $status = $this->input->post('status');
-     if($status == 'Activo' || $status == 'Inactivo') {
+  //Field validation succeeded.  Validate against database
+   $status = $this->input->post('status');
+   
+     if($status == "Activo" || $status == "Inactivo") {
         return TRUE;
      }else{
        $this->form_validation->set_message('check_status', "Sorry, This Status Doesn't Exist.");
@@ -131,10 +120,9 @@ class Clients extends CI_Controller {
      }
  }
 
- function check_database($typeSector){
+ function check_sector($typeSector){
    //Field validation succeeded.  Validate against database
    $typeSector = $this->input->post('typeSector');
- 
    //query the database
    $result = $this->sector_model->getSectorId($typeSector);
  
@@ -144,7 +132,7 @@ class Clients extends CI_Controller {
      }
    else
      {
-      $this->form_validation->set_message('check_database', "Sorry, This Sector Doesn't Exist.");
+      $this->form_validation->set_message('check_sector', "Sorry, This Sector Doesn't Exist.");
       return false;
      }
 
@@ -161,9 +149,8 @@ class Clients extends CI_Controller {
     $data['client'] = $this->client_model->getClient($id);
     if ($data['client']->nameClient != $data['nameClient']) 
     {   
+      $this->form_validation->set_rules('typeSector', 'Sector', 'required|trim|callback_check_sector');
       $this->form_validation->set_rules('clientname', 'Name Client', 'is_unique[clients.nameClient]|required');
-
-      $this->form_validation->set_rules('typeSector', 'Sector', 'required|trim|callback_check_database');
       $this->form_validation->set_rules('status', 'Status', 'required|callback_check_status');
 
       if($this->form_validation->run() == FALSE)
@@ -175,11 +162,55 @@ class Clients extends CI_Controller {
           redirect('clients');
         }
     }else{ 
-        $data['idSector'] = $this->sector_model->getSectorId($data['typeSector'])->idSector;
-        $this->client_model->updateClient($id,$data);
-        redirect('clients');
+      $this->form_validation->set_rules('typeSector', 'Sector', 'required|trim|callback_check_sector');
+      $this->form_validation->set_rules('clientname', 'Name Client', 'required');
+      $this->form_validation->set_rules('status', 'Status', 'required|callback_check_status');
+      if($this->form_validation->run() == FALSE)
+        {
+          $this->runViewEditActiveClient($id);
+        }else{
+          $data['idSector'] = $this->sector_model->getSectorId($data['typeSector'])->idSector;
+          $this->client_model->updateClient($id,$data);
+          redirect('clients');
+        }
      }
 
+  }
+  function updateClientInSector($id,$idSect){
+    $data = array(
+        'nameClient'=>$this->input->post('clientname'),
+        'status'=>$this->input->post('status'),
+        'typeSector'=>$this->input->post('typeSector'),
+        'idSector'=>''
+        );
+    $data['client'] = $this->client_model->getClient($id);
+    if ($data['client']->nameClient != $data['nameClient']) 
+    {   
+      $this->form_validation->set_rules('typeSector', 'Sector', 'required|trim|callback_check_sector');
+      $this->form_validation->set_rules('clientname', 'Name Client', 'is_unique[clients.nameClient]|required');
+      $this->form_validation->set_rules('status', 'Status', 'required|callback_check_status');
+
+      if($this->form_validation->run() == FALSE)
+        {
+          $this->runViewEditClientInSector($id,$idSect);
+        }else{
+          $data['idSector'] = $this->sector_model->getSectorId($data['typeSector'])->idSector;
+          $this->client_model->updateClient($id,$data);
+          redirect('sectors/runViewSectorInClients/'.$idSect);
+        }
+    }else{ 
+      $this->form_validation->set_rules('typeSector', 'Sector', 'required|trim|callback_check_sector');
+      $this->form_validation->set_rules('clientname', 'Name Client', 'required');
+      $this->form_validation->set_rules('status', 'Status', 'required|callback_check_status');
+      if($this->form_validation->run() == FALSE)
+        {
+          $this->runViewEditActiveClient($id);
+        }else{
+          $data['idSector'] = $this->sector_model->getSectorId($data['typeSector'])->idSector;
+          $this->client_model->updateClient($id,$data);
+          redirect('sectors/runViewSectorInClients/'.$idSect);
+        }
+     }
   }
 
  function updateInactiveClient(){
@@ -193,9 +224,9 @@ class Clients extends CI_Controller {
     $data['client'] = $this->client_model->getClient($id);
     if ($data['client']->nameClient != $data['nameClient']) 
      {   
-        $this->form_validation->set_rules('clientname', 'nameClient', 'is_unique[clients.nameClient]|required');
-        $this->form_validation->set_rules('status', 'Status', 'required');
-        $this->form_validation->set_rules('typeSector', 'Sector', 'required');
+        $this->form_validation->set_rules('typeSector', 'Sector', 'required|trim|callback_check_sector');
+        $this->form_validation->set_rules('clientname', 'Name Client', 'is_unique[clients.nameClient]|required');
+        $this->form_validation->set_rules('status', 'Status', 'required|callback_check_status');
         if($this->form_validation->run() == FALSE)
           {
             $this->runViewEditInactiveClient($id);
@@ -206,9 +237,17 @@ class Clients extends CI_Controller {
           }
 
      }else{
-        $data['idSector'] = $this->sector_model->getSectorId($data['typeSector'])->idSector;
-        $this->client_model->updateClient($id,$data);
-        redirect('clients/inactiveClients');
+        $this->form_validation->set_rules('typeSector', 'Sector', 'required|trim|callback_check_sector');
+        $this->form_validation->set_rules('clientname', 'Name Client', 'required');
+        $this->form_validation->set_rules('status', 'Status', 'required|callback_check_status');
+        if($this->form_validation->run() == FALSE)
+          {
+            $this->runViewEditInactiveClient($id);
+          }else{
+            $data['idSector'] = $this->sector_model->getSectorId($data['typeSector'])->idSector;
+            $this->client_model->updateClient($id,$data);
+            redirect('clients/inactiveClients');
+          }
      }
   }
 
@@ -225,16 +264,44 @@ class Clients extends CI_Controller {
     $this->load->view('ehtml/footercrud');
   }
 
+  function runViewEditClientInSector($id,$idSector){
+   $session_data = $this->session->userdata('logged_in');
+    $data['nameUser'] = $session_data['nameUser'];
+    $data['idUser'] =  $session_data['idUser'];
+    $data['client'] = $this->client_model->getClient($id);
+    $data['idSector'] = $idSector;
+    $data['id'] = $id;
+    $data['sectors'] = $this->sector_model->getAllSectors();
+    $this->load->view('ehtml/headercrud',$data);
+    $this->load->helper(array('form'));
+    $this->load->view('home/sectors/edit-client',$data);
+    $this->load->view('ehtml/footercrud'); 
+  }
+
   function runViewClientProjects($id){
     $session_data = $this->session->userdata('logged_in');
     $data['nameUser'] = $session_data['nameUser'];
     $data['idUser'] =  $session_data['idUser'];
-    $data['id'] = $id;
+    $data['idClient'] = $id;
     $this->load->model('projects_model','',TRUE);
-    $data['query'] = $this->projects_model->getclientProjects($data['id']);
+    $data['query'] = $this->projects_model->getclientProjects($data['idClient']);
     $this->load->view('ehtml/headercrud',$data);
     $this->load->helper(array('form'));
     $this->load->view('home/clients/client_projects',$data);
+    $this->load->view('ehtml/footercrud');
+  }
+
+  function runViewClientProjectsInSector($id,$idSector){
+    $session_data = $this->session->userdata('logged_in');
+    $data['nameUser'] = $session_data['nameUser'];
+    $data['idUser'] =  $session_data['idUser'];
+    $data['idClient'] = $id;
+    $data['idSector'] = $idSector; 
+    $this->load->model('projects_model','',TRUE);
+    $data['query'] = $this->projects_model->getclientProjects($data['idClient']);
+    $this->load->view('ehtml/headercrud',$data);
+    $this->load->helper(array('form'));
+    $this->load->view('home/sectors/sector_client_projects',$data);
     $this->load->view('ehtml/footercrud');
   }
 
@@ -254,6 +321,10 @@ class Clients extends CI_Controller {
     $id = $this->uri->segment(3);
     $this->client_model->deleteClient($id);
     redirect('clients'); 
+  }
+  function deleteClientInSector($idClient, $idSector){
+    $this->client_model->deleteClient($idClient);
+    redirect('sectors/runViewSectorInClients/'.$idSector);
   }
 
  function deleteInactiveClient(){

@@ -12,21 +12,23 @@
                             <li>
                                 <i class="fa fa-dashboard"></i>  <a href="<?=base_url()?>home">Dashboard</a>
                             </li>
+                            <li>
+                                <i class="fa fa-table"></i> <a href="<?= base_url()?>sectors">Sectores</a>
+                            </li>
                             <li class="active">
-                                <i class="fa fa-table"></i> Sectores
+                                <i class="fa fa-table"></i> Clientes
                             </li>
 
-                       <p class="text-right">
-                            <a href="<?=base_url()?>clients/inactiveClients" class="btn btn-large btn-info"><i class="icon-home icon-white"></i>Clients</a>
-                      
-                            <button type="button" class="btn btn-large btn-info" data-toggle="modal" data-target="#createClientModal" data-whatever="">New Client</button>
-                       </p>
+                         <p class="text-right">
+                              <a href="<?=base_url()?>clients/inactiveClients" class="btn btn-large btn-info"><i class="icon-home icon-white"></i>Clients</a>
+                        
+                              <button type="button" class="btn btn-large btn-info" data-toggle="modal" data-target="#createClientModal" data-whatever="">New Client</button>
+                         </p>
                        
                         </ol>
                     </div>
                 </div>
                 <!-- /.row -->
-
 
                 <div class="row">
                     <div class="col-lg-6">
@@ -52,14 +54,12 @@
                                                 <td><?= $opc->nameClient?></td>
                                                 <td><?= $opc->status?></td>
                                                 <td><?= $opc->typeSector?></td>
-                                                <td><a href="<?= base_url()?>clients/runViewClientProjects/<?= $opc->idClient?>">Mostrar</a></td>
-                                                <td><a href="<?=base_url()?>clients/runViewEditActiveClient/<?=$opc->idClient?>" >Edit</a></td>
+                                                <td><a href="<?= base_url()?>clients/runViewClientProjectsInSector/<?= $opc->idClient?>/<?=$opc->idSector?>">Mostrar</a></td>
+                                                <td><a href="<?=base_url()?>clients/runViewEditClientInSector/<?=$opc->idClient?>/<?=$id?>" >Edit</a></td>
                                                 <td class="text-center text-danger">
-                                                    <a href="<?=base_url()?>clients/deleteActiveClient/<?=$opc->idClient?>" class="confirmationDeleteClient">X</a>  
+                                                    <a href="<?=base_url()?>clients/deleteClientInSector/<?=$opc->idClient?>/<?=$id?>" class="confirmationDeleteClient">X</a>  
                                                 </td>
                                             </tr>
-
-
                                         <?php } 
                                         }else{
                                             echo "Error No Existe Ningun Cliente Favor De Agregar";
@@ -81,7 +81,6 @@
     </div>
     <!-- /#wrapper -->
 
-
         <div class="modal fade" id="createClientModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
              <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -93,7 +92,7 @@
                        <?= form_open('clients/newClient') ?>
                           <div class="form-group">
                               <?= form_error('clientname') ?>
-                              <label class="sr-only" for="clientname">NameClient:</label>
+                              <label class="" for="">NameClient:</label>
                               <input type="text" size="20" id="clientname" name="clientname" placeholder="Name Client" class="form-clientname form-control "required/>
                            </div>
                            <div class="form-group">
@@ -119,4 +118,3 @@
                 </div>
              </div>
         </div>
-         

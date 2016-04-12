@@ -55,11 +55,11 @@
                                                 <td><?= $opc->dateCreation?></td>
                                                 <td><?= $opc->dateTermination?></td>
                                                 <td><?= $opc->nameClient?></td>
-                                                <td><a href="<?=base_url()?>projects/runViewProyectOrderShoppings/<?=$opc->idProject?>">Mostrar</a></td>
-                                                <td><a href="<?=base_url()?>projects/runViewEditProject/<?=$opc->idProject?>" >Edit</a>
+                                                <td><a href="<?=base_url()?>projects/runViewProyectOrderShoppings/<?=$opc->idProyect?>">Mostrar</a></td>
+                                                <td><a href="<?=base_url()?>projects/runViewEditProject/<?=$opc->idProyect?>" >Edit</a>
                                                 </td>
                                                 <td class="text-center text-danger">
-                                                    <a href="<?=base_url()?>projects/deleteProject/<?=$opc->idProject?>" class="confirmationDeleteProject">X</a>  
+                                                    <a href="<?=base_url()?>projects/deleteProject/<?=$opc->idProyect?>" class="confirmationDeleteProject">X</a>  
                                                 </td>
                                             </tr>
 
