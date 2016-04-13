@@ -172,7 +172,6 @@ class Ordershopping extends CI_Controller {
       $this->ordershopping_model->updateorderShopping($idOrderShopping ,$data);
       redirect('ordershopping');
     }
-
   }
 
   function runViewEditorderShopping($id){

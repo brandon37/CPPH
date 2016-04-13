@@ -93,21 +93,21 @@
                     <div class="modal-body">
                        <?= form_open('clients/newClient') ?>
                           <div class="form-group">
+                              <label class="" for="clientname">Name Client:</label>
                               <?= form_error('clientname') ?>
-                              <label class="sr-only" for="clientname">NameClient:</label>
                               <input type="text" size="20" id="clientname" name="clientname" placeholder="Name Client" class="form-clientname form-control "required/>
                            </div>
                            <div class="form-group">
+                              <label class="" for="text">Status:</label>
                               <?= form_error('status') ?>
-                              <label class="sr-only" for="text">Status:</label>
                               <select name="status"  class="form-control" required>
                                  <option value="Activo">Activo</option> 
                                  <option value="Inactivo">Inactivo</option> 
                               </select>
                            </div>
                            <div class="form-group">
+                              <label class="" for="sector">Sector:</label>
                               <?= form_error('typeSector') ?>
-                              <label class="sr-only" for="sector">Sector:</label>
                               <input type="text" size="20" id="sector" name="typeSector" placeholder="Sector" value="" class="form-sector form-control" required/>
                               
                            </div>

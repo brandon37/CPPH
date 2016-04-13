@@ -18,7 +18,7 @@
                           </li>
                            
                           <li class="active">
-                              <i class="fa fa-edit"></i> Edit Clientes
+                              <i class="fa fa-edit"></i> Editar Cliente
                           </li> 
                        
                         </ol>

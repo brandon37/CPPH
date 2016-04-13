@@ -16,8 +16,8 @@ class Projects_model extends CI_Model {
 				'idClient'=>$data['idClient']));
 	}
 
-	function deleteProject($id){
-		$this->db->delete('projects', array('idProyect'=>$id));
+	function deleteProject($idProject){
+		$this->db->delete('projects', array('idProyect'=>$idProject));
 	}
 
 	function indexDepartment($data){
@@ -25,10 +25,10 @@ class Projects_model extends CI_Model {
 			array('idProject'=>$data['idProject'],
 				'idDepartment'=>$data['idDepartment']));
 	}
-	function updateIndexDepartment($id, $data){
-		$info = array('idProject'=>$id,
+	function updateIndexDepartment($idProject, $data){
+		$info = array('idProject'=>$idProject,
 				'idDepartment'=>$data['idDepartment']);
-		$this->db->where('projects_has_department.idProject',$id);
+		$this->db->where('projects_has_department.idProject',$idProject);
 		$this->db->update('projects_has_department',$info);
 	}
 
@@ -38,7 +38,6 @@ class Projects_model extends CI_Model {
 		if($query->num_rows > 0) return $query->row();
 		else return false;
 	}
-	
 
 	function getAllProjects(){
 		$this->db->select('*');
@@ -51,19 +50,19 @@ class Projects_model extends CI_Model {
 		else return false;
 	}
 
-	function getProject($id){
+	function getProject($idProject){
 		$this->db->select('*');
 		$this->db->from('projects_has_department');
 		$this->db->join('projects', 'projects_has_department.idProject = projects.idProyect');
 		$this->db->join('department', 'projects_has_department.idDepartment = department.idDepartment');
 		$this->db->join('clients', 'projects.idClient = clients.idClient');
-		$this->db->where('projects_has_department.idProject',$id);
+		$this->db->where('projects_has_department.idProject',$idProject);
 		$query =  $this->db->get();
 		if($query->num_rows() >0) return $query->row();
 		else return false;
 	}
 
-	function updateProject($id,$data){
+	function updateProject($idProject,$data){
 		$info = array(
 			'nameProject'=>$data['nameProject'],
 			'price'=>$data['price'],
@@ -71,32 +70,32 @@ class Projects_model extends CI_Model {
 			'dateTermination'=>$data['dateTermination'],
 			'idClient'=>$data['idClient']
 		 );
-		$this->db->where('idProyect',$id);
+		$this->db->where('projects.idProyect',$idProject);
 		$this->db->update('projects',$info);
 	}
 
-	function getclientProjects($id){
+	function getclientProjects($idClient){
 		$this->db->join('projects', 'projects_has_department.idProject = projects.idProyect');
 		$this->db->join('department', 'projects_has_department.idDepartment = department.idDepartment');
 		$this->db->join('clients', 'projects.idClient = clients.idClient');
-		$this->db->where('projects.idClient', $id);
+		$this->db->where('projects.idClient', $idClient);
 		return $this->db->get("projects_has_department");
 	}
 
-	function getDepartmentProjects($id){
+	function getDepartmentProjects($idDepartment){
 		$this->db->join('projects', 'projects_has_department.idProject = projects.idProyect');
 		$this->db->join('department', 'projects_has_department.idDepartment = department.idDepartment');
 		$this->db->join('clients', 'projects.idClient = clients.idClient');
-		$this->db->where('department.idDepartment', $id);
+		$this->db->where('department.idDepartment', $idDepartment);
 		return $this->db->get("projects_has_department");
 	}
 
-	function getSectorProjects($id){
+	function getSectorProjects($idSector){
 		$this->db->join('projects', 'projects_has_department.idProject = projects.idProyect');
 		$this->db->join('department', 'projects_has_department.idDepartment = department.idDepartment');
 		$this->db->join('clients', 'projects.idClient = clients.idClient');
 		$this->db->join('sector', 'sector.idSector = clients.idSector');
-		$this->db->where('sector.idSector', $id);
+		$this->db->where('sector.idSector', $idSector);
 		return $this->db->get("projects_has_department");
 	}
 

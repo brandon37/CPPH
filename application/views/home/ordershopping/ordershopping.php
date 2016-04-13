@@ -95,23 +95,23 @@
                     <div class="modal-body">
                        <?= form_open('ordershopping/newordershopping') ?>
                           <div class="form-group">
+                               <label class="" for="nameProyect">Name Proyect:</label>
                                <?= form_error('nameProyect') ?>
-                               <label class="sr-only" for="nameProyect">Name Proyect:</label>
                                <input type="text" size="20" id="nameProyect" name="nameProyect" placeholder="Name Proyect" class="form-nameProyect form-control" required/>
                            </div>
                            <div class="form-group">
+                              <label class="" for="text">concept:</label>
                               <?= form_error('concept') ?>
-                              <label class="sr-only" for="text">concept:</label>
                               <input type="text" size="20" id="concept" name="concept"placeholder="Concepto" class="form-concept form-control" required/>
                            </div>
                            <div class="form-group">
+                              <label class="" for="amount">amount:</label>
                               <?= form_error('amount') ?>
-                              <label class="sr-only" for="amount">amount:</label>
                               <input type="text" size="20" id="amount" name="amount" placeholder="Amount" class="form-amount form-control" required/>
                            </div>
                            <div class="form-group">
+                              <label class="" for="dateCreation">Date Creation:</label>
                               <?= form_error('dateCreation') ?>
-                              <label class="sr-only" for="dateCreation">Date Creation:</label>
                               <input type="date" size="20" id="dateCreation" name="dateCreation" class="form-dateCreation form-control" required/>
                            </div>
                          <div class="modal-footer">

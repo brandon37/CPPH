@@ -24,14 +24,13 @@
                                     <div class="form-group">
                                      <?php
                                      $email = array(
-                                     'size'=>"20",
-                                     'type' => "email",
-                                     'id' => "user", 
-                                     'name' => 'mail',
-                                     'placeholder' => 'Email',
-                                     'class'=>"form-username form-control",
-
-                                    );
+                                         'size'=>"20",
+                                         'type' => "email",
+                                         'id' => "user", 
+                                         'name' => 'mail',
+                                         'placeholder' => 'Email',
+                                         'class'=>"form-username form-control",
+                                       );
 
                                     ?>
                                     <?= form_label('', '')?>

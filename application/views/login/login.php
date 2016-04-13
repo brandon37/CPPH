@@ -26,10 +26,12 @@
                                <?= form_open('verifylogin') ?>
                                     <div class="form-group">
                                          <label class="sr-only" for="username">Username:</label>
+                                         <?= form_error('username') ?>
                                          <input type="text" size="20" id="username" name="username" placeholder="Username" class="form-username form-control"/>
                                      </div>
                                      <div class="form-group">
                                         <label class="sr-only" for="password">Password:</label>
+                                        <?= form_error('password') ?>
                                         <input type="password" size="20" id="passowrd" name="password"placeholder="Password" class="form-password form-control"/>
                                      </div>
                                    <button type="submit" class="btn">Login</button>  

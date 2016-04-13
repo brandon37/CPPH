@@ -14,12 +14,12 @@
                         </li>
 
                         <li>
-                             <i class="fa fa-table"> <a href="<?=base_url()?>departments"> Departamentos </a></i> 
-                          </li>
-                           
-                          <li class="active">
-                              <i class="fa fa-table"></i> Proyectos del Departamento
-                          </li> 
+                           <i class="fa fa-table"> <a href="<?=base_url()?>departments"> Departamentos </a></i> 
+                        </li>
+                         
+                        <li class="active">
+                            <i class="fa fa-table"></i> Proyectos del Departamento
+                        </li> 
                          
                     </ol>
                 </div>
@@ -43,30 +43,29 @@
                                         <th class="text-center">Delete</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                   
-                                    <?php 
-                                        if ($query){
-                                        foreach ($query->result() as $opc) { ?>
-                                            <tr>
-                                                <td><?= $opc->nameProject?></td>
-                                                <td><?= $opc->nameDepartment?></td>
-                                                <td><?= $opc->price?></td>
-                                                <td><?= $opc->dateCreation?></td>
-                                                <td><?= $opc->dateTermination?></td>
-                                                <td><?= $opc->nameClient?></td>
-                                                <td><a href="<?=base_url()?>projects/runViewEditProject/<?=$opc->idProyect?>" >Edit</a>
-                                                </td>
-                                                <td class="text-center text-danger">
-                                                    <a href="<?=base_url()?>projects/deleteProject/<?=$opc->idProyect?>" class="confirmationDeleteProject">X</a>  
-                                                </td>
-                                            </tr>
+                                <tbody>  
+                                  <?php 
+                                      if ($query){
+                                      foreach ($query->result() as $opc) { ?>
+                                          <tr>
+                                              <td><?= $opc->nameProject?></td>
+                                              <td><?= $opc->nameDepartment?></td>
+                                              <td><?= $opc->price?></td>
+                                              <td><?= $opc->dateCreation?></td>
+                                              <td><?= $opc->dateTermination?></td>
+                                              <td><?= $opc->nameClient?></td>
+                                              <td><a href="<?=base_url()?>projects/runViewEditProject/<?=$opc->idProyect?>" >Edit</a>
+                                              </td>
+                                              <td class="text-center text-danger">
+                                                  <a href="<?=base_url()?>projects/deleteProject/<?=$opc->idProyect?>" class="confirmationDeleteProject">X</a>  
+                                              </td>
+                                          </tr>
 
 
-                                        <?php } 
-                                        }else{
-                                            echo "Error No Existe Ningun Projecto Favor De Agregar";
-                                        }
+                                      <?php } 
+                                      }else{
+                                          echo "Error No Existe Ningun Projecto Favor De Agregar";
+                                      }
                                     ?>           
                                    
                                 </tbody>
@@ -95,28 +94,28 @@
                     <div class="modal-body">
                        <?= form_open('projects/newProject') ?>
                           <div class="form-group">
-                              <?=  form_error('projectname') ?>
-                               <label class="sr-only" for="projectname">NameProject:</label>
-                               <input type="text" size="20" id="projectname" name="projectname" placeholder="Name Project" class="form-projectname form-control" required/>
+                             <label class="" for="projectname">Name Project:</label>
+                             <?=  form_error('projectname') ?>
+                             <input type="text" size="20" id="projectname" name="projectname" placeholder="Name Project" class="form-projectname form-control" required/>
                            </div>
                            <div class="form-group">
+                              <label class="" for="text">Department:</label>
                               <?= form_error('department')?>
-                              <label class="sr-only" for="text">Departament:</label>
                               <input type="text" size="20" id="department" name="department"placeholder="Departamento" class="form-department form-control" required/>
                            </div>
                            <div class="form-group">
+                              <label class="" for="price">Price:</label>
                               <?= form_error('price')?>
-                              <label class="sr-only" for="price">Price:</label>
                               <input type="text" size="20" id="price" name="price" placeholder="Price" class="form-price form-control" required/>
                            </div>
                            <div class="form-group">
+                              <label class="" for="dateCreation">Date Creation:</label>
                               <?= form_error('dateCreation')?>
-                              <label class="sr-only" for="dateCreation">Date Creation:</label>
                               <input type="date" size="20" id="dateCreation" name="dateCreation" class="form-dateCreation form-control" required/>
                            </div>
                            <div class="form-group">
+                              <label class="" for="client">Client:</label>
                               <?= form_error('nameClient')?>
-                              <label class="sr-only" for="client">Client:</label>
                               <input type="text" size="20" id="client" name="nameClient" placeholder="Client" class="form-client form-control" required/>
                            </div>
                          <div class="modal-footer">

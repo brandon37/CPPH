@@ -86,13 +86,13 @@
                     <div class="modal-body">
                        <?= form_open('invoices/newinvoice') ?>
                            <div class="form-group">
+                              <label class="" for="invoice">Number Invoice:</label>
                               <?= form_error('noInvoice') ?>
-                              <label class="sr-only" for="invoice">Invoice:</label>
                               <input type="text" size="20" id="invoice" name="noInvoice" placeholder="Factura" value="" class="form-invoice form-control" required/>
                            </div>
                             <div class="form-group">
+                              <label class="" for="status">status:</label>
                               <?= form_error('status') ?>
-                              <label class="sr-only" for="status">status:</label>
                               <input type="text" size="20" id="status" name="status" placeholder="Estado" value="" class="form-status form-control" required/>
                               
                            </div>
