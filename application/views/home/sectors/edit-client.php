@@ -15,7 +15,10 @@
                           </li>
 
                           <li>
-                             <i class="fa fa-table"> <a href="<?=base_url()?>clients"> Clientes </a></i> 
+                             <i class="fa fa-table"> <a href="<?=base_url()?>sectors"> Sectores </a></i> 
+                          </li>
+                          <li>
+                             <i class="fa fa-table"> <a href="<?=base_url()?>sectors/runViewSectorInClients/<?=$idSector?>"> Clientes </a></i> 
                           </li>
                            
                           <li class="active">
@@ -27,7 +30,7 @@
                 </div>
 
           
-        <?= form_open('clients/updateActiveClient/'.$id); ?>    
+        <?= form_open('clients/updateClientInSector/'.$id.'/'.$idSector); ?>    
           <?php 
               if ($client){
                  ?>

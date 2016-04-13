@@ -17,7 +17,7 @@ class Projects_model extends CI_Model {
 	}
 
 	function deleteProject($id){
-		$this->db->delete('projects', array('idProject'=>$id));
+		$this->db->delete('projects', array('idProyect'=>$id));
 	}
 
 	function indexDepartment($data){
@@ -28,7 +28,7 @@ class Projects_model extends CI_Model {
 	function updateIndexDepartment($id, $data){
 		$info = array('idProject'=>$id,
 				'idDepartment'=>$data['idDepartment']);
-		$this->db->where('idProject',$id);
+		$this->db->where('projects_has_department.idProject',$id);
 		$this->db->update('projects_has_department',$info);
 	}
 
@@ -41,9 +41,12 @@ class Projects_model extends CI_Model {
 	
 
 	function getAllProjects(){
-	 	$this->db->select('*');
-		$this->db->from('projects');
-		$query = $this->db->get();
+		$this->db->select('*');
+		$this->db->from('projects_has_department');
+		$this->db->join('projects', 'projects_has_department.idProject = projects.idProyect');
+		$this->db->join('department', 'projects_has_department.idDepartment = department.idDepartment');
+		$this->db->join('clients', 'projects.idClient = clients.idClient');
+		return $this->db->get();
 		if($query->num_rows() >0) return $query;
 		else return false;
 	}
@@ -68,7 +71,7 @@ class Projects_model extends CI_Model {
 			'dateTermination'=>$data['dateTermination'],
 			'idClient'=>$data['idClient']
 		 );
-		$this->db->where('idProject',$id);
+		$this->db->where('idProyect',$id);
 		$this->db->update('projects',$info);
 	}
 

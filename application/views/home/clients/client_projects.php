@@ -14,12 +14,12 @@
                         </li>
 
                         <li>
-                             <i class="fa fa-table"> <a href="<?=base_url()?>clients"> Clientes </a></i> 
-                          </li>
-                           
-                          <li class="active">
-                              <i class="fa fa-table"></i> Proyectos del Cliente
-                          </li> 
+                           <i class="fa fa-table"> <a href="<?=base_url()?>clients"> Clientes </a></i> 
+                        </li>
+                         
+                        <li class="active">
+                            <i class="fa fa-table"></i> Proyectos del Cliente
+                        </li> 
                          
                     </ol>
                 </div>
@@ -55,10 +55,10 @@
                                                 <td><?= $opc->dateCreation?></td>
                                                 <td><?= $opc->dateTermination?></td>
                                                 <td><?= $opc->nameClient?></td>
-                                                <td><a href="<?=base_url()?>projects/runViewEditProject/<?=$opc->idProyect?>" >Edit</a>
+                                                <td><a href="<?=base_url()?>projects/runViewEditProjectInClient/<?=$opc->idProyect?>/<?= $idClient?>" >Edit</a>
                                                 </td>
                                                 <td class="text-center text-danger">
-                                                    <a href="<?=base_url()?>projects/deleteProject/<?=$opc->idProyect?>" class="confirmationDeleteProject">X</a>  
+                                                    <a href="<?=base_url()?>projects/deleteProjectInClient/<?=$opc->idProyect?>/<?=$idClient?>" class="confirmationDeleteProject">X</a>  
                                                 </td>
                                             </tr>
 
