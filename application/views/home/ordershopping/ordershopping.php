@@ -95,9 +95,9 @@
                     <div class="modal-body">
                        <?= form_open('ordershopping/newordershopping') ?>
                           <div class="form-group">
-                               <label class="" for="nameProyect">Name Proyect:</label>
-                               <?= form_error('nameProyect') ?>
-                               <input type="text" size="20" id="nameProyect" name="nameProyect" placeholder="Name Proyect" class="form-nameProyect form-control" required/>
+                               <label class="" for="nameProject">Name Project:</label>
+                               <?= form_error('nameProject') ?>
+                               <input type="text" size="20" id="nameProject" name="nameProject" placeholder="Name Project" class="form-nameProject form-control" required/>
                            </div>
                            <div class="form-group">
                               <label class="" for="text">concept:</label>

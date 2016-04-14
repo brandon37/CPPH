@@ -28,13 +28,13 @@
             if ($ordershopping){
                ?>    
                  <div class="form-group">
-                     <?= form_error('nameProyect') ?>
-                     <label class="" for="nameProyect">Name Proyect:</label>
-                     <select name="nameProyect"  class="form-control" value="<?= $ordershopping->nameProyect ?>" required>
+                     <?= form_error('nameProject') ?>
+                     <label class="" for="nameProject">Name Project:</label>
+                     <select name="nameProject"  class="form-control" value="<?= $ordershopping->nameProject ?>" required>
                         <?php 
-                        foreach ($proyects->result() as $opt) { 
+                        foreach ($projects->result() as $opt) { 
                         ?>
-                          <option value="<?=$opt->nameProyect ?>"><?=$opt->nameProyect?></option> 
+                          <option value="<?=$opt->nameProject ?>"><?=$opt->nameProject?></option> 
                        <?php
                         }
                         ?>

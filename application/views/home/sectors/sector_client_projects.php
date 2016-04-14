@@ -59,10 +59,10 @@
                                                 <td><?= $opc->dateCreation?></td>
                                                 <td><?= $opc->dateTermination?></td>
                                                 <td><?= $opc->nameClient?></td>
-                                                <td><a href="<?=base_url()?>projects/runViewEditProjectClientInSector/<?=$opc->idProyect?>/<?=$opc->idClient?>/<?=$idSector?>" >Edit</a>
+                                                <td><a href="<?=base_url()?>projects/runViewEditProjectClientInSector/<?=$opc->idProject?>/<?=$opc->idClient?>/<?=$idSector?>" >Edit</a>
                                                 </td>
                                                 <td class="text-center text-danger">
-                                                    <a href="<?=base_url()?>projects/deleteProject/<?=$opc->idProyect?>" class="confirmationDeleteProject">X</a>  
+                                                    <a href="<?=base_url()?>projects/deleteProject/<?=$opc->idProject?>" class="confirmationDeleteProject">X</a>  
                                                 </td>
                                             </tr>
                                         <?php } 

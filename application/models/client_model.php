@@ -21,7 +21,7 @@ class Client_model extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('clients');
 		$this->db->where('status',"Activo");
-		$this->db->join('sector', 'sector.idSector = clients.idSector');
+		$this->db->join('sectors', 'sectors.idSector = clients.idSector');
 		$query = $this->db->get();
 		if($query->num_rows() >0) return $query;
 		else return false;
@@ -31,7 +31,7 @@ class Client_model extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('clients');
 		$this->db->where('status',"Inactivo");
-		$this->db->join('sector', 'sector.idSector = clients.idSector');
+		$this->db->join('sectors', 'sectors.idSector = clients.idSector');
 		$query = $this->db->get();
 		if($query->num_rows() >0) return $query;
 		else return false;
@@ -39,7 +39,7 @@ class Client_model extends CI_Model {
 
 	function getClient($id){
 		$this->db->where('idClient',$id);
-		$this->db->join('sector', 'clients.idSector = sector.idSector');
+		$this->db->join('sectors', 'clients.idSector = sectors.idSector');
 		$query = $this->db->get('clients');
 		if($query->num_rows() >0) return $query->row();
 		else return false;
@@ -63,7 +63,7 @@ class Client_model extends CI_Model {
 	}
 
 	function getSectorClients($id){
-		$this->db->join('sector', 'clients.idSector = sector.idSector');
+		$this->db->join('sectors', 'clients.idSector = sectors.idSector');
 		$this->db->where('clients.idSector', $id);
 		return $this->db->get("clients");
 	}
@@ -80,13 +80,13 @@ class Client_model extends CI_Model {
 
 	function get_paginationActiveClients($number_per_page){
 		$this->db->where('status',"Activo");
-		$this->db->join('sector', 'clients.idSector = sector.idSector');
+		$this->db->join('sectors', 'clients.idSector = sectors.idSector');
 		return $this->db->get("clients", $number_per_page, $this->uri->segment(3));
 	}
 
 	function get_paginationInactiveClients($number_per_page){
 		$this->db->where('status',"Inactivo");
-		$this->db->join('sector', 'clients.idSector = sector.idSector');
+		$this->db->join('sectors', 'clients.idSector = sectors.idSector');
 		return $this->db->get("clients", $number_per_page, $this->uri->segment(3));
 	}
 

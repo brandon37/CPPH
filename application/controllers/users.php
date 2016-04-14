@@ -75,9 +75,9 @@ class Users extends CI_Controller {
 
     $this->form_validation->set_rules('password', 'Password', 'trim|required|matches[passwordconf]|min_length[8]');
     $this->form_validation->set_rules('passwordconf', 'Password Confirmation', 'trim|required|min_length[8]');
-    $this->form_validation->set_rules('username', 'Username', 'trim|required|min_length[5]|max_length[60]|xss_clean|is_unique[user.nameUser]');
+    $this->form_validation->set_rules('username', 'Username', 'trim|required|min_length[5]|max_length[60]|xss_clean|is_unique[users.nameUser]');
     
-    $this->form_validation->set_rules('email', 'Email', 'is_unique[user.email]|trim|required|valid_email');
+    $this->form_validation->set_rules('email', 'Email', 'is_unique[users.email]|trim|required|valid_email');
 
    if($this->form_validation->run() == FALSE)
     {
@@ -118,12 +118,12 @@ class Users extends CI_Controller {
       {
 
         if($data['User']->nameUser != $data['nameUser']){
-            $this->form_validation->set_rules('username', 'User Name', 'trim|required|min_length[5]|max_length[60]|xss_clean|is_unique[user.nameUser]');
+            $this->form_validation->set_rules('username', 'Users Name', 'trim|required|min_length[5]|max_length[60]|xss_clean|is_unique[users.nameUser]');
             $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
 
         }else{
-              $this->form_validation->set_rules('username', 'User Name', 'trim|required|min_length[5]|max_length[60]|xss_clean');
-              $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|is_unique[user.email]');
+              $this->form_validation->set_rules('username', 'Users Name', 'trim|required|min_length[5]|max_length[60]|xss_clean');
+              $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|is_unique[users.email]');
           }
       }
   }
@@ -213,11 +213,11 @@ class Users extends CI_Controller {
     if($data['User']->nameUser != $data['nameUser'] ||  $data['User']->email != $data['email'])
       {
         if ($data['User']->nameUser != $data['nameUser']) {
-          $this->form_validation->set_rules('username', 'Username', 'trim|required|min_length[5]|max_length[60]|xss_clean|is_unique[user.nameUser]');
+          $this->form_validation->set_rules('username', 'Username', 'trim|required|min_length[5]|max_length[60]|xss_clean|is_unique[users.nameUser]');
           $this->form_validation->set_rules('mail', 'Email', 'trim|required|valid_email');
         }else{
           $this->form_validation->set_rules('username', 'Username', 'trim|required|min_length[5]|max_length[60]|xss_clean');
-          $this->form_validation->set_rules('mail', 'Email', 'trim|required|valid_email|is_unique[user.email]');
+          $this->form_validation->set_rules('mail', 'Email', 'trim|required|valid_email|is_unique[users.email]');
         }
 
        if($this->form_validation->run() == FALSE)

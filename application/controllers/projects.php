@@ -93,7 +93,7 @@ function pagination(){
           
           $this->projects_model->newproject($data);
           $queryProject =  $this->projects_model->getProjectId($data['nameProject']);
-          $data['idProject'] = $queryProject->idProyect;
+          $data['idProject'] = $queryProject->idProject;
 
           $queryDepartment =  $this->department_model->getDepartmentId($data['nameDepartment']);
           $data['idDepartment'] = $queryDepartment->idDepartment;
@@ -345,13 +345,13 @@ function pagination(){
             $this->projects_model->updateProject($idProject,$data);
 
             $this->projects_model->updateIndexDepartment($idProject,$data);
-            redirect('sectors/runViewSectorProyects/'.$idSector);
+            redirect('sectors/runViewSectorProjects/'.$idSector);
           }
 
      }
     else
      {
-      redirect('sectors/runViewSectorProyects/'.$idSector);
+      redirect('sectors/runViewSectorPrjeects/'.$idSector);
      }
   }
 
@@ -410,7 +410,7 @@ function pagination(){
      }
   }
 
-  function runViewProyectOrderShoppings($id){
+  function runViewProjectOrderShoppings($id){
     $session_data = $this->session->userdata('logged_in');
     $data['nameUser'] = $session_data['nameUser'];
     $data['idUser'] =  $session_data['idUser'];
@@ -496,7 +496,7 @@ function pagination(){
 
   function deleteProjectInSector($idProject, $idSector){
     $this->projects_model->deleteproject($idProject);
-    redirect('sectors/runViewSectorProyects/'.$idSector);
+    redirect('sectors/runViewSectorProjects/'.$idSector);
   }
   function deleteProjectClientInSector($idProject, $idClient){
     $this->projects_model->deleteproject($idProject);

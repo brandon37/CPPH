@@ -8,30 +8,30 @@ class Department_model extends CI_Model {
 	}
 
 	function newDepartment($data){
-		$this->db->insert('department',array('nameDepartment'=>$data['nameDepartment']));
+		$this->db->insert('departments',array('nameDepartment'=>$data['nameDepartment']));
 	}
 
 	function deleteDepartment($id){
 		
-		$this->db->delete('department', array('idDepartment'=>$id));
+		$this->db->delete('departments', array('idDepartment'=>$id));
 	}
 
 	function getAllDepartments(){
-		$query = $this->db->get('department');
+		$query = $this->db->get('departments');
 		if($query->num_rows()>0) return $query;
 		else return false;
 	}
 
 	function getDepartmentId($nameDepartment){
 		$this->db->where('nameDepartment',$nameDepartment);
-		$query = $this->db->get('department');
+		$query = $this->db->get('departments');
 		if($query->num_rows() >0) return $query->row();
 		else return false;
 	}
 
 	function getDepartment($id){
 		$this->db->where('idDepartment',$id);
-		$query = $this->db->get('department');
+		$query = $this->db->get('departments');
 		if($query->num_rows() >0) return $query->row();
 		else return false;
 	}
@@ -41,17 +41,17 @@ class Department_model extends CI_Model {
 			'nameDepartment'=>$data['nameDepartment']
 		 );
 		$this->db->where('idDepartment',$id);
-		$this->db->update('department',$info);
+		$this->db->update('departments',$info);
 	}
 	function no_page(){
-		$number = $this->db->query("SELECT count(*) as number FROM department")->row()->number;
+		$number = $this->db->query("SELECT count(*) as number FROM departments")->row()->number;
 
 		return intval($number);
 	}
 
 	function get_pagination($number_per_page){
 
-		return $this->db->get("department", $number_per_page, $this->uri->segment(3));
+		return $this->db->get("departments", $number_per_page, $this->uri->segment(3));
 
 	}
 	
