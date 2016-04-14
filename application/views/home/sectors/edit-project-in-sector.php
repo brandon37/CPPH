@@ -44,11 +44,15 @@
                               <label class="" for="text">Department:</label>
                               <?= form_error('department')?>
                               <select name="department"  class="form-control" value="<?= $project->nameDepartment ?>" required>
+                                  <option value="<?= $project->nameDepartment?>" selected="selected" > <?= $project->nameDepartment?></option>
+                                  
                                   <?php 
                                   foreach ($department->result() as $opt) { 
+                                    if ($project->nameDepartment != $opt->nameDepartment){
                                   ?>
                                     <option value="<?=$opt->nameDepartment ?>"><?=$opt->nameDepartment?></option> 
                                  <?php
+                                    }
                                   }
                                   ?>
                               </select>
@@ -72,22 +76,23 @@
                               <label class="" for="client">Client:</label>
                               <?= form_error('nameClient')?>
                               <select name="nameClient"  class="form-control" value="<?= $project->nameClient ?>" required>
+                                <option value="<?=$project->nameClient ?>" selected="selected" > <?=$project->nameClient ?> </option>
                                   <?php 
                                   foreach ($client->result() as $opt) { 
+                                    if ($opt->nameClient != $project->nameClient ) {
                                   ?>
                                     <option value="<?=$opt->nameClient ?>"><?=$opt->nameClient?></option> 
                                  <?php
+                                    }
                                   }
                                   ?>
                               </select>
                            </div>
-
                            <button type="submit" class="btn btn-primary">Save</button> 
-
                    </form>
                       <?php 
                       }else{
-                          redirect('projects');
+                         
                       }
                   ?> 
                   </div> 

@@ -43,9 +43,16 @@
                                <div class="form-group">
                                   <label>Status:</label>
                                   <?= form_error('status') ?>
-                                  <select name="status"  class="form-control" value="<?=$client->status ?>" required>
-                                     <option value="Activo">Activo</option> 
-                                     <option value="Inactivo">Inactivo</option> 
+                                  <select name="status"  class="form-control" required>
+                                  <?php if($client->status == "Activo")
+                                       { ?>
+                                          <option value="Activo" selected="Selected">Activo</option> 
+                                          <option value="Inactivo">Inactivo</option> 
+                                   <?php } else 
+                                          {?>
+                                            <option value="Activo">Activo</option> 
+                                            <option value="Inactivo" selected="Selected">Inactivo</option> 
+                                      <?php } ?>
                                   </select>
                                </div>
                                <div class="form-group">

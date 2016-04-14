@@ -10,6 +10,7 @@ class Clients extends CI_Controller {
    $this->load->model('sector_model','',TRUE);
    $this->load->library("pagination");
    $this->load->library('form_validation');
+   $this->load->model('projects_model','',TRUE);
  }
 
  function index(){
@@ -106,6 +107,27 @@ class Clients extends CI_Controller {
           redirect('clients');
        }
           
+  }
+
+  function newClientInSector(){
+    $data = array(
+          'nameClient'=>$this->input->post('clientname'),
+          'status'=>$this->input->post('status'),
+          'typeSector'=>$this->input->post('typeSector'),
+          'idSector'=>''
+          );
+    $this->form_validation->set_rules('typeSector', 'Sector', 'required|trim|callback_check_sector');
+    $this->form_validation->set_rules('clientname', 'Name Client', 'is_unique[clients.nameClient]|required');
+    $this->form_validation->set_rules('status', 'Status', 'required|callback_check_status');
+
+     if($this->form_validation->run() == FALSE)
+      {
+        $this->index();
+      }else{           
+          $data['idSector'] = $this->sector_model->getSectorId($data['typeSector'])->idSector;
+          $this->client_model->newclient($data);
+          redirect('sectors/runViewSectorInClients/'.$data['idSector']);
+       }   
   }
  
  function check_status($status){
@@ -286,7 +308,6 @@ class Clients extends CI_Controller {
     $data['nameUser'] = $session_data['nameUser'];
     $data['idUser'] =  $session_data['idUser'];
     $data['idClient'] = $id;
-    $this->load->model('projects_model','',TRUE);
     $data['query'] = $this->projects_model->getclientProjects($data['idClient']);
     $this->load->view('ehtml/headercrud',$data);
     $this->load->helper(array('form'));
@@ -294,13 +315,12 @@ class Clients extends CI_Controller {
     $this->load->view('ehtml/footercrud');
   }
 
-  function runViewClientProjectsInSector($id,$idSector){
+  function runViewClientProjectsInSector($idClient,$idSector){
     $session_data = $this->session->userdata('logged_in');
     $data['nameUser'] = $session_data['nameUser'];
     $data['idUser'] =  $session_data['idUser'];
-    $data['idClient'] = $id;
+    $data['idClient'] = $idClient;
     $data['idSector'] = $idSector; 
-    $this->load->model('projects_model','',TRUE);
     $data['query'] = $this->projects_model->getclientProjects($data['idClient']);
     $data['client'] = $this->client_model->getClient($data['idClient']);
     $this->load->view('ehtml/headercrud',$data);

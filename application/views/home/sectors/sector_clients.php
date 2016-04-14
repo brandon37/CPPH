@@ -55,14 +55,14 @@
                                                 <td><?= $opc->status?></td>
                                                 <td><?= $opc->typeSector?></td>
                                                 <td><a href="<?= base_url()?>clients/runViewClientProjectsInSector/<?= $opc->idClient?>/<?=$opc->idSector?>">Mostrar</a></td>
-                                                <td><a href="<?=base_url()?>clients/runViewEditClientInSector/<?=$opc->idClient?>/<?=$id?>" >Edit</a></td>
+                                                <td><a href="<?=base_url()?>clients/runViewEditClientInSector/<?=$opc->idClient?>/<?=$idSector?>" >Edit</a></td>
                                                 <td class="text-center text-danger">
-                                                    <a href="<?=base_url()?>clients/deleteClientInSector/<?=$opc->idClient?>/<?=$id?>" class="confirmationDeleteClient">X</a>  
+                                                    <a href="<?=base_url()?>clients/deleteClientInSector/<?=$opc->idClient?>/<?=$idSector?>" class="confirmationDeleteClient">X</a>  
                                                 </td>
                                             </tr>
                                         <?php } 
                                         }else{
-                                            echo "Error No Existe Ningun Cliente Favor De Agregar";
+                                            echo "No Existe Ningun Cliente";
                                         }
                                     ?>           
                                    
@@ -89,7 +89,7 @@
                       <h3 class="myModalLabel text-center" id="exampleModalLabel">New Client</h3>
                     </div>
                     <div class="modal-body">
-                       <?= form_open('clients/newClient') ?>
+                       <?= form_open('clients/newClientInSector') ?>
                           <div class="form-group">
                               <label class="" for="">Name Client:</label>
                               <?= form_error('clientname') ?>
@@ -104,10 +104,7 @@
                               </select>
                            </div>
                            <div class="form-group">
-                              <label class="" for="sector">Sector:</label>
-                              <?= form_error('typeSector') ?>
-                              <input type="text" size="20" id="sector" name="typeSector" placeholder="Sector" value="" class="form-sector form-control" required/>
-                              
+                              <input type="hidden" size="20" id="sector" name="typeSector" placeholder="Sector" value="<?= $sector->typeSector ?>" class="form-sector form-control" required/>
                            </div>
                          <div class="modal-footer">
                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

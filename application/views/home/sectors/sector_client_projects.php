@@ -6,7 +6,9 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">
-                     Control De Proyectos Del Cliente <?= $client->nameClient ?>
+                     Control De Proyectos Del Cliente <?php if (isset($client->nameClient)) {
+                            echo $client->nameClient;
+                     }  ?>
                     </h1>
                     <ol class="breadcrumb">
                         <li>
@@ -24,6 +26,10 @@
                         <li class="active">
                             <i class="fa fa-table"></i> Proyectos del Cliente
                         </li> 
+
+                        <p class="text-right">
+                            <button type="button" class="btn btn-large btn-info" data-toggle="modal" data-target="#createProjectModal" data-whatever="">New Project</button>
+                        </p>
                          
                     </ol>
                 </div>
@@ -34,6 +40,8 @@
                     <div class="col-lg-10">
                         <h2>Proyectos</h2>
                         <div class="table-responsive">
+                        <?php 
+                             if ($query){ ?>
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
@@ -42,15 +50,14 @@
                                         <th>Price</th>
                                         <th>DC</th>
                                         <th>DT</th>
-                                        <th>Cliente</th>
+                                        <th>Ordenes de Cuenta</th>
                                         <th>Edit</th>
                                         <th class="text-center">Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                    
-                                    <?php 
-                                        if ($query){
+                                    <?php
                                         foreach ($query->result() as $opc) { ?>
                                             <tr>
                                                 <td><?= $opc->nameProject?></td>
@@ -58,21 +65,23 @@
                                                 <td><?= $opc->price?></td>
                                                 <td><?= $opc->dateCreation?></td>
                                                 <td><?= $opc->dateTermination?></td>
-                                                <td><?= $opc->nameClient?></td>
-                                                <td><a href="<?=base_url()?>projects/runViewEditProjectClientInSector/<?=$opc->idProject?>/<?=$opc->idClient?>/<?=$idSector?>" >Edit</a>
+                                                <td><a href="<?= base_url()?>ordershopping/runViewOrderShoppingsProjectClientInSector/<?=$opc->idProject?>/<?=$opc->idClient?>/<?=$idSector?>">Ver</a></td>
+                                                <td><a href="<?= base_url()?>projects/runViewEditProjectClientInSector/<?=$opc->idProject?>/<?=$opc->idClient?>/<?=$idSector?>" >Edit</a>
                                                 </td>
                                                 <td class="text-center text-danger">
-                                                    <a href="<?=base_url()?>projects/deleteProject/<?=$opc->idProject?>" class="confirmationDeleteProject">X</a>  
+                                                    <a href="<?=base_url()?>projects/deleteProjectClientInSector/<?=$opc->idProject?>/<?=$idClient ?>/<?=$idSector ?>" class="confirmationDeleteProject">X</a>  
                                                 </td>
-                                            </tr>
-                                        <?php } 
-                                        }else{
-                                            echo "Error No Existe Ningun Projecto Favor De Agregar";
-                                        }
-                                    ?>           
+                                            </tr>   
                                    
-                                </tbody>
-                            </table>
+                               <?php } ?>
+                               </tbody>
+                            </table><?php
+                                        }else{
+                                            echo "<h4 class='text-danger'>El Cliente "; if(isset($client->nameClient)) {
+                                              echo $client->nameClient;
+                                            } echo " No Contiene Proyectos</h4>";
+                                        }
+                                    ?>  
                         </div>
                     </div>
                 </div>
@@ -94,7 +103,7 @@
                       <h3 class="myModalLabel text-center" id="exampleModalLabel">New Project</h3>
                     </div>
                     <div class="modal-body">
-                       <?= form_open('projects/newProject') ?>
+                       <?= form_open('projects/newProjectClientInSector/'.$idClient.'/'.$idSector) ?>
                           <div class="form-group">
                               <label class="" for="projectname">Name Project:</label>
                               <?=  form_error('projectname') ?>
@@ -116,9 +125,7 @@
                               <input type="date" size="20" id="dateCreation" name="dateCreation" class="form-dateCreation form-control" required/>
                            </div>
                            <div class="form-group">
-                              <label class="" for="client">Client:</label>
-                              <?= form_error('nameClient')?>
-                              <input type="text" size="20" id="client" name="nameClient" placeholder="Client" class="form-client form-control" required/>
+                              <input type="hidden" size="20" id="client" name="nameClient" value="<?= $client->nameClient ?>" class="form-client form-control" required/>
                            </div>
                          <div class="modal-footer">
                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

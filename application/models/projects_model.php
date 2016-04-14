@@ -79,7 +79,9 @@ class Projects_model extends CI_Model {
 		$this->db->join('departments', 'projects_has_departments.idDepartment = departments.idDepartment');
 		$this->db->join('clients', 'projects.idClient = clients.idClient');
 		$this->db->where('projects.idClient', $idClient);
-		return $this->db->get("projects_has_departments");
+		$query = $this->db->get("projects_has_departments");
+		if($query->num_rows() >0) return $query;
+		else return false;
 	}
 
 	function getDepartmentProjects($idDepartment){
