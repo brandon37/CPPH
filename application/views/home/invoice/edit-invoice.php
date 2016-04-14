@@ -19,7 +19,7 @@
                           </li>
                            
                           <li class="active">
-                              <i class="fa fa-edit"></i> Edit Facturas
+                              <i class="fa fa-edit"></i> Editar Factura
                           </li>
                      
                       </ol>
@@ -30,14 +30,13 @@
               if ($invoice){
                  ?>
                 <div class="form-group">
+                    <label class="" for="invoice">Number Invoice:</label>
                     <?= form_error('noInvoice') ?>
-                    <label class="sr-only" for="invoice">invoice:</label>
                     <input type="text" size="20" id="invoice" name="noinvoice" placeholder="Factura" value="<?= $invoice->noInvoice ?>" class="form-invoice form-control" required/>
-                        
                  </div>
                  <div class="form-group">
+                    <label class="" for="status">status:</label>
                     <?= form_error('status') ?>
-                    <label class="sr-only" for="status">status:</label>
                     <input type="text" size="20" id="status" name="status" placeholder="Estado" class="form-status form-control" value="<?= $invoice->status ?>" required/>             
                  </div>
                  <div class="modal-footer">

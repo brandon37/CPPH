@@ -88,10 +88,10 @@
                       <h3 class="myModalLabel text-center" id="exampleModalLabel">New Sector</h3>
                     </div>
                     <div class="modal-body">
-                       <?= validation_errors() ?>
                        <?= form_open('sectors/newSector') ?>
                            <div class="form-group">
-                              <label class="sr-only" for="sector">Sector:</label>
+                              <label class="" for="sector">Sector:</label>
+                              <?= form_error('sector')?>
                               <input type="text" size="20" id="sector" name="sector" placeholder="Name Sector" value="" class="form-sector form-control" required/>
                               
                            </div>

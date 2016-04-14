@@ -176,6 +176,7 @@ class Clients extends CI_Controller {
      }
 
   }
+  
   function updateClientInSector($id,$idSect){
     $data = array(
         'nameClient'=>$this->input->post('clientname'),
@@ -256,6 +257,7 @@ class Clients extends CI_Controller {
     $data['nameUser'] = $session_data['nameUser'];
     $data['idUser'] =  $session_data['idUser'];
     $data['client'] = $this->client_model->getClient($id);
+    $data['sector'] = $this->sector_model->getSector($data['client']->idSector);
     $data['id'] = $id;
     $data['sectors'] = $this->sector_model->getAllSectors();
     $this->load->view('ehtml/headercrud',$data);
@@ -269,6 +271,7 @@ class Clients extends CI_Controller {
     $data['nameUser'] = $session_data['nameUser'];
     $data['idUser'] =  $session_data['idUser'];
     $data['client'] = $this->client_model->getClient($id);
+    $data['sector'] = $this->sector_model->getSector($data['client']->idSector);
     $data['idSector'] = $idSector;
     $data['id'] = $id;
     $data['sectors'] = $this->sector_model->getAllSectors();
@@ -299,6 +302,7 @@ class Clients extends CI_Controller {
     $data['idSector'] = $idSector; 
     $this->load->model('projects_model','',TRUE);
     $data['query'] = $this->projects_model->getclientProjects($data['idClient']);
+    $data['client'] = $this->client_model->getClient($data['idClient']);
     $this->load->view('ehtml/headercrud',$data);
     $this->load->helper(array('form'));
     $this->load->view('home/sectors/sector_client_projects',$data);
@@ -310,6 +314,7 @@ class Clients extends CI_Controller {
     $data['nameUser'] = $session_data['nameUser'];
     $data['idUser'] =  $session_data['idUser'];
     $data['client'] = $this->client_model->getClient($id);
+    $data['sector'] = $this->sector_model->getSector($data['client']->idSector)->typeSector;
     $data['id'] = $id;
     $this->load->view('ehtml/headercrud',$data);
     $this->load->helper(array('form'));
@@ -322,6 +327,7 @@ class Clients extends CI_Controller {
     $this->client_model->deleteClient($id);
     redirect('clients'); 
   }
+
   function deleteClientInSector($idClient, $idSector){
     $this->client_model->deleteClient($idClient);
     redirect('sectors/runViewSectorInClients/'.$idSector);

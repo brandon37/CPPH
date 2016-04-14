@@ -18,7 +18,7 @@
                           </li>
                            
                           <li class="active">
-                              <i class="fa fa-edit"></i> Edit Ordenes de Compra
+                              <i class="fa fa-edit"></i> Editar Orden de Compra
                           </li> 
                     </ol>
                 </div>
@@ -29,7 +29,7 @@
                ?>    
                  <div class="form-group">
                      <?= form_error('nameProyect') ?>
-                     <label class="sr-only" for="nameProyect">Name Proyect:</label>
+                     <label class="" for="nameProyect">Name Proyect:</label>
                      <select name="nameProyect"  class="form-control" value="<?= $ordershopping->nameProyect ?>" required>
                         <?php 
                         foreach ($proyects->result() as $opt) { 
@@ -42,23 +42,23 @@
                      
                  </div>
                  <div class="form-group">
+                    <label class="" for="text">concept:</label>
                     <?= form_error('concept') ?>
-                    <label class="sr-only" for="text">concept:</label>
                     <input type="text" size="20" id="concept" name="concept"placeholder="concept" class="form-concept form-control" value="<?= $ordershopping->concept ?>" required/>
                  </div>
                  <div class="form-group">
+                    <label class="" for="amount">amount:</label>
                     <?= form_error('amount') ?>
-                    <label class="sr-only" for="amount">amount:</label>
                     <input type="text" size="20" id="amount" name="amount" placeholder="amount" class="form-amount form-control" value="<?= $ordershopping->amount ?>" required/>
                  </div>
                  <div class="form-group">
+                    <label class="" for="dateCreation">Date Creation:</label>
                     <?= form_error('dateCreation') ?>
-                    <label class="sr-only" for="dateCreation">Date Creation:</label>
                     <input type="date" size="20" id="dateCreation" name="dateCreation" placeholder="Date Creation"  class="form-dateCreation form-control" value="<?= $ordershopping->dateCreation ?>" required/>
                  </div>
                  <div class="form-group">
+                    <label class="" for="dateTermination">Date Termination:</label>
                     <?= form_error('dateTermination') ?>
-                    <label class="sr-only" for="dateTermination">Date Termination:</label>
                     <input type="date" size="20" id="dateTermination" name="dateTermination" placeholder="Date Termination" class="form-dateTermination form-control" value="<?= $ordershopping->dateTermination ?>" required/>
                  </div>
                <div class="modal-footer">

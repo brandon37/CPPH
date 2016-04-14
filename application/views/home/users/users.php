@@ -123,23 +123,23 @@
                     <div class="modal-body">
                        <?= form_open('users/newUser') ?>
                           <div class="form-group">
+                               <label class="" for="username">User Name:</label>
                                <?=form_error('username') ?>
-                               <label class="sr-only" for="username">Username:</label>
                                <input type="text" size="20" id="username" name="username" placeholder="Username" class="form-username form-control "required/>
                            </div>
                            <div class="form-group">
+                              <label class="" for="email">Email:</label>
                               <?= form_error('email') ?>
-                              <label class="sr-only" for="email">Email:</label>
                               <input type="email" size="20" id="email" name="email"placeholder="Email" class="form-email form-control "required/>
                            </div>
                            <div class="form-group">
+                              <label class="" for="password">Password:</label>
                               <?= form_error('password') ?>
-                              <label class="sr-only" for="password">Password:</label>
                               <input type="password" size="20" id="passowrd" name="password"placeholder="Password" class="form-password form-control" required/>
                            </div>
                            <div class="form-group">
+                              <label class="" for="password">Repeat Password:</label>
                               <?= form_error('passwordconf') ?>
-                              <label class="sr-only" for="password">Repeat Password:</label>
                               <input type="password" size="20" id="passowrd" name="passwordconf"placeholder="Repeat Password" class="form-password form-control" required/>
                            </div>
                          <div class="modal-footer">
@@ -171,17 +171,17 @@
                             
                             <div class="form-group">
                                <?= form_error('username') ?>
-                               <label class="sr-only" for="username">Username:</label>
+                               <label class="" for="username">User Name:</label>
                                <input type="text" size="20" id="username" name="username" placeholder="Username" class="form-username form-control" value="<?= $opc->nameUser?>" required/>
                             </div>
                             <div class="form-group">
                               <?= form_error('email') ?>
-                              <label class="sr-only" for="email">Email:</label>
+                              <label class="" for="email">Email:</label>
                               <input type="email" size="20" id="passowrd" name="email"placeholder="Email" class="form-email form-control" value="<?= $opc->email?>" required/>
                             </div>
                             <div class="form-group">
                               <?= form_error('password') ?>
-                              <label class="sr-only" for="password">Password:</label>
+                              <label class="" for="password">Password:</label>
                               <input type="password" size="20" id="passowrd" name="password"placeholder="Password" class="form-password form-control" value="<?= $opc->pass?>" required/>
                             </div>
                            

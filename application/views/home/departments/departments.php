@@ -80,13 +80,13 @@
                 <div class="modal-content">
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <h3 class="myModalLabel text-center" id="exampleModalLabel">New department</h3>
+                      <h3 class="myModalLabel text-center" id="exampleModalLabel">New Department</h3>
                     </div>
                     <div class="modal-body">
                        <?= form_open('departments/newDepartment') ?>
                            <div class="form-group">
+                              <label class="" for="department">Department:</label>
                               <?= form_error('department')?>
-                              <label class="sr-only" for="department">department:</label>
                               <input type="text" size="20" id="department" name="department" placeholder="Departamento" value="" class="form-department form-control" required/>
                               
                            </div>

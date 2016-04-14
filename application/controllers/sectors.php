@@ -80,12 +80,10 @@ class Sectors extends CI_Controller {
     }
   }
 
-  function updateSector(){
+  function updateSector($id){
     $data = array(
       'typeSector'=>$this->input->post('sector')
     );
-
-    $id = $this->uri->segment(3);
 
     $data['sector'] = $this->sector_model->getSector($id);
    if ($data['sector']->typeSector != $data['typeSector']) 
@@ -106,9 +104,8 @@ class Sectors extends CI_Controller {
           $this->load->view('ehtml/footercrud');
 
         }else{
-          
-            $this->sector_model->updateSector($id,$data);
-            redirect('sectors');
+          $this->sector_model->updateSector($id,$data);
+          redirect('sectors');
         }
 
      }else{
@@ -117,13 +114,13 @@ class Sectors extends CI_Controller {
           }  
   }
 
-  function runViewSectorProyects($id){
+  function runViewSectorProyects($idSector){
     $session_data = $this->session->userdata('logged_in');
     $data['nameUser'] = $session_data['nameUser'];
     $data['idUser'] =  $session_data['idUser'];
-    $data['id'] = $id;
+    $data['idSector'] = $idSector;
     $this->load->model('projects_model','',TRUE);
-    $data['query'] = $this->projects_model->getSectorProjects($data['id']);
+    $data['query'] = $this->projects_model->getSectorProjects($data['idSector']);
     $this->load->view('ehtml/headercrud',$data);
     $this->load->helper(array('form'));
     $this->load->view('home/sectors/sector_projects',$data);
@@ -136,7 +133,8 @@ class Sectors extends CI_Controller {
     $data['idUser'] =  $session_data['idUser'];
     $data['id'] = $id;
     $this->load->model('client_model','',TRUE);
-    $data['query'] = $this->client_model->getSectorClients($data['id']);
+    $data['query'] = $this->client_model->getSectorClients($id);
+    $data['sector'] = $this->sector_model->getSector($id);
     $this->load->view('ehtml/headercrud',$data);
     $this->load->helper(array('form'));
     $this->load->view('home/sectors/sector_clients',$data);

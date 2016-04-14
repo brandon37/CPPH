@@ -4,33 +4,39 @@ class Departments extends CI_Controller {
  
   function __construct(){
       parent::__construct();
+      $this->session();
       $this->load->model('department_model','',TRUE);
       $this->load->library("pagination");
+      $this->load->library('form_validation');
   }
 
   function index(){
-	  if($this->session->userdata('logged_in')){
-	     $session_data = $this->session->userdata('logged_in');
-	     $name = 'General';
-	     $data['nameUser'] = $session_data['nameUser'];
-	     $data['idUser'] =  $session_data['idUser'];
-	     $data['email'] = $session_data['email'];
-       $config = $this->pagination();
-       $this->pagination->initialize($config);
-       $result = $this->department_model->get_pagination($config['per_page']);
-       $data['query'] = $result;
-       $data['pagination'] = $this->pagination->create_links();
-	     $this->load->view('ehtml/headercrud',$data);
-	     $this->load->helper(array('form'));
-	     $this->load->view('home/departments/departments',$data);
-	     $this->load->view('ehtml/footercrud');
-	   }
+     $session_data = $this->session->userdata('logged_in');
+     $name = 'General';
+     $data['nameUser'] = $session_data['nameUser'];
+     $data['idUser'] =  $session_data['idUser'];
+     $data['email'] = $session_data['email'];
+     $config = $this->pagination();
+     $this->pagination->initialize($config);
+     $result = $this->department_model->get_pagination($config['per_page']);
+     $data['query'] = $result;
+     $data['pagination'] = $this->pagination->create_links();
+     $this->load->view('ehtml/headercrud',$data);
+     $this->load->helper(array('form'));
+     $this->load->view('home/departments/departments',$data);
+     $this->load->view('ehtml/footercrud');
+	}
+
+  function session(){
+    if($this->session->userdata('logged_in')){
+       return TRUE;
+      }
     else
      {
        //If no session, redirect to login page
        redirect('login', 'refresh');
      }
-	}
+  }
 
   function pagination(){
      $config['base_url'] = base_url()."departments/index/";
@@ -60,13 +66,14 @@ class Departments extends CI_Controller {
   }
 
   function newDepartment(){
-    if($this->session->userdata('logged_in')){
-
-      $data = array(
+     $session_data = $this->session->userdata('logged_in');
+     $name = 'General';
+     $data['nameUser'] = $session_data['nameUser'];
+     $data['idUser'] =  $session_data['idUser'];
+     $data['email'] = $session_data['email'];
+     $data = array(
       'nameDepartment'=>$this->input->post('department')
       );
-
-        $this->load->library('form_validation');
         $this->form_validation->set_rules('department', 'Department', 'is_unique[department.nameDepartment]|required');
        if($this->form_validation->run() == FALSE)
         {
@@ -76,56 +83,52 @@ class Departments extends CI_Controller {
           $this->department_model->newDepartment($data);
           redirect('departments');
         }
-
-     }
-    else
-     {
-       //If no session, redirect to login page
-       redirect('login', 'refresh');
-     }
   }
 
-  function updateDepartment(){
-    if($this->session->userdata('logged_in')){
-    	    $data = array(
-    	      'nameDepartment'=>$this->input->post('department')
-    	    );
+  function updateDepartment($id ){
+     $session_data = $this->session->userdata('logged_in');
+     $name = 'General';
+     $data['nameUser'] = $session_data['nameUser'];
+     $data['idUser'] =  $session_data['idUser'];
+     $data['email'] = $session_data['email'];
+	    $data = array(
+	      'nameDepartment'=>$this->input->post('department')
+	    );
+      $data['department'] = $this->department_model->getDepartment($id);
+     if ($data['department']->nameDepartment != $data['nameDepartment']) 
+     {   
+        $this->form_validation->set_rules('department', 'Department', 'is_unique[department.nameDepartment]|required');
+        if($this->form_validation->run() == FALSE)
+          {
+            $this->runViewEditDepartment($id);
 
-          $id = $this->uri->segment(3);
-
-          $data['department'] = $this->department_model->getDepartment($id);
-         if ($data['department']->nameDepartment != $data['nameDepartment']) 
-         {   
-          
-            $this->load->library('form_validation');
-            $this->form_validation->set_rules('department', 'Department', 'is_unique[department.nameDepartment]|required');
-            if($this->form_validation->run() == FALSE)
-              {
-                $this->runViewEditDepartment();
-
-              }else{
-                
-                  $this->department_model->updateDepartment($id,$data);
-                  redirect('departments');
-              }
+          }else{
+            
+              $this->department_model->updateDepartment($id,$data);
+              redirect('departments');
+          }
 
       }else{
-        $this->department_model->updateDepartment($id,$data);
-        redirect('departments');
+
+        $this->form_validation->set_rules('department', 'Department', 'required');
+        if($this->form_validation->run() == FALSE)
+          {
+            $this->runViewEditDepartment($id);
+
+          }else{
+              $this->department_model->updateDepartment($id,$data);
+              redirect('departments');
+          }
       }
       
-    }
-    else
-      {
-       //If no session, redirect to login page
-       redirect('login', 'refresh');
-      }
   }
 
   function runViewDeparmentProyects($id){
     $session_data = $this->session->userdata('logged_in');
+    $name = 'General';
     $data['nameUser'] = $session_data['nameUser'];
     $data['idUser'] =  $session_data['idUser'];
+    $data['email'] = $session_data['email'];
     $data['id'] = $id;
     $this->load->model('projects_model','',TRUE);
     $data['query'] = $this->projects_model->getDepartmentProjects($data['id']);
@@ -136,35 +139,24 @@ class Departments extends CI_Controller {
   }
 
   function runViewEditDepartment($id){
-     if($this->session->userdata('logged_in')){
-        $session_data = $this->session->userdata('logged_in');
-        $data['nameUser'] = $session_data['nameUser'];
-        $data['idUser'] =  $session_data['idUser'];
-        $data['department'] = $this->department_model->getDepartment($id);
-        $data['id'] = $id;
-        $this->load->view('ehtml/headercrud',$data);
-        $this->load->helper(array('form'));
-        $this->load->view('home/departments/edit-department',$data);
-        $this->load->view('ehtml/footercrud');
-      }
-     else
-       {
-         //If no session, redirect to login page
-         redirect('login', 'refresh');
-       }
+    $session_data = $this->session->userdata('logged_in');
+    $name = 'General';
+    $data['nameUser'] = $session_data['nameUser'];
+    $data['idUser'] =  $session_data['idUser'];
+    $data['email'] = $session_data['email'];
+    $data['department'] = $this->department_model->getDepartment($id);
+    $data['id'] = $id;
+    $this->load->view('ehtml/headercrud',$data);
+    $this->load->helper(array('form'));
+    $this->load->view('home/departments/edit-department',$data);
+    $this->load->view('ehtml/footercrud');
   }
 
   function deleteDepartment(){
-    if($this->session->userdata('logged_in')){
         $id = $this->uri->segment(3);
         $this->department_model->deleteDepartment($id);
         redirect('departments');
-      }
-    else
-     {
-       //If no session, redirect to login page
-       redirect('login', 'refresh');
-     }  
-}
+     
+  }
 
 }

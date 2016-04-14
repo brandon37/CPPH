@@ -3,7 +3,6 @@
             <div class="container-fluid">
 
                 <!-- Page Heading -->
-             <div class="col-xs-12 col-sm-12">
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
@@ -14,12 +13,18 @@
                             <i class="fa fa-dashboard"></i>  <a href="<?=base_url()?>home">Dashboard</a>
                           </li>
 
-                         <li>
-                             <i class="fa fa-table"> <a href="<?=base_url()?>clients"> Clientes </a></i> 
+                          <li>
+                              <i class="fa fa-table">
+                                    <a href="<?= base_url()?>sectors"> Sectores</a>
+                              </i>
                           </li>
 
                           <li>
-                             <i class="fa fa-table"> <a href="<?=base_url()?>clients/runViewClientProjects/<?=$idClient?>"> Proyectos Del Cliente </a></i> 
+                             <i class="fa fa-table"> <a href="<?=base_url()?>sectors/runViewSectorInClients/<?= $idSector?>"> Clientes </a> </i> 
+                          </li>
+
+                          <li>
+                             <i class="fa fa-table"> <a href="<?=base_url()?>clients/runViewClientProjectsInSector/<?=$idClient?>/<?=$idSector?>"> Proyectos Del Cliente </a></i> 
                           </li>
                            
                           <li class="active">
@@ -28,14 +33,14 @@
                         </ol>
                     </div>
                 </div>
-      <?= form_open('projects/updateProjectInClient/'.$idProject.'/'.$idClient)?>    
+      <?= form_open('projects/updateProjectClientInSector/'.$idProject.'/'.$idClient)?>    
         <?php 
             if ($project){
                ?>
                  <div class="form-group">
-                     <label class="" for="projectname">Name Project:</label>
-                     <?=  form_error('projectname') ?>
-                     <input type="text" size="20" id="nameProject" name="projectname" value="<?=$project->nameProject?>" placeholder="Name Project" class="form-projectname form-control" required/>
+                    <label class="" for="projectname">Name Project:</label>
+                    <?=  form_error('projectname') ?>
+                    <input type="text" size="20" id="nameProject" name="projectname" value="<?=$project->nameProject?>" placeholder="Name Project" class="form-projectname form-control" required/>
                  </div>
                  <div class="form-group">
                     <label class="" for="text">Department:</label>
