@@ -8,23 +8,23 @@ class Invoice_model extends CI_Model {
 	}
 
 	function newInvoice($data){
-		$this->db->insert('invoice',array('noInvoice'=>$data['noInvoice'],'status'=>$data['status'],
+		$this->db->insert('invoices',array('noInvoice'=>$data['noInvoice'],'status'=>$data['status'],
 			'idOrderShopping'=>$data['idOrderShopping']));
 	}
 
 	function deleteInvoice($id){
-		$this->db->delete('invoice', array('idInvoice'=>$id));
+		$this->db->delete('invoices', array('idInvoice'=>$id));
 	}
 
 	function getAllInvoice($id){
-		$query = $this->db->get('invoice');
+		$query = $this->db->get('invoices');
 		if($query->num_rows() >0) return $query;
 		else return false;
 	}
 
 	function getInvoice($id){
 		$this->db->where('idInvoice',$id);
-		$query = $this->db->get('invoice');
+		$query = $this->db->get('invoices');
 		if($query->num_rows() >0) return $query->row();
 		else return false;
 	}
@@ -36,18 +36,18 @@ class Invoice_model extends CI_Model {
 
 		 );
 		$this->db->where('idInvoice',$id);
-		$this->db->update('invoice',$info);
+		$this->db->update('invoices',$info);
 	}
 
 	function no_page(){
-		$number = $this->db->query("SELECT count(*) as number FROM invoice")->row()->number;
+		$number = $this->db->query("SELECT count(*) as number FROM invoices")->row()->number;
 
 		return intval($number);
 	}
 
 	function get_pagination($number_per_page){
 
-		return $this->db->get("invoice", $number_per_page, $this->uri->segment(3));
+		return $this->db->get("invoices", $number_per_page, $this->uri->segment(3));
 
 	}
 	

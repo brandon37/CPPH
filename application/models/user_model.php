@@ -10,7 +10,7 @@ class User_model extends CI_Model {
 	 function login($username, $password)
 	 {
 	   $this->db->select('idUser, nameUser, email, pass, type');
-	   $this->db->from('user');
+	   $this->db->from('users');
 	   $this->db->where('nameUser', $username);
 	   $this->db->where('pass', MD5($password));
 	   $this->db->limit(1);
@@ -29,14 +29,14 @@ class User_model extends CI_Model {
     
     function getAllUsers($type){
 	  	$this->db->where('type',$type);
-		$query = $this->db->get('user');
+		$query = $this->db->get('users');
 		if($query->num_rows() >0) return $query;
 		else return false;
 	}
 
 	function getUserPass($pass){
 	  	$this->db->where('pass',$pass);
-		$query = $this->db->get('user');
+		$query = $this->db->get('users');
 		if($query->num_rows() >0) return $query->result();
 		else return false;
 	}
@@ -44,22 +44,22 @@ class User_model extends CI_Model {
 	function getUserEmail($email)
 	{
 		$this->db->where('email',$email);
-		$query = $this->db->get('user');
+		$query = $this->db->get('users');
 		if($query->num_rows() > 0) return $query->result();
 		else return false;
 	}
 
 	function newUser($data){
-		$this->db->insert('user',array('nameUser'=>$data['nameUser'], 'email'=>$data['email'],'pass'=>MD5($data['pass']),'type'=>$data['type']));
+		$this->db->insert('users',array('nameUser'=>$data['nameUser'], 'email'=>$data['email'],'pass'=>MD5($data['pass']),'type'=>$data['type']));
 	}
 
 	function deleteUser($id){
-		$this->db->delete('user', array('idUser'=>$id));
+		$this->db->delete('users', array('idUser'=>$id));
 	}
 
 	function getUser($id){
 		$this->db->where('idUser',$id);
-		$query = $this->db->get('user');
+		$query = $this->db->get('users');
 		if($query->num_rows() >0) return $query->row();
 		else return false;
 	}
@@ -68,19 +68,19 @@ class User_model extends CI_Model {
 		$info = array('nameUser'=>$data['nameUser'],'email'=>$data['email'],
 		'pass'=>MD5($data['pass']),'type'=>$data['type']);
 		$this->db->where('idUser',$id);
-		$this->db->update('user',$info);
+		$this->db->update('users',$info);
 	}
 
 	function updateProfile($id,$data){
 		$info = array('nameUser'=>$data['nameUser'],'email'=>$data['email'],
 		'pass'=>$data['pass'],'type'=>$data['type']);
 		$this->db->where('idUser',$id);
-		$this->db->update('user',$info);
+		$this->db->update('users',$info);
 	}
 	
 	function no_page(){
 		$this->db->where('type','General');
-		$number = $this->db->query("SELECT count(*) as number FROM user")->row()->number;
+		$number = $this->db->query("SELECT count(*) as number FROM users")->row()->number;
 
 		return intval($number);
 	}
@@ -88,7 +88,7 @@ class User_model extends CI_Model {
 	function get_pagination($number_per_page){
 
 		$this->db->where('type','General');
-		return $this->db->get("user", $number_per_page, $this->uri->segment(3));
+		return $this->db->get("users", $number_per_page, $this->uri->segment(3));
 
 	}
 	
@@ -98,7 +98,7 @@ class User_model extends CI_Model {
         $this->db->or_like('nameUser', $cadena, 'after');
  
  
-        $consulta = $this->db->get('user');
+        $consulta = $this->db->get('users');
  
         if($consulta->num_rows() > 0){
             return $consulta->result();

@@ -69,7 +69,7 @@ class Sectors extends CI_Controller {
     $data = array(
       'typeSector'=>$this->input->post('sector')
     );
-    $this->form_validation->set_rules('sector', 'Sector', 'is_unique[sector.typeSector]|required');
+    $this->form_validation->set_rules('sector', 'Sector', 'is_unique[sectors.typeSector]|required');
    if($this->form_validation->run() == FALSE)
     {
       $this->index();
@@ -89,7 +89,7 @@ class Sectors extends CI_Controller {
    if ($data['sector']->typeSector != $data['typeSector']) 
     {   
     
-      $this->form_validation->set_rules('sector', 'Type Sector', 'required|is_unique[Sector.typeSector]');
+      $this->form_validation->set_rules('sector', 'Type Sector', 'required|is_unique[sectors.typeSector]');
       if($this->form_validation->run() == FALSE)
         {
           $session_data = $this->session->userdata('logged_in');
@@ -114,7 +114,7 @@ class Sectors extends CI_Controller {
           }  
   }
 
-  function runViewSectorProyects($idSector){
+  function runViewSectorProjects($idSector){
     $session_data = $this->session->userdata('logged_in');
     $data['nameUser'] = $session_data['nameUser'];
     $data['idUser'] =  $session_data['idUser'];

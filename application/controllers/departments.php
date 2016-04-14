@@ -74,7 +74,7 @@ class Departments extends CI_Controller {
      $data = array(
       'nameDepartment'=>$this->input->post('department')
       );
-        $this->form_validation->set_rules('department', 'Department', 'is_unique[department.nameDepartment]|required');
+        $this->form_validation->set_rules('department', 'Department', 'is_unique[departments.nameDepartment]|required');
        if($this->form_validation->run() == FALSE)
         {
           $this->index();
@@ -97,7 +97,7 @@ class Departments extends CI_Controller {
       $data['department'] = $this->department_model->getDepartment($id);
      if ($data['department']->nameDepartment != $data['nameDepartment']) 
      {   
-        $this->form_validation->set_rules('department', 'Department', 'is_unique[department.nameDepartment]|required');
+        $this->form_validation->set_rules('department', 'Department', 'is_unique[departments.nameDepartment]|required');
         if($this->form_validation->run() == FALSE)
           {
             $this->runViewEditDepartment($id);
@@ -123,7 +123,7 @@ class Departments extends CI_Controller {
       
   }
 
-  function runViewDeparmentProyects($id){
+  function runViewDeparmentProjects($id){
     $session_data = $this->session->userdata('logged_in');
     $name = 'General';
     $data['nameUser'] = $session_data['nameUser'];

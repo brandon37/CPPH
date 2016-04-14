@@ -8,36 +8,36 @@ class Ordershopping_model extends CI_Model {
 	}
 
 	function newOrderShopping($data){
-		$this->db->insert('orderShopping',array('concept'=>$data['concept'],'amount'=>$data['amount'], 
-			'dateCreation'=>$data['dateCreation'],'dateTermination'=>$data['dateTermination'],'idProject'=>$data['idproject']));
+		$this->db->insert('orderShoppings',array('concept'=>$data['concept'],'amount'=>$data['amount'], 
+			'dateCreationOS'=>$data['dateCreationOS'],'dateTerminationOS'=>$data['dateTerminationOS'],'idProject'=>$data['idproject']));
 	}
 
 	function deleteOrderShopping($id){
-		$this->db->delete('orderShopping', array('idorderShopping'=>$id));
+		$this->db->delete('orderShoppings', array('idorderShopping'=>$id));
 	}
 
 	function getAllOrderShopping($id){
-		$this->db->join('projects', 'orderShopping.idproject = projects.idproject');
+		$this->db->join('projects', 'orderShoppings.idproject = projects.idproject');
 		$this->db->join('clients', 'projects.idClient = clients.idClient');
-		$query = $this->db->get('orderShopping');
+		$query = $this->db->get('orderShoppings');
 		if($query->num_rows() >0) return $query;
 		else return false;
 	}
 
 	function getOrderShopping($id){
-		$this->db->join('projects', 'orderShopping.idproject = projects.idproject');
+		$this->db->join('projects', 'orderShoppings.idproject = projects.idproject');
 		$this->db->join('clients', 'projects.idClient = clients.idClient');
 		$this->db->where('idorderShopping',$id);
-		$query = $this->db->get('orderShopping');
+		$query = $this->db->get('orderShoppings');
 		if($query->num_rows() >0) return $query->row();
 		else return false;
 	}
 
 	function getProjectOrderShoppings($id){
-		$this->db->join('projects', 'orderShopping.idproject = projects.idproyect');
+		$this->db->join('projects', 'orderShoppings.idproject = projects.idproject');
 		$this->db->join('clients', 'projects.idClient = clients.idClient');
-		$this->db->where('projects.idProyect',$id);
-		$query = $this->db->get('orderShopping');
+		$this->db->where('projects.idProject',$id);
+		$query = $this->db->get('orderShoppings');
 		if($query->num_rows() >0) return $query;
 		else return false;
 	}
@@ -46,22 +46,22 @@ class Ordershopping_model extends CI_Model {
 		$info = array(
 			'concept'=>$data['concept'],
 			'amount'=>$data['amount'],
-			'dateCreation'=>$data['dateCreation'],
-			'dateTermination'=>$data['dateTermination']
+			'dateCreationOS'=>$data['dateCreationOS'],
+			'dateTerminationOS'=>$data['dateTerminationOS']
 		 );
 		$this->db->where('idorderShopping',$id);
-		$this->db->update('orderShopping',$info);
+		$this->db->update('orderShoppings',$info);
 	}
 
 	function no_page(){
-		$number = $this->db->query("SELECT count(*) as number FROM orderShopping")->row()->number;
+		$number = $this->db->query("SELECT count(*) as number FROM orderShoppings")->row()->number;
 		return intval($number);
 	}
 
 	function get_pagination($number_per_page){
-		$this->db->join('projects', 'orderShopping.idproject = projects.idproyect');
+		$this->db->join('projects', 'orderShoppings.idproject = projects.idproject');
 		$this->db->join('clients', 'projects.idClient = clients.idClient');
-		return $this->db->get("orderShopping", $number_per_page, $this->uri->segment(3));
+		return $this->db->get("orderShoppings", $number_per_page, $this->uri->segment(3));
 	}
 	
 }
