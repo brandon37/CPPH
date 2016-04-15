@@ -180,14 +180,13 @@ class Ordershopping extends CI_Controller {
     }
   }
 
-  function updateorderShoppingProyectClientinSector($idproject,$idClient,$idSector){
+  function updateorderShoppingProyectClientinSector($idOrderShopping,$idProject,$idClient,$idSector){
     $data = array(
       'concept'=>$this->input->post('concept'),
       'amount'=>$this->input->post('amount'),
       'dateCreation'=>$this->input->post('dateCreation'),
       'dateTermination'=>$this->input->post('dateTermination')
     );
-    $idOrderShopping = $this->uri->segment(3);
     $this->form_validation->set_rules('concept', 'Concept', 'required');
     $this->form_validation->set_rules('amount', 'Amount', 'required|numeric');
     $this->form_validation->set_rules('dateCreation','Date', 'required|callback_check_date');
@@ -195,14 +194,15 @@ class Ordershopping extends CI_Controller {
 
     if($this->form_validation->run() == FALSE)
     {
-      $this->runViewOrderShoppingsProjectClientInSector($idProject,$idClient,$idSector);
+      $this->runViewEditOrderShoppingsProjectClientInSector($idOrderShopping,$idProject,$idClient,$idSector);
     }else{
-      $this->ordershopping_model->updateorderShopping($idOrderShopping ,$data);
+      $data['idProject'] = $idProject;
+      $this->ordershopping_model->updateOrderShopping($idOrderShopping ,$data);
       redirect('ordershopping/runViewOrderShoppingsProjectClientInSector/'.$idProject.'/'.$idClient.'/'.$idSector);
     }
   }
 
-  function runViewOrderShoppingsProjectClientInSector($idProject,$idClient,$idSector){
+  function runViewOrderShoppingsProjectClientInSector($idProject, $idClient, $idSector){
     $session_data = $this->session->userdata('logged_in');
     $data['nameUser'] = $session_data['nameUser'];
     $data['idUser'] =  $session_data['idUser'];
