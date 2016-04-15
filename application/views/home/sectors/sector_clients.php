@@ -6,7 +6,9 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                         Control De Clientes del Sector <?= $sector->typeSector?>
+                         Control De Clientes del Sector <?php if ($sector) {
+                            echo $sector->typeSector;
+                         } ?>
                         </h1>
                         <ol class="breadcrumb">
                             <li>

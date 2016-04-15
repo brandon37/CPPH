@@ -34,7 +34,7 @@
                     </ol>
                 </div>
             </div>
-      <?= form_open('ordershopping/updateordershopping/'.$idProject.'/'.$idClient.'/'.$idSector); ?>    
+      <?= form_open('ordershopping/updateorderShoppingProyectClientinSector/'.$idProject.'/'.$idClient.'/'.$idSector); ?>    
         <?php 
             if ($ordershopping){
                ?>    
