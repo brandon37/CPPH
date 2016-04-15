@@ -22,6 +22,8 @@ class Projects extends CI_Controller {
    $config = $this->pagination();
    $this->pagination->initialize($config);
    $data['query'] = $this->projects_model->getAllProjects();
+   $data['departments'] = $this->department_model->getAllDepartments();
+   $data['clients'] = $this->client_model->getAllClients();
    $data['pagination'] = $this->pagination->create_links();
    $this->load->view('ehtml/headercrud',$data);
    $this->load->helper(array('form'));
@@ -107,7 +109,7 @@ function pagination(){
 
   }
 
-  function newProjectClientInSector($idClient, $idSector){
+  function newProjectClientInSector(){
       $data = array(
       'idProject'=>"",
       'idDepartment'=>"",
@@ -118,6 +120,8 @@ function pagination(){
       'dateTermination'=>"",
       'nameClient'=>$this->input->post('nameClient')
     );
+      $idClient = $this->uri->segment(3);
+      $idSector = $this->uri->segment(4);
       $this->form_validation_newProyect();
      if($this->form_validation->run() == FALSE)
       {
@@ -280,7 +284,7 @@ function pagination(){
         
   }
   
-  function updateProjectClientInSector($idProject, $idClient,$idSector){
+  function updateProjectClientInSector(){
     $data = array(
       'idProject'=>"",
       'idDepartment'=>"",
@@ -291,9 +295,9 @@ function pagination(){
       'dateTermination'=>$this->input->post('dateTermination'),
       'nameClient'=>$this->input->post('nameClient')
     );  
-      $data['idProject'] = $idProject;
-      $data['idClient'] = $idClient;
-      $data['idSector'] = $idSector;
+      $data['idProject'] = $this->uri->segment(3);
+      $data['idClient'] = $this->uri->segment(4);
+      $data['idSector'] = $this->uri->segment(5);
       $queryProject = $this->projects_model->getProject($idProject);
     if($queryProject) 
      {
@@ -336,7 +340,7 @@ function pagination(){
      }
   }
 
-  function updateProjectInSector($idProject,$idSector){
+  function updateProjectInSector(){
     $data = array(
       'idProject'=>"",
       'idDepartment'=>"",
@@ -347,8 +351,8 @@ function pagination(){
       'dateTermination'=>$this->input->post('dateTermination'),
       'nameClient'=>$this->input->post('nameClient')
     );  
-      $data['idProject'] = $idProject;
-      $data['idSector'] = $idSector;
+      $data['idProject'] = $this->uri->segment(3);
+      $data['idSector'] = $this->uri->segment(4);
       $queryProject = $this->projects_model->getProject($idProject);
     if($queryProject) 
      {
@@ -391,7 +395,7 @@ function pagination(){
      }
   }
 
-  function updateProjectInClient($idProject,$idClient){
+  function updateProjectInClient(){
       $data = array(
       'idProject'=>"",
       'idDepartment'=>"",
@@ -402,8 +406,8 @@ function pagination(){
       'dateTermination'=>$this->input->post('dateTermination'),
       'nameClient'=>$this->input->post('nameClient')
     );  
-      $data['idProject'] = $idProject;
-      $data['idClient'] = $idClient;
+      $data['idProject'] = $this->uri->segment(3);
+      $data['idClient'] = $this->uri->segment(4);
       $queryProject = $this->projects_model->getProject($idProject);
     if($queryProject) 
      {
@@ -446,11 +450,11 @@ function pagination(){
      }
   }
 
-  function runViewProjectOrderShoppings($id){
+  function runViewProjectOrderShoppings(){
     $session_data = $this->session->userdata('logged_in');
     $data['nameUser'] = $session_data['nameUser'];
     $data['idUser'] =  $session_data['idUser'];
-    $data['id'] = $id;
+    $data['id'] = $this->uri->segment(3);
     $this->load->model('ordershopping_model','',TRUE);
     $data['query'] = $this->ordershopping_model->getProjectOrderShoppings($data['id']);
     $this->load->view('ehtml/headercrud',$data);
@@ -459,60 +463,60 @@ function pagination(){
     $this->load->view('ehtml/footercrud');
   }
 
-  function runViewEditProject($id){
+  function runViewEditProject(){
     $session_data = $this->session->userdata('logged_in');
     $data['nameUser'] = $session_data['nameUser'];
     $data['idUser'] =  $session_data['idUser'];
-    $data['project'] = $this->projects_model->getProject($id);
+    $data['id'] = $this->uri->segment(3);
+    $data['project'] = $this->projects_model->getProject($data['id']);
     $data['department'] = $this->department_model->getAllDepartments();
     $data['client'] = $this->client_model->getAllActiveClients();
-    $data['id'] = $id;
     $this->load->view('ehtml/headercrud',$data);
     $this->load->helper(array('form'));
     $this->load->view('home/projects/edit-project',$data);
     $this->load->view('ehtml/footercrud'); 
   }
 
-  function runViewEditProjectInClient($idProject,$idClient){
+  function runViewEditProjectInClient(){
     $session_data = $this->session->userdata('logged_in');
     $data['nameUser'] = $session_data['nameUser'];
     $data['idUser'] =  $session_data['idUser'];
-    $data['project'] = $this->projects_model->getProject($idProject);
+    $data['idProject'] = $this->uri->segment(3);
+    $data['idClient'] = $this->uri->segment(4);
+    $data['project'] = $this->projects_model->getProject($data['idProject']);
     $data['department'] = $this->department_model->getAllDepartments();
     $data['client'] = $this->client_model->getAllActiveClients();
-    $data['idProject'] = $idProject;
-    $data['idClient'] = $idClient;
     $this->load->view('ehtml/headercrud',$data);
     $this->load->helper(array('form'));
     $this->load->view('home/clients/edit-project',$data);
     $this->load->view('ehtml/footercrud'); 
   }
 
-  function runViewEditProjectInSector($idProject,$idSector){
+  function runViewEditProjectInSector(){
     $session_data = $this->session->userdata('logged_in');
     $data['nameUser'] = $session_data['nameUser'];
     $data['idUser'] =  $session_data['idUser'];
-    $data['project'] = $this->projects_model->getProject($idProject);
+    $data['idProject'] = $this->uri->segment(3);
+    $data['idSector'] =$this->uri->segment(4);
+    $data['project'] = $this->projects_model->getProject($data['idProject']);
     $data['department'] = $this->department_model->getAllDepartments();
     $data['client'] = $this->client_model->getAllActiveClients();
-    $data['idProject'] = $idProject;
-    $data['idSector'] =$idSector;
     $this->load->view('ehtml/headercrud',$data);
     $this->load->helper(array('form'));
     $this->load->view('home/sectors/edit-project-in-sector',$data);
     $this->load->view('ehtml/footercrud'); 
   }
 
-  function runViewEditProjectClientInSector($idProject,$idClient,$idSector){
+  function runViewEditProjectClientInSector(){
     $session_data = $this->session->userdata('logged_in');
     $data['nameUser'] = $session_data['nameUser'];
     $data['idUser'] =  $session_data['idUser'];
-    $data['project'] = $this->projects_model->getProject($idProject);
+    $data['idProject'] = $this->uri->segment(3);
+    $data['idClient'] = $this->uri->segment(4);
+    $data['idSector'] =$this->uri->segment(5);
+    $data['project'] = $this->projects_model->getProject($data['idProject']);
     $data['department'] = $this->department_model->getAllDepartments();
     $data['client'] = $this->client_model->getAllActiveClients();
-    $data['idProject'] = $idProject;
-    $data['idClient'] = $idClient;
-    $data['idSector'] =$idSector;
     $this->load->view('ehtml/headercrud',$data);
     $this->load->helper(array('form'));
     $this->load->view('home/sectors/edit-project-client-in-sector',$data);

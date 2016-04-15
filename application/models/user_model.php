@@ -85,6 +85,12 @@ class User_model extends CI_Model {
 		return intval($number);
 	}
 
+	function getCountUsers(){
+		$this->db->where('type','General');
+		$number = $this->db->query("SELECT count(*) as number FROM users")->row()->number;
+		return intval($number);
+	}
+
 	function get_pagination($number_per_page){
 
 		$this->db->where('type','General');

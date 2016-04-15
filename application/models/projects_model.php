@@ -105,6 +105,10 @@ class Projects_model extends CI_Model {
 		$number = $this->db->query("SELECT count(*) as number FROM projects")->row()->number;
 		return intval($number);
 	}
+	function getCountProjects(){
+		$number = $this->db->query("SELECT count(*) as number FROM projects")->row()->number;
+		return intval($number);
+	}
 
 	function get_pagination($number_per_page){
 		$this->db->join('projects', 'projects_has_departments.idProject = projects.idProject');

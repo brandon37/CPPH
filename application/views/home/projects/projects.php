@@ -102,9 +102,24 @@
                               <input type="text" size="20" id="projectname" name="projectname" placeholder="Name Project" class="form-projectname form-control" required/>
                            </div>
                            <div class="form-group">
-                              <label class="" for="text">Department:</label>
-                              <?= form_error('department')?>
-                              <input type="text" size="20" id="department" name="department"placeholder="Departamento" class="form-department form-control" required/>
+                            <label class="" for="text">Department:</label>
+                           <?= form_error('department')?>
+                           <?php if ($departments) 
+                                  { ?>
+                                    <select name="department"  class="form-control" required> 
+                                      <?php        
+                                        foreach ($departments->result() as $opt) { 
+                           ?>
+                                        <option value="<?=$opt->nameDepartment ?>"><?=$opt->nameDepartment?></option> 
+                           <?php 
+                                       }
+                           ?>
+                                    </select>
+                           <?php
+                                     }else{
+                                          echo "<h5 class='text-danger'>No Hay Departmantos Favor de Agregar</h5>";
+                                      }
+                             ?>
                            </div>
                            <div class="form-group">
                               <label class="" for="price">Price:</label>
@@ -117,10 +132,20 @@
                               <input type="date" size="20" id="dateCreation" name="dateCreation" class="form-dateCreation form-control" required/>
                            </div>
                            <div class="form-group">
-                              <label class="" for="client">Client:</label>
-                              <?= form_error('nameClient')?>
-                              <input type="text" size="20" id="client" name="nameClient" placeholder="Client" class="form-client form-control" required/>
+                            <label class="" for="client">Client:</label>
+                            <?= form_error('nameClient')?>
+                            <select name="nameClient"  class="form-control" required>
+                                <?php 
+                                foreach ($clients->result() as $opt)
+                                  {                        
+                                ?>
+                                    <option value="<?=$opt->nameClient ?>"><?=$opt->nameClient?></option> 
+                               <?php
+                                   }
+                                ?>
+                            </select>
                            </div>
+
                          <div class="modal-footer">
                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                              <button type="submit" class="btn btn-primary">Save</button> 

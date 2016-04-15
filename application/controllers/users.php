@@ -128,15 +128,15 @@ class Users extends CI_Controller {
       }
   }
 
-  function runViewEditUser($id){
+  function runViewEditUser(){
     $session_data = $this->session->userdata('logged_in');
     $data['nameUser'] = $session_data['nameUser'];
     $data['idUser'] =  $session_data['idUser'];
     $data['email'] = $session_data['email'];
     $data['pass'] = $session_data['pass'];
     $data['type'] = $session_data['type'];
-    $data['user'] = $this->user_model->getUser($id);
-    $data['id'] = $id;
+    $data['id'] = $this->uri->segment(3);
+    $data['user'] = $this->user_model->getUser($data['id']);
     $this->load->view('ehtml/headercrud',$data);
     $this->load->helper(array('form'));
     $this->load->view('home/users/edit-user',$data);

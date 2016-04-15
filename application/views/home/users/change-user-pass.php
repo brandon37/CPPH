@@ -1,8 +1,9 @@
     <div id="page-wrapper">
 
-        <div class="container-fluid">
+      <div class="container-fluid">
 
             <!-- Page Heading -->
+          <div class="col-xs-12 col-sm-12"> 
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">
@@ -25,29 +26,33 @@
           <?php 
               if ($user){
                  ?>
-                
-                <div class="form-group">
-                  <label class="" for="username">Older Password:</label>
-                  <?= form_error('oldpassword') ?>
-                  <input type="password" size="20" id="oldpassword" name="oldpassword" placeholder="Old Password" class="form-username form-control" value="" required/>
-                </div>
-                <div class="form-group">
-                  <label class="" for="pass">New Password:</label>
-                  <?= form_error('password') ?>
-                  <input type="password" size="20" id="password" name="password" placeholder="New Password:" class="form-password form-control" value="" required/>
-                </div>
-                <div class="form-group">
-                  <label class="" for="password">Repeat Password:</label>
-                  <?= form_error('passwordconf') ?>
-                  <input type="password" size="20" id="passwordconf" name="passwordconf"placeholder="Repeat Password:" class="form-password form-control" value="" required/>
-                </div>
-                <button type="submit" class="btn btn-primary">Save Changes</button> 
-          </form>
-              <?php 
-              }else{
-                  redirect('home');
-              }
-     ?>           
-                    
-           
-        
+                <div class="col-xs-6 col-sm-6 well"> 
+                  <div class="form-group">
+                    <label class="" for="username">Older Password:</label>
+                    <?= form_error('oldpassword') ?>
+                    <input type="password" size="20" id="oldpassword" name="oldpassword" placeholder="Old Password" class="form-username form-control" value="" required/>
+                  </div>
+                  <div class="form-group">
+                    <label class="" for="pass">New Password:</label>
+                    <?= form_error('password') ?>
+                    <input type="password" size="20" id="password" name="password" placeholder="New Password:" class="form-password form-control" value="" required/>
+                  </div>
+                  <div class="form-group">
+                    <label class="" for="password">Repeat Password:</label>
+                    <?= form_error('passwordconf') ?>
+                    <input type="password" size="20" id="passwordconf" name="passwordconf"placeholder="Repeat Password:" class="form-password form-control" value="" required/>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Save Changes</button> 
+            </form>
+                <?php 
+                }else{
+                    redirect('home');
+                }
+       ?>           
+              </div> 
+
+        </div>
+
+      </div>         
+               
+            

@@ -56,8 +56,8 @@ class Ordershopping_model extends CI_Model {
 		$info = array(
 			'concept'=>$data['concept'],
 			'amount'=>$data['amount'],
-			'dateCreationOS'=>$data['dateCreationOS'],
-			'dateTerminationOS'=>$data['dateTerminationOS'],
+			'dateCreationOS'=>$data['dateCreation'],
+			'dateTerminationOS'=>$data['dateTermination'],
 			'idproject'=>$data['idProject']
 		 );
 		$this->db->where('idorderShopping',$id);

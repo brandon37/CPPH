@@ -28,62 +28,69 @@
                         </ol>
                     </div>
                 </div>
-      <?= form_open('projects/updateProjectInClient/'.$idProject.'/'.$idClient)?>    
-        <?php 
-            if ($project){
-               ?>
-                 <div class="form-group">
-                     <label class="" for="projectname">Name Project:</label>
-                     <?=  form_error('projectname') ?>
-                     <input type="text" size="20" id="nameProject" name="projectname" value="<?=$project->nameProject?>" placeholder="Name Project" class="form-projectname form-control" required/>
-                 </div>
-                 <div class="form-group">
-                    <label class="" for="text">Department:</label>
-                    <?= form_error('department')?>
-                    <select name="department"  class="form-control" value="<?= $project->nameDepartment ?>" required>
-                        <?php 
-                        foreach ($department->result() as $opt) { 
-                        ?>
-                          <option value="<?=$opt->nameDepartment ?>"><?=$opt->nameDepartment?></option> 
-                       <?php
-                        }
-                        ?>
-                    </select>
-                 </div>
-                 <div class="form-group">
-                    <label class="" for="price">Price:</label>
-                    <?= form_error('price')?>
-                    <input type="text" size="20" id="price" name="price" placeholder="Price" class="form-price form-control" value="<?=$project->price?>" required/>
-                 </div>
-                 <div class="form-group">
-                    <label class="" for="dateCreation">Date Creation:</label>
-                    <?= form_error('dateCreation')?>
-                    <input type="date" size="20" id="dateCreation" name="dateCreation" class="form-dateCreation form-control" value="<?=$project->dateCreation?>" required/>
-                 </div>
-                 <div class="form-group">
-                    <label class="" for="dateTermination">Date Termination:</label>
-                    <?= form_error('dateTermination')?>
-                    <input type="date" size="20" id="dateTermination" name="dateTermination" class="form-dateTermination form-control" value="<?=$project->dateTermination?>" required/>
-                 </div>
-                 <div class="form-group">
-                    <label class="" for="client">Client:</label>
-                    <?= form_error('nameClient')?>
-                    <select name="nameClient"  class="form-control" value="<?= $project->nameClient ?>" required>
-                        <?php 
-                        foreach ($client->result() as $opt) { 
-                        ?>
-                          <option value="<?=$opt->nameClient ?>"><?=$opt->nameClient?></option> 
-                       <?php
-                        }
-                        ?>
-                    </select>
-                 </div>
+              <?= form_open('projects/updateProjectInClient/'.$idProject.'/'.$idClient)?>    
+                <?php 
+                    if ($project){
+                       ?>
+                    <div class="col-xs-6 col-sm-6 well"> 
+                         <div class="form-group">
+                             <label class="" for="projectname">Name Project:</label>
+                             <?=  form_error('projectname') ?>
+                             <input type="text" size="20" id="nameProject" name="projectname" value="<?=$project->nameProject?>" placeholder="Name Project" class="form-projectname form-control" required/>
+                         </div>
+                         <div class="form-group">
+                            <label class="" for="text">Department:</label>
+                            <?= form_error('department')?>
+                            <select name="department"  class="form-control" value="<?= $project->nameDepartment ?>" required>
+                                <?php 
+                                foreach ($department->result() as $opt) { 
+                                ?>
+                                  <option value="<?=$opt->nameDepartment ?>"><?=$opt->nameDepartment?></option> 
+                               <?php
+                                }
+                                ?>
+                            </select>
+                         </div>
+                         <div class="form-group">
+                            <label class="" for="price">Price:</label>
+                            <?= form_error('price')?>
+                            <input type="text" size="20" id="price" name="price" placeholder="Price" class="form-price form-control" value="<?=$project->price?>" required/>
+                         </div>
+                         <div class="form-group">
+                            <label class="" for="dateCreation">Date Creation:</label>
+                            <?= form_error('dateCreation')?>
+                            <input type="date" size="20" id="dateCreation" name="dateCreation" class="form-dateCreation form-control" value="<?=$project->dateCreation?>" required/>
+                         </div>
+                         <div class="form-group">
+                            <label class="" for="dateTermination">Date Termination:</label>
+                            <?= form_error('dateTermination')?>
+                            <input type="date" size="20" id="dateTermination" name="dateTermination" class="form-dateTermination form-control" value="<?=$project->dateTermination?>" required/>
+                         </div>
+                         <div class="form-group">
+                            <label class="" for="client">Client:</label>
+                            <?= form_error('nameClient')?>
+                            <select name="nameClient"  class="form-control" value="<?= $project->nameClient ?>" required>
+                                <?php 
+                                foreach ($client->result() as $opt) { 
+                                ?>
+                                  <option value="<?=$opt->nameClient ?>"><?=$opt->nameClient?></option> 
+                               <?php
+                                }
+                                ?>
+                            </select>
+                         </div>
 
-                 <button type="submit" class="btn btn-primary">Save</button> 
+                         <button type="submit" class="btn btn-primary">Save</button> 
 
-         </form>
-            <?php 
-            }else{
-                redirect('projects');
-            }
-        ?>          
+                 </form>
+                    <?php 
+                    }else{
+                        redirect('projects');
+                    }
+                ?>     
+            </div> 
+
+        </div>
+
+      </div>            
+           

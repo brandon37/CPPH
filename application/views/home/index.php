@@ -27,7 +27,7 @@
                                         <i class="fa fa-comments fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge">26</div>
+                                        <div class="huge"><?= $countUsers?></div>
                                         <div>Usuarios</div>
                                     </div>
                                 </div>
@@ -49,7 +49,7 @@
                                         <i class="fa fa-tasks fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge">12</div>
+                                        <div class="huge"><?= $countClients?></div>
                                         <div>Clientes</div>
                                     </div>
                                 </div>
@@ -71,12 +71,12 @@
                                         <i class="fa fa-shopping-cart fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge">124</div>
+                                        <div class="huge"><?= $countProjects?></div>
                                         <div>Proyectos</div>
                                     </div>
                                 </div>
                             </div>
-                            <a href="proyects/">
+                            <a href="projects/">
                                 <div class="panel-footer">
                                     <span class="pull-left">View Details</span>
                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

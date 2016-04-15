@@ -5,6 +5,9 @@ class Home extends CI_Controller {
  function __construct()
  {
    parent::__construct();
+   $this->load->model('client_model', '',TRUE);
+   $this->load->model('projects_model','',TRUE);
+   $this->load->model('user_model','',TRUE);
  }
  
  function index()
@@ -15,6 +18,9 @@ class Home extends CI_Controller {
      $data['nameUser'] = $session_data['nameUser'];
      $data['idUser'] = $session_data['idUser'];
      $data['email'] = $session_data['email'];
+     $data['countClients'] = $this->client_model->getCountClients();
+     $data['countProjects'] = $this->projects_model->getCountProjects();
+     $data['countUsers'] = $this->user_model->getCountUsers();
      $this->load->view('ehtml/header',$data);
      $this->load->view('home/index');
      $this->load->view('ehtml/footer');
