@@ -10,8 +10,20 @@
                         </h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-dashboard"></i>  <a href="<?=base_url()?>home">Dashboard</a>
+                                <i class="fa fa-dashboard"></i>  <a href="index.php">Dashboard</a>
                             </li>
+
+                            <li>
+                               <i class="fa fa-table"> <a href="<?=base_url()?>sectors"> Sectores </a></i> 
+                            </li>
+
+                            <li>
+                               <i class="fa fa-table"> <a href="<?=base_url()?>sectors/runViewSectorInClients/<?=$idSector?>"> Clientes </a></i> 
+                            </li>
+                             
+                            <li>
+                                <i class="fa fa-table"><a href="<?=base_url()?>clients/runViewClientProjectsInSector/<?=$idSector?>/<?=$idClient ?>"> Proyectos del Cliente</a></i> 
+                            </li> 
                             <li class="active">
                                 <i class="fa fa-table"> Ordenes De Compras</i>
                             </li>
@@ -52,9 +64,9 @@
                                                 <td><?= $opc->nameProject?></td>
                                                 <td><?= $opc->concept?></td>
                                                 <td><?= $opc->amount?></td>
-                                                <td><?= $opc->dateCreation?></td>
-                                                <td><?= $opc->dateTermination?></td>
-                                                <td><a href="<?=base_url()?>ordershopping/runViewEditordershopping/<?=$opc->idOrderShopping?>" >Edit</a>
+                                                <td><?= $opc->dateCreationOS?></td>
+                                                <td><?= $opc->dateTerminationOS?></td>
+                                                <td><a href="<?=base_url()?>ordershopping/runViewEditOrderShoppingsProjectClientInSector/<?=$opc->idOrderShopping?>/<?=$opc->idproject?>/<?=$idClient?>/<?=$idSector?>" >Edit</a>
                                                 </td>
                                                 <td class="text-center text-danger">
                                                     <a href="<?=base_url()?>ordershopping/deleteordershopping/<?=$opc->idOrderShopping?>" class="confirmationDeleteOrderShopping">X</a>  
@@ -92,11 +104,9 @@
                       <h3 class="myModalLabel text-center" id="exampleModalLabel">New Ordershopping</h3>
                     </div>
                     <div class="modal-body">
-                       <?= form_open('ordershopping/newordershopping') ?>
+                       <?= form_open('ordershopping/newOrderShoppingProjectClientSector/'.$idProject.'/'.$idClient.'/'.$idSector) ?>
                           <div class="form-group">
-                               <label class="" for="nameProject">Name Project:</label>
-                               <?= form_error('nameProject') ?>
-                               <input type="text" size="20" id="nameProject" name="nameProject" placeholder="Name Project" class="form-nameProject form-control" required/>
+                               <input type="hidden" size="20" id="idProject" name="idProject" value="<?= $idProject ?>" class="form-idProject form-control" required/>
                            </div>
                            <div class="form-group">
                               <label class="" for="text">concept:</label>
@@ -122,3 +132,5 @@
                 </div>
              </div>
         </div>
+        
+

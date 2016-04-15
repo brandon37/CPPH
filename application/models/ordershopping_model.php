@@ -9,7 +9,7 @@ class Ordershopping_model extends CI_Model {
 
 	function newOrderShopping($data){
 		$this->db->insert('orderShoppings',array('concept'=>$data['concept'],'amount'=>$data['amount'], 
-			'dateCreationOS'=>$data['dateCreationOS'],'dateTerminationOS'=>$data['dateTerminationOS'],'idProject'=>$data['idproject']));
+			'dateCreationOS'=>$data['dateCreation'],'dateTerminationOS'=>$data['dateTermination'],'idproject'=>$data['idproject']));
 	}
 
 	function deleteOrderShopping($id){
@@ -19,6 +19,16 @@ class Ordershopping_model extends CI_Model {
 	function getAllOrderShopping($id){
 		$this->db->join('projects', 'orderShoppings.idproject = projects.idproject');
 		$this->db->join('clients', 'projects.idClient = clients.idClient');
+		$query = $this->db->get('orderShoppings');
+		if($query->num_rows() >0) return $query;
+		else return false;
+	}
+
+	function get_OrderShoppingsProjectClientInSector($id){
+		$this->db->join('projects', 'orderShoppings.idproject = projects.idproject');
+		$this->db->join('clients', 'projects.idClient = clients.idClient');
+		$this->db->join('sectors','clients.idSector = sectors.idSector');
+		$this->db->where('projects.idProject',$id);
 		$query = $this->db->get('orderShoppings');
 		if($query->num_rows() >0) return $query;
 		else return false;
