@@ -17,9 +17,8 @@
                             </li>
 
                              <p class="text-right">
-                                  <button type="button" class="btn btn-large btn-info" data-toggle="modal" data-target="#createdepartamentModal" data-whatever="">New Department</button>
+                                <button type="button" class="btn btn-large btn-info" data-toggle="modal" data-target="#createdepartamentModal" data-whatever="">New Department</button>
                              </p>
-                       
                         </ol>
                     </div>
                 </div>
@@ -29,38 +28,40 @@
                     <div class="col-lg-6">
                         <h2>Departamentos</h2>
                         <div class="table-responsive">
-                            <table class="table table-hover table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Proyectos</th>
-                                        <th>Edit</th>
-                                        <th class="text-center">Delete</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                   
-                                    <?php 
-                                        if ($query){
-                                        foreach ($query->result() as $opc) { ?>
-                                            <tr>
-                                                <td><?= $opc->nameDepartment?></td>
-                                                <td><a href="<?=base_url()?>departments/runViewDeparmentProjects/<?=$opc->idDepartment?>">Mostrar</a></td>
-                                                <td><a href="<?=base_url()?>departments/runViewEditdepartment/<?=$opc->idDepartment?>" >Edit</a></td>
-                                                <td class="text-center text-danger">
-                                                    <a href="<?=base_url()?>departments/deletedepartment/<?=$opc->idDepartment?>" class="confirmationDeleteDepartment">X</a>  
-                                                </td>
-                                            </tr>
+                        <?php 
+                          if($query)
+                            { ?>
+                              <table class="table table-hover table-striped">
+                                  <thead>
+                                      <tr>
+                                          <th>Name</th>
+                                          <th>Proyectos</th>
+                                          <th>Edit</th>
+                                          <th class="text-center">Delete</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <?php 
+                                          foreach ($query->result() as $opc) { ?>
+                                              <tr>
+                                                  <td><?= $opc->nameDepartment?></td>
+                                                  <td><a href="<?=base_url()?>projects/runViewDeparmentProjects/<?=$opc->idDepartment?>">Mostrar</a></td>
+                                                  <td><a href="<?=base_url()?>departments/runViewEditdepartment/<?=$opc->idDepartment?>" >Edit</a></td>
+                                                  <td class="text-center text-danger">
+                                                      <a href="<?=base_url()?>departments/deletedepartment/<?=$opc->idDepartment?>" class="confirmationDeleteDepartment">X</a>  
+                                                  </td>
+                                              </tr>
 
 
-                                        <?php } 
-                                        }else{
-                                            echo "Error No Existe Ningun Cliente Favor De Agregar";
-                                        }
-                                    ?>           
-                                   
-                                </tbody>
-                            </table>
+                                          <?php } 
+                                      ?>           
+                                  </tbody>
+                              </table>
+                               <?php 
+                              }else{
+                                  echo "No Existe Ningun Proyecto En El Departmento Favor De Agregar";
+                              }
+                          ?>   
                         </div>
                     </div>
                 </div>

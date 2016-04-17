@@ -124,21 +124,6 @@ class Departments extends CI_Controller {
       
   }
 
-  function runViewDeparmentProjects(){
-    $session_data = $this->session->userdata('logged_in');
-    $name = 'General';
-    $data['nameUser'] = $session_data['nameUser'];
-    $data['idUser'] =  $session_data['idUser'];
-    $data['email'] = $session_data['email'];
-    $data['id'] = $this->uri->segment(3);
-    $this->load->model('projects_model','',TRUE);
-    $data['query'] = $this->projects_model->getDepartmentProjects($data['id']);
-    $this->load->view('ehtml/headercrud',$data);
-    $this->load->helper(array('form'));
-    $this->load->view('home/departments/department_projects',$data);
-    $this->load->view('ehtml/footercrud');
-  }
-
   function runViewEditDepartment(){
     $session_data = $this->session->userdata('logged_in');
     $name = 'General';

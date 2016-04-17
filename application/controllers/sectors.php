@@ -114,34 +114,6 @@ class Sectors extends CI_Controller {
           }  
   }
 
-  function runViewSectorProjects(){
-    $session_data = $this->session->userdata('logged_in');
-    $data['nameUser'] = $session_data['nameUser'];
-    $data['idUser'] =  $session_data['idUser'];
-    $data['idSector'] = $this->uri->segment(3);
-    $this->load->model('projects_model','',TRUE);
-    $data['query'] = $this->projects_model->getSectorProjects($data['idSector']);
-    $this->load->view('ehtml/headercrud',$data);
-    $this->load->helper(array('form'));
-    $this->load->view('home/sectors/sector_projects',$data);
-    $this->load->view('ehtml/footercrud');
-  }
-
-  function runViewSectorInClients(){
-    $session_data = $this->session->userdata('logged_in');
-    $data['nameUser'] = $session_data['nameUser'];
-    $data['idUser'] =  $session_data['idUser'];
-    $idSector = $this->uri->segment(3);
-    $data['idSector'] = $idSector;
-    $this->load->model('client_model','',TRUE);
-    $data['query'] = $this->client_model->getSectorClients($idSector);
-    $data['sector'] = $this->sector_model->getSector($idSector);
-    $this->load->view('ehtml/headercrud',$data);
-    $this->load->helper(array('form'));
-    $this->load->view('home/sectors/sector_clients',$data);
-    $this->load->view('ehtml/footercrud');
-  }
-
   function runViewEditsector(){
     $session_data = $this->session->userdata('logged_in');
     $data['nameUser'] = $session_data['nameUser'];

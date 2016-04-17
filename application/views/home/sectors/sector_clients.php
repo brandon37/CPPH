@@ -91,7 +91,7 @@
                       <h3 class="myModalLabel text-center" id="exampleModalLabel">New Client</h3>
                     </div>
                     <div class="modal-body">
-                       <?= form_open('clients/newClientInSector') ?>
+                       <?= form_open('clients/newClientInSector/'.$idSector) ?>
                           <div class="form-group">
                               <label class="" for="">Name Client:</label>
                               <?= form_error('clientname') ?>
