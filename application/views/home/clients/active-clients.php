@@ -106,11 +106,24 @@
                               </select>
                            </div>
                            <div class="form-group">
-                              <label class="" for="sector">Sector:</label>
-                              <?= form_error('typeSector') ?>
-                              <input type="text" size="20" id="sector" name="typeSector" placeholder="Sector" value="" class="form-sector form-control" required/>
-                              
-                           </div>
+                                  <label for="sector">Sector:</label>
+                                  <?= form_error('typeSector') ?>
+                                  <?php if ($sectors) 
+                                          {   ?>
+                                
+                                          <select name="typeSector"  class="form-control" required>
+                                              <?php 
+                                              foreach ($sectors->result() as $opt) { 
+                                              ?>
+                                                <option value="<?=$opt->typeSector ?>"><?=$opt->typeSector?></option> 
+                                             <?php
+                                              }
+                                        ?>
+                                    </select>
+                                    <?php }else{
+                                      echo "<h5 class='text-danger'>No Hay Sectores Favor de Agregar</h5>";
+                                      } ?>
+                               </div>
                          <div class="modal-footer">
                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                              <button type="submit" class="btn btn-primary">Save</button> 

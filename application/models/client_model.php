@@ -17,6 +17,14 @@ class Client_model extends CI_Model {
 		$this->db->delete('clients', array('idClient'=>$id));
 	}
 
+	function getAllClients(){
+		$this->db->select('*');
+		$this->db->from('clients');
+		$query = $this->db->get();
+		if($query->num_rows() >0) return $query;
+		else return false;
+	}
+
 	function getAllActiveClients(){
 		$this->db->select('*');
 		$this->db->from('clients');
@@ -66,6 +74,11 @@ class Client_model extends CI_Model {
 		$this->db->join('sectors', 'clients.idSector = sectors.idSector');
 		$this->db->where('clients.idSector', $id);
 		return $this->db->get("clients");
+	}
+
+	function getCountClients(){
+		$number = $this->db->query("SELECT count(*) as number FROM clients")->row()->number;
+		return intval($number);
 	}
 
 	function no_pageActiveClients(){

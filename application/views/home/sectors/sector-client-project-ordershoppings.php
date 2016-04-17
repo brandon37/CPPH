@@ -22,7 +22,7 @@
                             </li>
                              
                             <li>
-                                <i class="fa fa-table"><a href="<?=base_url()?>clients/runViewClientProjectsInSector/<?=$idSector?>/<?=$idClient ?>"> Proyectos del Cliente</a></i> 
+                                <i class="fa fa-table"><a href="<?=base_url()?>clients/runViewClientProjectsInSector/<?=$idClient ?>/<?=$idSector?>"> Proyectos del Cliente</a></i> 
                             </li> 
                             <li class="active">
                                 <i class="fa fa-table"> Ordenes De Compras</i>
@@ -41,6 +41,8 @@
                     <div class="col-lg-10">
                         <h2>Ordenes De Compras</h2>
                         <div class="table-responsive">
+                        <?php 
+                          if ($query){ ?>
                             <table class="table table-striped">
                                 <thead class="text-center">
                                     <tr class="text-center">
@@ -57,7 +59,7 @@
                                 <tbody>
                                    
                                     <?php 
-                                        if ($query){
+                                       
                                         foreach ($query->result() as $opc) { ?>
                                             <tr>
                                                 <td><?= $opc->nameClient?></td>
@@ -69,19 +71,17 @@
                                                 <td><a href="<?=base_url()?>ordershopping/runViewEditOrderShoppingsProjectClientInSector/<?=$opc->idOrderShopping?>/<?=$opc->idproject?>/<?=$idClient?>/<?=$idSector?>" >Edit</a>
                                                 </td>
                                                 <td class="text-center text-danger">
-                                                    <a href="<?=base_url()?>ordershopping/deleteordershopping/<?=$opc->idOrderShopping?>" class="confirmationDeleteOrderShopping">X</a>  
+                                                    <a href="<?=base_url()?>ordershopping/deleteorderShoppingProjectClientInSector/<?=$opc->idOrderShopping?>/<?= $opc->idProject ?>/<?=$idClient ?>/<?=$idSector?>" class="confirmationDeleteOrderShopping">X</a>  
                                                 </td>
                                             </tr>
-
-
-                                        <?php } 
-                                        }else{
-                                            echo "Error No Existe Ningun Cliente Favor De Agregar";
-                                        }
-                                    ?>           
-                                   
+                                      <?php } ?>
                                 </tbody>
                             </table>
+                        <?php
+                                  }else{
+                                      echo "<h4 class='text-danger'>No Existe Ninguna Orden de Compra En Este Proyecto</h4>";
+                                  }
+                              ?>  
                         </div>
                     </div>
                 </div>
@@ -106,6 +106,7 @@
                     <div class="modal-body">
                        <?= form_open('ordershopping/newOrderShoppingProjectClientSector/'.$idProject.'/'.$idClient.'/'.$idSector) ?>
                           <div class="form-group">
+                              <?= form_error('idProject') ?>
                                <input type="hidden" size="20" id="idProject" name="idProject" value="<?= $idProject ?>" class="form-idProject form-control" required/>
                            </div>
                            <div class="form-group">

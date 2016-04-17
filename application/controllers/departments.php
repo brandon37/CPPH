@@ -85,7 +85,7 @@ class Departments extends CI_Controller {
         }
   }
 
-  function updateDepartment($id ){
+  function updateDepartment(){
      $session_data = $this->session->userdata('logged_in');
      $name = 'General';
      $data['nameUser'] = $session_data['nameUser'];
@@ -94,17 +94,18 @@ class Departments extends CI_Controller {
 	    $data = array(
 	      'nameDepartment'=>$this->input->post('department')
 	    );
-      $data['department'] = $this->department_model->getDepartment($id);
+      $data['id'] = $this->uri->segment(3);
+      $data['department'] = $this->department_model->getDepartment($data['id']);
      if ($data['department']->nameDepartment != $data['nameDepartment']) 
      {   
         $this->form_validation->set_rules('department', 'Department', 'is_unique[departments.nameDepartment]|required');
         if($this->form_validation->run() == FALSE)
           {
-            $this->runViewEditDepartment($id);
+            $this->runViewEditDepartment($data['id']);
 
           }else{
             
-              $this->department_model->updateDepartment($id,$data);
+              $this->department_model->updateDepartment($data['id'],$data);
               redirect('departments');
           }
 
@@ -113,23 +114,23 @@ class Departments extends CI_Controller {
         $this->form_validation->set_rules('department', 'Department', 'required');
         if($this->form_validation->run() == FALSE)
           {
-            $this->runViewEditDepartment($id);
+            $this->runViewEditDepartment($data['id']);
 
           }else{
-              $this->department_model->updateDepartment($id,$data);
+              $this->department_model->updateDepartment($data['id'],$data);
               redirect('departments');
           }
       }
       
   }
 
-  function runViewDeparmentProjects($id){
+  function runViewDeparmentProjects(){
     $session_data = $this->session->userdata('logged_in');
     $name = 'General';
     $data['nameUser'] = $session_data['nameUser'];
     $data['idUser'] =  $session_data['idUser'];
     $data['email'] = $session_data['email'];
-    $data['id'] = $id;
+    $data['id'] = $this->uri->segment(3);
     $this->load->model('projects_model','',TRUE);
     $data['query'] = $this->projects_model->getDepartmentProjects($data['id']);
     $this->load->view('ehtml/headercrud',$data);
@@ -138,14 +139,14 @@ class Departments extends CI_Controller {
     $this->load->view('ehtml/footercrud');
   }
 
-  function runViewEditDepartment($id){
+  function runViewEditDepartment(){
     $session_data = $this->session->userdata('logged_in');
     $name = 'General';
     $data['nameUser'] = $session_data['nameUser'];
     $data['idUser'] =  $session_data['idUser'];
     $data['email'] = $session_data['email'];
-    $data['department'] = $this->department_model->getDepartment($id);
-    $data['id'] = $id;
+    $data['id'] = $this->uri->segment(3);
+    $data['department'] = $this->department_model->getDepartment($data['id']);
     $this->load->view('ehtml/headercrud',$data);
     $this->load->helper(array('form'));
     $this->load->view('home/departments/edit-department',$data);

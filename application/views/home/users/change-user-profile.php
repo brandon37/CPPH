@@ -1,31 +1,31 @@
     <div id="page-wrapper">
 
-        <div class="container-fluid">
+      <div class="container-fluid">
 
             <!-- Page Heading -->
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">
-                     Control De Usuarios
-                    </h1>
-                    <ol class="breadcrumb">
-                        <li>
-                            <i class="fa fa-dashboard"></i>  <a href="<?=base_url()?>home">Dashboard </a>
-                            <i class="fa fa-table"> <a href="<?=base_url()?>users"> Usuarios </a></i> 
-            
-                        </li>
-                        <li class="active">
-                            <i class="fa fa-edit">Editar Usuario</i>
-                        </li>
-                   
-                    </ol>
-                </div>
-            </div>           
+          <div class="col-xs-12 col-sm-12">
+              <div class="row">
+                  <div class="col-lg-12">
+                      <h1 class="page-header">
+                       Control De Usuarios
+                      </h1>
+                      <ol class="breadcrumb">
+                          <li>
+                              <i class="fa fa-dashboard"></i>  <a href="<?=base_url()?>home">Dashboard </a>
+                              <i class="fa fa-table"> <a href="<?=base_url()?>users"> Usuarios </a></i> 
+                          </li>
+                          <li class="active">
+                              <i class="fa fa-edit">Editar Usuario</i>
+                          </li>
+                     
+                      </ol>
+                  </div>
+              </div>           
                <?= form_open('users/updateUserProfile/'.$idUser); ?>     
               <?php 
                   if ($user){
                      ?>
-     
+                  <div class="col-xs-6 col-sm-6 well"> 
                       <div class="form-group">
                         <label class="" for="username">Name User:</label>
                         <?= form_error('username') ?>
@@ -43,5 +43,11 @@
                       redirect('home');
                   }
          ?>           
-                      
+                   
+            </div> 
+        </div>
+
+  </div>            
+      
+                  
 

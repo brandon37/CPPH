@@ -146,8 +146,8 @@ class Sectors extends CI_Controller {
     $session_data = $this->session->userdata('logged_in');
     $data['nameUser'] = $session_data['nameUser'];
     $data['idUser'] =  $session_data['idUser'];
-    $data['sector'] = $this->sector_model->getsector($id);
     $data['id'] = $this->uri->segment(3);
+    $data['sector'] = $this->sector_model->getsector($data['id']);
     $this->load->view('ehtml/headercrud',$data);
     $this->load->helper(array('form'));
     $this->load->view('home/sectors/edit-sector',$data);

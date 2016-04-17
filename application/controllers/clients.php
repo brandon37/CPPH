@@ -24,6 +24,7 @@ class Clients extends CI_Controller {
    $result = $this->client_model->get_paginationActiveClients($config['per_page']);
    $data['query'] = $result;
    $data['pagination'] = $this->pagination->create_links();
+   $data['sectors'] = $this->sector_model->getAllSectors();
    $this->load->view('ehtml/headercrud',$data);
    $this->load->helper(array('form'));
    $this->load->view('home/clients/active-clients',$data);
@@ -199,14 +200,16 @@ class Clients extends CI_Controller {
 
   }
   
-  function updateClientInSector($id,$idSect){
+  function updateClientInSector(){
     $data = array(
         'nameClient'=>$this->input->post('clientname'),
         'status'=>$this->input->post('status'),
         'typeSector'=>$this->input->post('typeSector'),
         'idSector'=>''
         );
-    $data['client'] = $this->client_model->getClient($id);
+    $data['id'] = $this->uri->segment(3);
+    $data['idSect'] = $this->uri->segment(4);
+    $data['client'] = $this->client_model->getClient($data['id']);
     if ($data['client']->nameClient != $data['nameClient']) 
     {   
       $this->form_validation->set_rules('typeSector', 'Sector', 'required|trim|callback_check_sector');
@@ -215,11 +218,11 @@ class Clients extends CI_Controller {
 
       if($this->form_validation->run() == FALSE)
         {
-          $this->runViewEditClientInSector($id,$idSect);
+          $this->runViewEditClientInSector($data['id'],$data['idSect']);
         }else{
           $data['idSector'] = $this->sector_model->getSectorId($data['typeSector'])->idSector;
-          $this->client_model->updateClient($id,$data);
-          redirect('sectors/runViewSectorInClients/'.$idSect);
+          $this->client_model->updateClient($data['id'],$data);
+          redirect('sectors/runViewSectorInClients/'.$data['idSect']);
         }
     }else{ 
       $this->form_validation->set_rules('typeSector', 'Sector', 'required|trim|callback_check_sector');
@@ -227,11 +230,11 @@ class Clients extends CI_Controller {
       $this->form_validation->set_rules('status', 'Status', 'required|callback_check_status');
       if($this->form_validation->run() == FALSE)
         {
-          $this->runViewEditActiveClient($id);
+          $this->runViewEditActiveClient($data['id']);
         }else{
           $data['idSector'] = $this->sector_model->getSectorId($data['typeSector'])->idSector;
-          $this->client_model->updateClient($id,$data);
-          redirect('sectors/runViewSectorInClients/'.$idSect);
+          $this->client_model->updateClient($data['id'],$data);
+          redirect('sectors/runViewSectorInClients/'.$data['idSect']);
         }
      }
   }
@@ -274,13 +277,13 @@ class Clients extends CI_Controller {
      }
   }
 
- function runViewEditActiveClient($id){
+ function runViewEditActiveClient(){
     $session_data = $this->session->userdata('logged_in');
     $data['nameUser'] = $session_data['nameUser'];
     $data['idUser'] =  $session_data['idUser'];
-    $data['client'] = $this->client_model->getClient($id);
+    $data['id'] = $this->uri->segment(3);
+    $data['client'] = $this->client_model->getClient($data['id']);
     $data['sector'] = $this->sector_model->getSector($data['client']->idSector);
-    $data['id'] = $id;
     $data['sectors'] = $this->sector_model->getAllSectors();
     $this->load->view('ehtml/headercrud',$data);
     $this->load->helper(array('form'));
@@ -288,14 +291,14 @@ class Clients extends CI_Controller {
     $this->load->view('ehtml/footercrud');
   }
 
-  function runViewEditClientInSector($id,$idSector){
+  function runViewEditClientInSector(){
    $session_data = $this->session->userdata('logged_in');
     $data['nameUser'] = $session_data['nameUser'];
     $data['idUser'] =  $session_data['idUser'];
-    $data['client'] = $this->client_model->getClient($id);
+    $data['id'] = $this->uri->segment(3);
+    $data['idSector'] = $this->uri->segment(4);
+    $data['client'] = $this->client_model->getClient($data['id']);
     $data['sector'] = $this->sector_model->getSector($data['client']->idSector);
-    $data['idSector'] = $idSector;
-    $data['id'] = $id;
     $data['sectors'] = $this->sector_model->getAllSectors();
     $this->load->view('ehtml/headercrud',$data);
     $this->load->helper(array('form'));
@@ -303,11 +306,11 @@ class Clients extends CI_Controller {
     $this->load->view('ehtml/footercrud'); 
   }
 
-  function runViewClientProjects($id){
+  function runViewClientProjects(){
     $session_data = $this->session->userdata('logged_in');
     $data['nameUser'] = $session_data['nameUser'];
     $data['idUser'] =  $session_data['idUser'];
-    $data['idClient'] = $id;
+    $data['idClient'] = $this->uri->segment(3);
     $data['query'] = $this->projects_model->getclientProjects($data['idClient']);
     $this->load->view('ehtml/headercrud',$data);
     $this->load->helper(array('form'));
@@ -315,12 +318,12 @@ class Clients extends CI_Controller {
     $this->load->view('ehtml/footercrud');
   }
 
-  function runViewClientProjectsInSector($idClient,$idSector){
+  function runViewClientProjectsInSector(){
     $session_data = $this->session->userdata('logged_in');
     $data['nameUser'] = $session_data['nameUser'];
     $data['idUser'] =  $session_data['idUser'];
-    $data['idClient'] = $idClient;
-    $data['idSector'] = $idSector; 
+    $data['idClient'] = $this->uri->segment(3);
+    $data['idSector'] = $this->uri->segment(4);
     $data['query'] = $this->projects_model->getclientProjects($data['idClient']);
     $data['client'] = $this->client_model->getClient($data['idClient']);
     $this->load->view('ehtml/headercrud',$data);
@@ -329,13 +332,13 @@ class Clients extends CI_Controller {
     $this->load->view('ehtml/footercrud');
   }
 
- function runViewEditInactiveClient($id){
+ function runViewEditInactiveClient(){
     $session_data = $this->session->userdata('logged_in');
     $data['nameUser'] = $session_data['nameUser'];
     $data['idUser'] =  $session_data['idUser'];
     $data['client'] = $this->client_model->getClient($id);
     $data['sector'] = $this->sector_model->getSector($data['client']->idSector)->typeSector;
-    $data['id'] = $id;
+    $data['id'] = $this->uri->segment(3);
     $this->load->view('ehtml/headercrud',$data);
     $this->load->helper(array('form'));
     $this->load->view('home/clients/edit-inactive-client',$data);

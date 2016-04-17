@@ -50,7 +50,7 @@
                                         <th>Price</th>
                                         <th>DC</th>
                                         <th>DT</th>
-                                        <th>Ordenes de Cuenta</th>
+                                        <th>Ordenes de Compra</th>
                                         <th>Edit</th>
                                         <th class="text-center">Delete</th>
                                     </tr>
