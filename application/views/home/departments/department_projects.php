@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">
-                     Control De Proyectos del Cliente
+                     Control De Proyectos del Departamento <?= $department->nameDepartment ?>
                     </h1>
                     <ol class="breadcrumb">
                         <li>
@@ -43,6 +43,7 @@
                                         <th>DC</th>
                                         <th>DT</th>
                                         <th>Cliente</th>
+                                        <th>Ordenes de Compra</th>
                                         <th>Edit</th>
                                         <th class="text-center">Delete</th>
                                     </tr>
@@ -58,6 +59,7 @@
                                               <td><?= $opc->dateCreation?></td>
                                               <td><?= $opc->dateTermination?></td>
                                               <td><?= $opc->nameClient?></td>
+                                              <td><a href="ordershopping/runViewProjectOrderShoppingInDepartments/<?=$opc->idProject?>/<?= $department->idDepartment ?>">Mostrar</a></td>
                                               <td><a href="<?=base_url()?>projects/runViewEditProjectInDepartment/<?=$opc->idProject?>/<?=$idDepartment ?>" >Edit</a>
                                               </td>
                                               <td class="text-center text-danger">
