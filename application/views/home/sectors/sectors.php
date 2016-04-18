@@ -48,8 +48,8 @@
                                         foreach ($query->result() as $opc) { ?>
                                             <tr>
                                                 <td><?= $opc->typeSector?></td>
-                                                <td><a href="<?=base_url()?>sectors/runViewSectorInClients/<?=$opc->idSector?>">Mostrar</a></td>
-                                                <td><a href="<?=base_url()?>sectors/runViewSectorProjects/<?= $opc->idSector?>">Mostrar</a></td>
+                                                <td><a href="<?=base_url()?>clients/runViewSectorClients/<?=$opc->idSector?>">Mostrar</a></td>
+                                                <td><a href="<?=base_url()?>projects/runViewSectorProjects/<?= $opc->idSector?>">Mostrar</a></td>
                                                 <td><a href="<?=base_url()?>sectors/runViewEditSector/<?=$opc->idSector?>" >Edit</a></td>
                                                 <td class="text-center text-danger">
                                                     <a href="<?=base_url()?>sectors/deleteSector/<?=$opc->idSector?>" class="confirmationDeleteSector">X</a>  

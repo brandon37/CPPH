@@ -29,6 +29,8 @@
                     <div class="col-lg-10">
                         <h2>Proyectos</h2>
                         <div class="table-responsive">
+                        <?php 
+                          if ($query){ ?>
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
@@ -43,35 +45,30 @@
                                         <th class="text-center">Delete</th>
                                     </tr>
                                 </thead>
+                        <?php foreach ($query->result() as $opc) { ?>
                                 <tbody>
-                                   
-                                    <?php 
-                                        if ($query){
-                                        foreach ($query->result() as $opc) { ?>
-                                            <tr>
-                                                <td><?= $opc->nameProject?></td>
-                                                <td><?= $opc->nameDepartment?></td>
-                                                <td><?= $opc->price?></td>
-                                                <td><?= $opc->dateCreation?></td>
-                                                <td><?= $opc->dateTermination?></td>
-                                                <td><?= $opc->nameClient?></td>
-                                                <td><a href="<?=base_url()?>projects/runViewProjectOrderShoppings/<?=$opc->idProject?>">Mostrar</a></td>
-                                                <td><a href="<?=base_url()?>projects/runViewEditProject/<?=$opc->idProject?>" >Edit</a>
-                                                </td>
-                                                <td class="text-center text-danger">
-                                                    <a href="<?=base_url()?>projects/deleteProject/<?=$opc->idProject?>" class="confirmationDeleteProject">X</a>  
-                                                </td>
-                                            </tr>
-
-
-                                        <?php } 
-                                        }else{
-                                            echo "Error No Existe Ningun Cliente Favor De Agregar";
-                                        }
-                                    ?>           
-                                   
+                                      <tr>
+                                          <td><?= $opc->nameProject?></td>
+                                          <td><?= $opc->nameDepartment?></td>
+                                          <td><?= $opc->price?></td>
+                                          <td><?= $opc->dateCreation?></td>
+                                          <td><?= $opc->dateTermination?></td>
+                                          <td><?= $opc->nameClient?></td>
+                                          <td><a href="<?=base_url()?>ordershopping/runViewProjectOrderShoppings/<?=$opc->idProject?>">Mostrar</a></td>
+                                          <td><a href="<?=base_url()?>projects/runViewEditProject/<?=$opc->idProject?>" >Edit</a>
+                                          </td>
+                                          <td class="text-center text-danger">
+                                              <a href="<?=base_url()?>projects/deleteProject/<?=$opc->idProject?>" class="confirmationDeleteProject">X</a>  
+                                          </td>
+                                      </tr>         
                                 </tbody>
+                                <?php } ?>
                             </table>
+                             <?php
+                                        }else{
+                                            echo "Error No Existe Ningun Proyecto Favor De Agregar";
+                                        }
+                                    ?>   
                         </div>
                     </div>
                 </div>
@@ -134,18 +131,22 @@
                            <div class="form-group">
                             <label class="" for="client">Client:</label>
                             <?= form_error('nameClient')?>
-                            <select name="nameClient"  class="form-control" required>
-                                <?php 
-                                foreach ($clients->result() as $opt)
-                                  {                        
-                                ?>
-                                    <option value="<?=$opt->nameClient ?>"><?=$opt->nameClient?></option> 
-                               <?php
-                                   }
-                                ?>
-                            </select>
+                            <?php if($clients) 
+                                    { ?>
+                                      <select name="nameClient"  class="form-control" required>
+                                          <?php 
+                                          foreach ($clients->result() as $opt)
+                                            {                        
+                                          ?>
+                                              <option value="<?=$opt->nameClient ?>"><?=$opt->nameClient?></option> 
+                                  <?php
+                                             }
+                                  ?>
+                                      </select>
+                              <?php } else{
+                                          echo "<h5 class='text-danger'>No Hay Clientes Favor de Agregar</h5>";
+                                      }?> 
                            </div>
-
                          <div class="modal-footer">
                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                              <button type="submit" class="btn btn-primary">Save</button> 

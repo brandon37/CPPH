@@ -11,6 +11,7 @@ class Clients extends CI_Controller {
    $this->load->library("pagination");
    $this->load->library('form_validation');
    $this->load->model('projects_model','',TRUE);
+   $this->load->model('department_model','',TRUE);
  }
 
  function index(){
@@ -117,17 +118,18 @@ class Clients extends CI_Controller {
           'typeSector'=>$this->input->post('typeSector'),
           'idSector'=>''
           );
+    $data['idSector'] = $this->uri->segment(3);
     $this->form_validation->set_rules('typeSector', 'Sector', 'required|trim|callback_check_sector');
     $this->form_validation->set_rules('clientname', 'Name Client', 'is_unique[clients.nameClient]|required');
     $this->form_validation->set_rules('status', 'Status', 'required|callback_check_status');
 
      if($this->form_validation->run() == FALSE)
       {
-        $this->index();
+        $this->runViewSectorClients($data['idSector']);
       }else{           
           $data['idSector'] = $this->sector_model->getSectorId($data['typeSector'])->idSector;
           $this->client_model->newclient($data);
-          redirect('sectors/runViewSectorInClients/'.$data['idSector']);
+          redirect('clients/runViewSectorClients/'.$data['idSector']);
        }   
   }
  
@@ -222,7 +224,7 @@ class Clients extends CI_Controller {
         }else{
           $data['idSector'] = $this->sector_model->getSectorId($data['typeSector'])->idSector;
           $this->client_model->updateClient($data['id'],$data);
-          redirect('sectors/runViewSectorInClients/'.$data['idSect']);
+          redirect('clients/runViewSectorClients/'.$data['idSect']);
         }
     }else{ 
       $this->form_validation->set_rules('typeSector', 'Sector', 'required|trim|callback_check_sector');
@@ -234,7 +236,7 @@ class Clients extends CI_Controller {
         }else{
           $data['idSector'] = $this->sector_model->getSectorId($data['typeSector'])->idSector;
           $this->client_model->updateClient($data['id'],$data);
-          redirect('sectors/runViewSectorInClients/'.$data['idSect']);
+          redirect('clients/runViewSectorClients/'.$data['idSect']);
         }
      }
   }
@@ -306,16 +308,38 @@ class Clients extends CI_Controller {
     $this->load->view('ehtml/footercrud'); 
   }
 
+  function runViewSectorClients(){
+    $session_data = $this->session->userdata('logged_in');
+    $data['nameUser'] = $session_data['nameUser'];
+    $data['idUser'] =  $session_data['idUser'];
+    $data['idSector'] = $this->uri->segment(3);
+    $this->load->model('client_model','',TRUE);
+    $data['query'] = $this->client_model->getSectorClients($data['idSector']);
+    $data['sector'] = $this->sector_model->getSector($data['idSector']);
+    $this->load->view('ehtml/headercrud',$data);
+    $this->load->helper(array('form'));
+    $this->load->view('home/sectors/sector_clients',$data);
+    $this->load->view('ehtml/footercrud');
+  }
+
   function runViewClientProjects(){
     $session_data = $this->session->userdata('logged_in');
     $data['nameUser'] = $session_data['nameUser'];
     $data['idUser'] =  $session_data['idUser'];
     $data['idClient'] = $this->uri->segment(3);
-    $data['query'] = $this->projects_model->getclientProjects($data['idClient']);
-    $this->load->view('ehtml/headercrud',$data);
-    $this->load->helper(array('form'));
-    $this->load->view('home/clients/client_projects',$data);
-    $this->load->view('ehtml/footercrud');
+    $data['Client'] = $this->client_model->getClient($data['idClient']);
+    if ($data['Client']) {
+      $data['nameClient'] = $data['Client']->nameClient;
+      $data['departments'] = $this->department_model->getAllDepartments();
+      $data['query'] = $this->projects_model->getclientProjects($data['idClient']);
+      $this->load->view('ehtml/headercrud',$data);
+      $this->load->helper(array('form'));
+      $this->load->view('home/clients/client_projects',$data);
+      $this->load->view('ehtml/footercrud');
+    }else{
+      redirect('clients');
+    }
+    
   }
 
   function runViewClientProjectsInSector(){
@@ -326,6 +350,7 @@ class Clients extends CI_Controller {
     $data['idSector'] = $this->uri->segment(4);
     $data['query'] = $this->projects_model->getclientProjects($data['idClient']);
     $data['client'] = $this->client_model->getClient($data['idClient']);
+    $data['departments'] = $this->department_model->getAllDepartments();
     $this->load->view('ehtml/headercrud',$data);
     $this->load->helper(array('form'));
     $this->load->view('home/sectors/sector_client_projects',$data);
@@ -353,7 +378,7 @@ class Clients extends CI_Controller {
 
   function deleteClientInSector($idClient, $idSector){
     $this->client_model->deleteClient($idClient);
-    redirect('sectors/runViewSectorInClients/'.$idSector);
+    redirect('clients/runViewSectorClients/'.$idSector);
   }
 
  function deleteInactiveClient(){

@@ -12,6 +12,11 @@
                             <li>
                                 <i class="fa fa-dashboard"></i>  <a href="<?=base_url()?>home">Dashboard</a>
                             </li>
+
+                            <li>
+                                <i class="fa fa-table"> <a href="<?=base_url()?>projects">Proyectos</a> </i>
+                            </li>
+
                             <li class="active">
                                 <i class="fa fa-table"> Ordenes De Compras</i>
                             </li>
@@ -29,47 +34,49 @@
                     <div class="col-lg-10">
                         <h2>Ordenes De Compras</h2>
                         <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead class="text-center">
-                                    <tr class="text-center">
-                                        <th>Cliente</th>
-                                        <th>Name</th>
-                                        <th>Concepto</th>
-                                        <th>Monto</th>
-                                        <th>DC</th>
-                                        <th>DT</th>
-                                        <th>Edit</th>
-                                        <th >Delete</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                   
-                                    <?php 
-                                        if ($query){
-                                        foreach ($query->result() as $opc) { ?>
-                                            <tr>
-                                                <td><?= $opc->nameClient?></td>
-                                                <td><?= $opc->nameProject?></td>
-                                                <td><?= $opc->concept?></td>
-                                                <td><?= $opc->amount?></td>
-                                                <td><?= $opc->dateCreation?></td>
-                                                <td><?= $opc->dateTermination?></td>
-                                                <td><a href="<?=base_url()?>ordershopping/runViewEditordershopping/<?=$opc->idOrderShopping?>" >Edit</a>
-                                                </td>
-                                                <td class="text-center text-danger">
-                                                    <a href="<?=base_url()?>ordershopping/deleteordershopping/<?=$opc->idOrderShopping?>" class="confirmationDeleteOrderShopping">X</a>  
-                                                </td>
-                                            </tr>
+                        <?php 
+                          if($query)
+                            { ?>
+                                <table class="table table-striped">
+                                    <thead class="text-center">
+                                        <tr class="text-center">
+                                            <th>Cliente</th>
+                                            <th>Name</th>
+                                            <th>Concepto</th>
+                                            <th>Monto</th>
+                                            <th>DC</th>
+                                            <th>DT</th>
+                                            <th>Edit</th>
+                                            <th >Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php 
+                                            foreach ($query->result() as $opc) { ?>
+                                                <tr>
+                                                    <td><?= $opc->nameClient?></td>
+                                                    <td><?= $opc->nameProject?></td>
+                                                    <td><?= $opc->concept?></td>
+                                                    <td><?= $opc->amount?></td>
+                                                    <td><?= $opc->dateCreation?></td>
+                                                    <td><?= $opc->dateTermination?></td>
+                                                    <td><a href="<?=base_url()?>ordershopping/runViewEditOrderShoppingsInProject/<?=$opc->idOrderShopping?>/<?= $idProject?>" >Edit</a>
+                                                    </td>
+                                                    <td class="text-center text-danger">
+                                                        <a href="<?=base_url()?>ordershopping/deleteordershopping/<?=$opc->idOrderShopping?>/<?= $idProject ?>" class="confirmationDeleteOrderShopping">X</a>  
+                                                    </td>
+                                                </tr>
 
 
-                                        <?php } 
-                                        }else{
-                                            echo "Error No Existe Ningun Cliente Favor De Agregar";
-                                        }
-                                    ?>           
-                                   
-                                </tbody>
-                            </table>
+                                            <?php } ?>           
+                                       
+                                    </tbody>
+                                </table>
+                            <?php 
+                              }else{
+                                      echo "<h4 class='text-danger'>No Existe Ninguna Orden de compra Favor De Agregar</h4>";
+                                  }
+                              ?>   
                         </div>
                     </div>
                 </div>
@@ -94,9 +101,9 @@
                     <div class="modal-body">
                        <?= form_open('ordershopping/newordershopping') ?>
                           <div class="form-group">
-                               <label class="" for="nameProject">Name Project:</label>
                                <?= form_error('nameProject') ?>
-                               <input type="text" size="20" id="nameProject" name="nameProject" placeholder="Name Project" class="form-nameProject form-control" required/>
+                               <input type="hidden" size="20" id="nameProject" name="nameProject" value="<?=
+                               $Project->nameProject?>" placeholder="Name Project" class="form-nameProject form-control" required/>
                            </div>
                            <div class="form-group">
                               <label class="" for="text">concept:</label>

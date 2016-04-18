@@ -21,6 +21,10 @@
                             <i class="fa fa-table"></i> Proyectos del Departamento
                         </li> 
                          
+                        <p class="text-right">
+                            <button type="button" class="btn btn-large btn-info" data-toggle="modal" data-target="#createProjectModal" data-whatever="">New Project</button>
+                        </p>    
+
                     </ol>
                 </div>
             </div>
@@ -54,7 +58,7 @@
                                               <td><?= $opc->dateCreation?></td>
                                               <td><?= $opc->dateTermination?></td>
                                               <td><?= $opc->nameClient?></td>
-                                              <td><a href="<?=base_url()?>projects/runViewEditProject/<?=$opc->idProject?>" >Edit</a>
+                                              <td><a href="<?=base_url()?>projects/runViewEditProjectInDepartment/<?=$opc->idProject?>/<?=$idDepartment ?>" >Edit</a>
                                               </td>
                                               <td class="text-center text-danger">
                                                   <a href="<?=base_url()?>projects/deleteProject/<?=$opc->idProject?>" class="confirmationDeleteProject">X</a>  
@@ -99,9 +103,8 @@
                              <input type="text" size="20" id="projectname" name="projectname" placeholder="Name Project" class="form-projectname form-control" required/>
                            </div>
                            <div class="form-group">
-                              <label class="" for="text">Department:</label>
                               <?= form_error('department')?>
-                              <input type="text" size="20" id="department" name="department"placeholder="Departamento" class="form-department form-control" required/>
+                              <input type="hidden" size="20" id="department" name="department" value="<?= $department->nameDepartment ?>" class="form-department form-control" required/>
                            </div>
                            <div class="form-group">
                               <label class="" for="price">Price:</label>
@@ -114,9 +117,19 @@
                               <input type="date" size="20" id="dateCreation" name="dateCreation" class="form-dateCreation form-control" required/>
                            </div>
                            <div class="form-group">
-                              <label class="" for="client">Client:</label>
-                              <?= form_error('nameClient')?>
-                              <input type="text" size="20" id="client" name="nameClient" placeholder="Client" class="form-client form-control" required/>
+                            <label class="" for="client">Client:</label>
+                            <?= form_error('nameClient')?>
+                            <select name="nameClient"  class="form-control" required>
+                                <?php 
+                                foreach ($clients->result() as $opt)
+                                  {                        
+                                    ?>
+                                        <option value="<?=$opt->nameClient ?>"><?=$opt->nameClient?></option> 
+                              <?php
+                                   }
+                  
+                                ?>
+                            </select>
                            </div>
                          <div class="modal-footer">
                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
