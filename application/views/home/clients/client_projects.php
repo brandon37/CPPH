@@ -43,6 +43,7 @@
                                         <th>DC</th>
                                         <th>DT</th>
                                         <th>Cliente</th>
+                                        <th>Ordenes de Compra</th>
                                         <th>Edit</th>
                                         <th class="text-center">Delete</th>
                                     </tr>
@@ -59,6 +60,7 @@
                                                 <td><?= $opc->dateCreation?></td>
                                                 <td><?= $opc->dateTermination?></td>
                                                 <td><?= $opc->nameClient?></td>
+                                                <td><a href="<?= base_url() ?>ordershopping/runViewProjectOrderShoppingsInClient/<?=$opc->idProject?>/<?=$idClient?>">Mostrar</a> </td>
                                                 <td><a href="<?=base_url()?>projects/runViewEditProjectInClient/<?=$opc->idProject?>/<?= $idClient?>" >Edit</a>
                                                 </td>
                                                 <td class="text-center text-danger">

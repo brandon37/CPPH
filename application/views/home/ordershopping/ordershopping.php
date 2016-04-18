@@ -38,6 +38,7 @@
                                         <th>Monto</th>
                                         <th>DC</th>
                                         <th>DT</th>
+                                        <th>Factura</th>
                                         <th>Edit</th>
                                         <th >Delete</th>
                                     </tr>
@@ -54,6 +55,7 @@
                                                 <td><?= $opc->amount?></td>
                                                 <td><?= $opc->dateCreation?></td>
                                                 <td><?= $opc->dateTermination?></td>
+                                                <td><a href="<?=base_url()?>invoices/runViewInvoiceInOrderShopping/<?=$opc->idOrderShopping?>">Mostrar</a></td>
                                                 <td><a href="<?=base_url()?>ordershopping/runViewEditordershopping/<?=$opc->idOrderShopping?>" >Edit</a>
                                                 </td>
                                                 <td class="text-center text-danger">

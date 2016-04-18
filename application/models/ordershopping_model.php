@@ -9,7 +9,7 @@ class Ordershopping_model extends CI_Model {
 
 	function newOrderShopping($data){
 		$this->db->insert('orderShoppings',array('concept'=>$data['concept'],'amount'=>$data['amount'], 
-			'dateCreationOS'=>$data['dateCreation'],'dateTerminationOS'=>$data['dateTermination'],'idproject'=>$data['idproject']));
+			'dateCreationOS'=>$data['dateCreation'],'dateTerminationOS'=>$data['dateTermination'],'idproject'=>$data['idProject']));
 	}
 
 	function deleteOrderShopping($id){

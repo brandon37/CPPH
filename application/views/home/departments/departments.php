@@ -45,7 +45,7 @@
                                           foreach ($query->result() as $opc) { ?>
                                               <tr>
                                                   <td><?= $opc->nameDepartment?></td>
-                                                  <td><a href="<?=base_url()?>projects/runViewDeparmentProjects/<?=$opc->idDepartment?>">Mostrar</a></td>
+                                                  <td><a href="<?=base_url()?>projects/runViewDepartmentProjects/<?=$opc->idDepartment?>">Mostrar</a></td>
                                                   <td><a href="<?=base_url()?>departments/runViewEditdepartment/<?=$opc->idDepartment?>" >Edit</a></td>
                                                   <td class="text-center text-danger">
                                                       <a href="<?=base_url()?>departments/deletedepartment/<?=$opc->idDepartment?>" class="confirmationDeleteDepartment">X</a>  

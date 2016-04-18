@@ -449,13 +449,13 @@ function pagination(){
             $this->projects_model->updateProject($data['idProject'],$data);
 
             $this->projects_model->updateIndexDepartment($data['idProject'],$data);
-            redirect('projects/runViewDeparmentProjects/'.$data['idDepartment']);
+            redirect('projects/runViewDepartmentProjects/'.$data['idDepartment']);
           }
 
      }
     else
      {
-      redirect('projects/runViewDeparmentProjects/'.$data['idDepartment']);
+      redirect('projects/runViewDepartmentProjects/'.$data['idDepartment']);
      }
   }
 
@@ -588,7 +588,7 @@ function pagination(){
     }
   }
 
-  function runViewDeparmentProjects(){
+  function runViewDepartmentProjects(){
     $session_data = $this->session->userdata('logged_in');
     $name = 'General';
     $data['nameUser'] = $session_data['nameUser'];

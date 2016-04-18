@@ -6,7 +6,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                         Control De Ordenes De Compras de Proyecto
+                         Control De Ordenes De Compras del Proyecto <?= $Project->nameProject ?>
                         </h1>
                         <ol class="breadcrumb">
                             <li>
@@ -52,6 +52,7 @@
                                         <th>Monto</th>
                                         <th>DC</th>
                                         <th>DT</th>
+                                        <th>Factura</th>
                                         <th>Edit</th>
                                         <th >Delete</th>
                                     </tr>
@@ -68,10 +69,11 @@
                                                 <td><?= $opc->amount?></td>
                                                 <td><?= $opc->dateCreationOS?></td>
                                                 <td><?= $opc->dateTerminationOS?></td>
-                                                <td><a href="<?=base_url()?>ordershopping/runViewEditOrderShoppingsProjectClientInSector/<?=$opc->idOrderShopping?>/<?=$opc->idproject?>/<?=$idClient?>/<?=$idSector?>" >Edit</a>
+                                                <td><a href="<?= base_url()?>invoices/runViewInvoiceOrderShoppingProjectClientInSector/<?= $opc->idOrderShopping ?>/<?= $idProject ?>/<?= $idClient ?>/<?= $idSector ?>">Crear</a></td>
+                                                <td><a href="<?=base_url()?>ordershopping/runViewEditOrderShoppingsProjectClientInSector/<?=$opc->idOrderShopping?>/<?=$opc->idproject?>/<?= $idClient?>/<?=$idSector?>" >Edit</a>
                                                 </td>
                                                 <td class="text-center text-danger">
-                                                    <a href="<?=base_url()?>ordershopping/deleteorderShoppingProjectClientInSector/<?=$opc->idOrderShopping?>/<?= $opc->idProject ?>/<?=$idClient ?>/<?=$idSector?>" class="confirmationDeleteOrderShopping">X</a>  
+                                                    <a href="<?=base_url()?>ordershopping/deleteorderShoppingProjectClientInSector/<?=$opc->idOrderShopping?>/<?= $opc->idproject ?>/<?= $idClient ?>/<?=$idSector?>" class="confirmationDeleteOrderShopping">X</a>  
                                                 </td>
                                             </tr>
                                       <?php } ?>

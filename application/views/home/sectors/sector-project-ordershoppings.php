@@ -50,6 +50,7 @@
                                             <th>Monto</th>
                                             <th>DC</th>
                                             <th>DT</th>
+                                            <th>Factura</th>
                                             <th>Edit</th>
                                             <th >Delete</th>
                                         </tr>
@@ -64,6 +65,7 @@
                                                     <td><?= $opc->amount?></td>
                                                     <td><?= $opc->dateCreation?></td>
                                                     <td><?= $opc->dateTermination?></td>
+                                                    <td><a href="<?= base_url()?>invoices/runViewInvoiceOrderShoppingProjectInSector/<?= $opc->idOrderShopping?>/<?= $idProject?>/<?= $idSector ?>">crear</a></td>
                                                     <td><a href="<?=base_url()?>ordershopping/runViewEditOrderShoppingProjectInSector/<?=$opc->idOrderShopping?>/<?= $idProject?>/<?= $idSector?>" >Edit</a>
                                                     </td>
                                                     <td class="text-center text-danger">
@@ -103,7 +105,7 @@
                       <h3 class="myModalLabel text-center" id="exampleModalLabel">New Ordershopping</h3>
                     </div>
                     <div class="modal-body">
-                       <?= form_open('ordershopping/newordershopping') ?>
+                       <?= form_open('ordershopping/newInvoiceOrderShoppingProjectInSector/'.$idOrderShopping.'/'.$idProject.'/'.$idSector) ?>
                           <div class="form-group">
                                <?= form_error('nameProject') ?>
                                <input type="hidden" size="20" id="nameProject" name="nameProject" value="<?=
