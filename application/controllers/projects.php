@@ -9,6 +9,7 @@ class Projects extends CI_Controller {
    $this->load->model('client_model','',TRUE);
    $this->load->model('department_model','',TRUE);
    $this->load->model('projects_model','',TRUE); 
+   $this->load->model('sector_model','', TRUE);
    $this->load->library("pagination");
  }
  
@@ -574,12 +575,17 @@ function pagination(){
     $data['idUser'] =  $session_data['idUser'];
     $data['idSector'] = $this->uri->segment(3);
     $data['query'] = $this->projects_model->getSectorProjects($data['idSector']);
-    $data['departments'] = $this->department_model->getAllDepartments();
-    $data['clients'] = $this->client_model->getAllClients();
-    $this->load->view('ehtml/headercrud',$data);
-    $this->load->helper(array('form'));
-    $this->load->view('home/sectors/sector_projects',$data);
-    $this->load->view('ehtml/footercrud');
+    $data['sector'] = $this->sector_model->getSector($data['idSector']);
+    if ($data['sector']) {
+        $data['departments'] = $this->department_model->getAllDepartments();
+        $data['clients'] = $this->client_model->getAllClients();
+        $this->load->view('ehtml/headercrud',$data);
+        $this->load->helper(array('form'));
+        $this->load->view('home/sectors/sector_projects',$data);
+        $this->load->view('ehtml/footercrud');
+    }else{
+      redirect('sectors');
+    }
   }
 
   function runViewDeparmentProjects(){
