@@ -12,6 +12,19 @@ class Ordershopping_model extends CI_Model {
 			'dateCreationOS'=>$data['dateCreation'],'dateTerminationOS'=>$data['dateTermination'],'idproject'=>$data['idProject']));
 	}
 
+	function indexDepartment($data){
+		$this->db->insert('orderShoppings_has_departments',
+			array('idOrderShopping'=>$data['idOrderShopping'],
+				'idDepartment'=>$data['idDepartment']));
+	}
+
+	function updateIndexDepartment($idOrderShopping, $data){
+		$info = array('idOrderShopping'=>$idOrderShopping,
+				'idDepartment'=>$data['idDepartment']);
+		$this->db->where('orderShoppings_has_departments.idOrderShopping',$idOrderShopping);
+		$this->db->update('orderShoppings_has_departments',$info);
+	}
+
 	function deleteOrderShopping($id){
 		$this->db->delete('orderShoppings', array('idorderShopping'=>$id));
 	}
@@ -34,11 +47,15 @@ class Ordershopping_model extends CI_Model {
 		else return false;
 	}
 
-	function getOrderShopping($id){
-		$this->db->join('projects', 'orderShoppings.idproject = projects.idproject');
+	function getOrderShopping($idOrderShopping){
+		$this->db->select('*');
+		$this->db->from('orderShoppings_has_departments');
+		$this->db->join('orderShoppings', 'ordershoppings_has_departments.idOrderShopping = orderShoppings.idOrderShopping');
+		$this->db->join('departments', 'orderShoppings_has_departments.idDepartment = departments.idDepartment');
+		$this->db->join('projects', 'projects.idProject = orderShoppings.idproject');
 		$this->db->join('clients', 'projects.idClient = clients.idClient');
-		$this->db->where('idorderShopping',$id);
-		$query = $this->db->get('orderShoppings');
+		$this->db->where('orderShoppings_has_departments.idOrderShopping',$idOrderShopping);
+		$query =  $this->db->get();
 		if($query->num_rows() >0) return $query->row();
 		else return false;
 	}
