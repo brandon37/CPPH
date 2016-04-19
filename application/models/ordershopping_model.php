@@ -9,58 +9,63 @@ class Ordershopping_model extends CI_Model {
 
 	function newOrderShopping($data){
 		$this->db->insert('orderShoppings',array('concept'=>$data['concept'],'amount'=>$data['amount'], 
-			'dateCreationOS'=>$data['dateCreation'],'dateTerminationOS'=>$data['dateTermination'],'idproject'=>$data['idProject']));
+			'dateCreationOS'=>$data['dateCreation'],'dateTerminationOS'=>$data['dateTermination'],'idProject'=>$data['idProject'], 'idDepartment'=>$data['idDepartment']));
 	}
 
-	function deleteOrderShopping($id){
-		$this->db->delete('orderShoppings', array('idorderShopping'=>$id));
+	function deleteOrderShopping($idOrderShopping){
+		$this->db->delete('orderShoppings', array('idorderShopping'=>$idOrderShopping));
 	}
 
-	function getAllOrderShopping($id){
-		$this->db->join('projects', 'orderShoppings.idproject = projects.idproject');
+	function getAllOrderShopping($idOrderShopping){
+		$this->db->join('projects', 'orderShoppings.idProject = projects.idProject');
 		$this->db->join('clients', 'projects.idClient = clients.idClient');
+		$this->db->join('departments', 'orderShoppings.idDepartment = departments.idDepartment');
 		$query = $this->db->get('orderShoppings');
 		if($query->num_rows() >0) return $query;
 		else return false;
 	}
 
-	function get_OrderShoppingsProjectClientInSector($id){
-		$this->db->join('projects', 'orderShoppings.idproject = projects.idproject');
+	function get_OrderShoppingsProjectClientInSector($idProject){
+		$this->db->join('projects', 'orderShoppings.idProject = projects.idProject');
 		$this->db->join('clients', 'projects.idClient = clients.idClient');
 		$this->db->join('sectors','clients.idSector = sectors.idSector');
-		$this->db->where('projects.idProject',$id);
+		$this->db->join('departments', 'orderShoppings.idDepartment = departments.idDepartment');
+		$this->db->where('projects.idProject',$idProject);
 		$query = $this->db->get('orderShoppings');
 		if($query->num_rows() >0) return $query;
 		else return false;
 	}
 
-	function getOrderShopping($id){
-		$this->db->join('projects', 'orderShoppings.idproject = projects.idproject');
+	function getOrderShopping($idOrderShopping){
+		$this->db->join('projects', 'orderShoppings.idProject = projects.idProject');
 		$this->db->join('clients', 'projects.idClient = clients.idClient');
-		$this->db->where('idorderShopping',$id);
+		$this->db->join('departments', 'orderShoppings.idDepartment = departments.idDepartment');
+		$this->db->where('idorderShopping',$idOrderShopping);
 		$query = $this->db->get('orderShoppings');
 		if($query->num_rows() >0) return $query->row();
 		else return false;
 	}
 
-	function getProjectOrderShoppings($id){
-		$this->db->join('projects', 'orderShoppings.idproject = projects.idproject');
+	function getProjectOrderShoppings($idProject){
+		$this->db->join('projects', 'orderShoppings.idProject = projects.idProject');
 		$this->db->join('clients', 'projects.idClient = clients.idClient');
-		$this->db->where('projects.idProject',$id);
+		$this->db->join('departments', 'orderShoppings.idDepartment = departments.idDepartment');
+		$this->db->where('projects.idProject',$idProject);
 		$query = $this->db->get('orderShoppings');
 		if($query->num_rows() >0) return $query;
 		else return false;
 	}
 
-	function updateOrderShopping($id,$data){
+	function updateOrderShopping($idOrderShopping,$data){
 		$info = array(
 			'concept'=>$data['concept'],
 			'amount'=>$data['amount'],
 			'dateCreationOS'=>$data['dateCreation'],
 			'dateTerminationOS'=>$data['dateTermination'],
-			'idproject'=>$data['idProject']
+			'idProject'=>$data['idProject'],
+			'idDepartment'=>$data['idDepartment']
 		 );
-		$this->db->where('idorderShopping',$id);
+		$this->db->where('idorderShopping',$idOrderShopping);
 		$this->db->update('orderShoppings',$info);
 	}
 
@@ -70,8 +75,9 @@ class Ordershopping_model extends CI_Model {
 	}
 
 	function get_pagination($number_per_page){
-		$this->db->join('projects', 'orderShoppings.idproject = projects.idproject');
+		$this->db->join('projects', 'orderShoppings.idProject = projects.idProject');
 		$this->db->join('clients', 'projects.idClient = clients.idClient');
+		$this->db->join('departments', 'orderShoppings.idDepartment = departments.idDepartment');
 		return $this->db->get("orderShoppings", $number_per_page, $this->uri->segment(3));
 	}
 	

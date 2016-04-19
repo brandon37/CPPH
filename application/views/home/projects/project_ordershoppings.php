@@ -5,8 +5,8 @@
                 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">
-                         Control De Ordenes De Compras de Proyecto
+                        <h1 class="page-header text-left">
+                         Control De Ordenes De Compras <br> Del Proyecto <b class="text-primary"><?= $Project->nameProject ?></b>
                         </h1>
                         <ol class="breadcrumb">
                             <li>
@@ -41,7 +41,7 @@
                                     <thead class="text-center">
                                         <tr class="text-center">
                                             <th>Cliente</th>
-                                            <th>Name</th>
+                                            <th>Departamento</th>
                                             <th>Concepto</th>
                                             <th>Monto</th>
                                             <th>DC</th>
@@ -56,11 +56,11 @@
                                             foreach ($query->result() as $opc) { ?>
                                                 <tr>
                                                     <td><?= $opc->nameClient?></td>
-                                                    <td><?= $opc->nameProject?></td>
+                                                    <td><?= $opc->nameDepartment?></td>
                                                     <td><?= $opc->concept?></td>
                                                     <td><?= $opc->amount?></td>
-                                                    <td><?= $opc->dateCreation?></td>
-                                                    <td><?= $opc->dateTermination?></td>
+                                                    <td><?= $opc->dateCreationOS?></td>
+                                                    <td><?= $opc->dateTerminationOS?></td>
                                                     <td><a href="<?=base_url() ?>Invoices/runViewInvoiceOrderShoppingInProject/<?= $opc->idOrderShopping ?>/<?= $idProject ?>">Mostrar</a></td>
                                                     <td><a href="<?=base_url()?>ordershopping/runViewEditOrderShoppingsInProject/<?=$opc->idOrderShopping?>/<?= $idProject?>" >Edit</a>
                                                     </td>
@@ -107,6 +107,27 @@
                                <input type="hidden" size="20" id="idProject" name="idProject" value="<?=
                                $idProject?>" class="form-nameProject form-control" required/>
                            </div>
+                          <div class="form-group">
+                           <?= form_error('nameDepartment') ?>
+                           <label class="" for="nameDepartment">Name Department:</label>
+                           <?php 
+                              if ($departments) 
+                                {?>
+                                 <select name="nameDepartment"  class="form-control" value="<?= $ordershopping->nameDepartment ?>" required>
+                                    <?php 
+                                    foreach ($departments->result() as $opt)
+                                     { 
+                                       ?>
+                                         <option value="<?=$opt->nameDepartment ?>"><?=$opt->nameDepartment?></option>  
+                                    <?php
+                                   }
+                              ?></select> <?php
+                                 }else{
+                                  echo '<h4 class="text-danger">"No Hay Departamentos Favor De Agregar"</h4>';
+                                 }
+                              
+                              ?>   
+                       </div>
                            <div class="form-group">
                               <label class="" for="text">concept:</label>
                               <?= form_error('concept') ?>

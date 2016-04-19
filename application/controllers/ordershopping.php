@@ -26,6 +26,8 @@ class Ordershopping extends CI_Controller {
      $result = $this->ordershopping_model->get_pagination($config['per_page']);
      $data['query'] = $result;
      $data['pagination'] = $this->pagination->create_links();
+     $data['departments'] = $this->department_model->getAllDepartments();
+     $data['projects'] = $this->projects_model->getAllProjects();
      $this->load->view('ehtml/headercrud',$data);
      $this->load->helper(array('form'));
      $this->load->view('home/ordershopping/ordershopping',$data);
@@ -87,6 +89,23 @@ class Ordershopping extends CI_Controller {
     
   }
 
+  function check_department($nameDepartment){
+    $queryDepartment = $this->projects_model->getProjectId($this->input->post('nameDepartment'));
+    $nameDepartment_db = null;
+    if ($queryDepartment) {
+       $nameDepartment_db = $queryDepartment->nameDepartment;
+    }
+
+    if ($nameDepartment == $nameDepartment_db) {
+       return TRUE;
+
+     }else{
+        $this->form_validation->set_message('check_department', "Sorry, This Department Doesn't Exist.");
+        return false;
+     }
+    
+  }
+
   function check_nameProyect($nameProject, $projectid){
     $Project = $this->projects_model->getProjectId($nameProject);
     if($Project){
@@ -98,6 +117,21 @@ class Ordershopping extends CI_Controller {
         }
     }else{
       $this->form_validation->set_message('check_nameProyect',"Sorry, This Name Project Doesn't Exist.");
+      return false;
+    }
+  }
+
+  function check_nameDepartment($nameDepartment, $idDepartment){
+    $department = $this->department_model->getDepartmentId($nameProject);
+    if($department){
+        if ($department->idDepartment == $idDepartment) {
+              return true;
+        }else{
+            $this->form_validation->set_message('check_nameDepartment',"Sorry, The Department name does not match the OrderShopping.");
+            return false;
+        }
+    }else{
+      $this->form_validation->set_message('check_nameDepartment',"Sorry, This Name Department Doesn't Exist.");
       return false;
     }
   }
@@ -147,10 +181,13 @@ class Ordershopping extends CI_Controller {
       'concept'=>$this->input->post('concept'),
       'amount'=>$this->input->post('amount'),
       'dateCreation'=>$this->input->post('dateCreation'),
+      'nameDepartment'=>$this->input->post('nameDepartment'),
       'dateTermination'=>'',
-      'idproject'=>''
+      'idProject'=>'',
+      'idDepartment'=>''
      );
       $this->form_validation->set_rules('nameProject', 'Name Project', 'required|callback_check_project');
+      $this->form_validation->set_rules('nameDepartment','Name Department', 'required|callback_check_check_department');
       $this->form_validation->set_rules('concept', 'Concept', 'required');
       $this->form_validation->set_rules('amount', 'Amount', 'required|numeric');
       $this->form_validation->set_rules('dateCreation','Date', 'required|callback_check_date');
@@ -159,48 +196,31 @@ class Ordershopping extends CI_Controller {
          $this->index();
 
       }else{
-          $data['idProject'] = $this->projects_model->getProjectId($data['nameProject'])->idProject;
-          $this->ordershopping_model->newOrderShopping($data);
-          redirect('ordershopping');
+        $data['department'] = $this->department_model->getDepartmentid($data['nameDepartment']);
+        $data['idDepartment'] = $data['department']->idDepartment;
+        $data['idProject'] = $this->projects_model->getProjectId($data['nameProject'])->idProject;
+        $this->ordershopping_model->newOrderShopping($data);
+        redirect('ordershopping');
       }
 
-  }
-  function newOrderShoppingProjectInDepartment(){
-    $data = array(
-      'nameProject'=>$this->input->post('nameProject'),
-      'concept'=>$this->input->post('concept'),
-      'amount'=>$this->input->post('amount'),
-      'dateCreation'=>$this->input->post('dateCreation'),
-      'dateTermination'=>''
-     );
-      $data['idProject']= $this->uri->segment(3);
-      $data['idClient'] = $this->uri->segment(4);
-      $data['idDepartment'] = $this->uri->segment(5);
-      $this->form_validation->set_rules('nameProject','Id Project', 'required|numeric|callback_check_idProject');
-      $this->form_validation->set_rules('concept', 'Concept', 'required');
-      $this->form_validation->set_rules('amount', 'Amount', 'required|numeric');
-      $this->form_validation->set_rules('dateCreation','Date', 'required|callback_check_date');
-     if($this->form_validation->run() == FALSE)
-      {
-         $this->runViewProjectOrderShoppingInDepartment($data['idProject'],$data['idClient'],$data['idDepartment']);
-      }else{
-          $this->ordershopping_model->newOrderShopping($data);
-          redirect('ordershopping/runViewProjectOrderShoppingInDepartment/'.$data['idProject'].'/'.$data['idClient'].'/'.$data['idDepartment']);
-      }
   }
 
   function newOrderShoppingProjectClientSector(){
      $data = array(
-      'idproject'=>$this->input->post('idProject'),
+      'nameProject'=>$this->input->post('nameProject'),
       'concept'=>$this->input->post('concept'),
       'amount'=>$this->input->post('amount'),
       'dateCreation'=>$this->input->post('dateCreation'),
-      'dateTermination'=>''
+      'nameDepartment'=>$this->input->post('nameDepartment'),
+      'dateTermination'=>'',
+      'idproject'=>'',
+      'idDepartment'=>''
      );
       $data['idProject']= $this->uri->segment(3);
       $data['idClient'] = $this->uri->segment(4);
       $data['idSector'] = $this->uri->segment(5);
       $this->form_validation->set_rules('idProject','Id Project', 'required|numeric|callback_check_idProject');
+      $this->form_validation->set_rules('nameDepartment','Name Department', 'required|callback_check_check_department');
       $this->form_validation->set_rules('concept', 'Concept', 'required');
       $this->form_validation->set_rules('amount', 'Amount', 'required|numeric');
       $this->form_validation->set_rules('dateCreation','Date', 'required|callback_check_date');
@@ -208,21 +228,28 @@ class Ordershopping extends CI_Controller {
       {
          $this->runViewOrderShoppingsProjectClientInSector($data['idProject'],$data['idClient'],$data['idSector']);
       }else{
+          $data['department'] = $this->department_model->getDepartmentid($data['nameDepartment']); 
+          $data['idDepartment'] = $data['department']->idDepartment;
           $this->ordershopping_model->newOrderShopping($data);
           redirect('ordershopping/runViewOrderShoppingsProjectClientInSector/'.$data['idProject'].'/'.$data['idClient'].'/'.$data['idSector']);
+        
       }
   }
 
   function newOrderShoppingProject(){
      $data = array(
-      'idproject'=>$this->input->post('idProject'),
+      'idProject'=>$this->input->post('idProject'),
       'concept'=>$this->input->post('concept'),
       'amount'=>$this->input->post('amount'),
       'dateCreation'=>$this->input->post('dateCreation'),
-      'dateTermination'=>''
+      'nameDepartment'=>$this->input->post('nameDepartment'),
+      'dateTermination'=>'',
+      'idproject'=>'',
+      'idDepartment'=>''
      );
       $data['idProject']= $this->uri->segment(3);
       $this->form_validation->set_rules('idProject','Id Project', 'required|numeric|callback_check_idProject');
+      $this->form_validation->set_rules('nameDepartment','Name Department', 'required|callback_check_check_department');
       $this->form_validation->set_rules('concept', 'Concept', 'required');
       $this->form_validation->set_rules('amount', 'Amount', 'required|numeric');
       $this->form_validation->set_rules('dateCreation','Date', 'required|callback_check_date');
@@ -230,8 +257,10 @@ class Ordershopping extends CI_Controller {
       {
          $this->runViewProjectOrderShoppings($data['idProject']);
       }else{
-          $this->ordershopping_model->newOrderShopping($data);
-          redirect('ordershopping/runViewProjectOrderShoppings/'.$data['idProject']);
+          $data['department'] = $this->department_model->getDepartmentid($data['nameDepartment']);
+            $data['idDepartment'] = $data['department']->idDepartment;
+            $this->ordershopping_model->newOrderShopping($data);
+            redirect('ordershopping/runViewProjectOrderShoppings/'.$data['idProject']);
       }
   }
 
@@ -242,11 +271,15 @@ class Ordershopping extends CI_Controller {
       'concept'=>$this->input->post('concept'),
       'amount'=>$this->input->post('amount'),
       'dateCreation'=>$this->input->post('dateCreation'),
-      'dateTermination'=>''
+      'nameDepartment'=>$this->input->post('nameDepartment'),
+      'dateTermination'=>'',
+      'idproject'=>'',
+      'idDepartment'=>''
      );
       $data['idProject']= $this->uri->segment(3);
       $data['idClient'] = $this->uri->segment(4);
       $this->form_validation->set_rules('nameProject','Name Project', 'required');
+      $this->form_validation->set_rules('nameDepartment','Name Department', 'required|callback_check_check_department');
       $this->form_validation->set_rules('concept', 'Concept', 'required');
       $this->form_validation->set_rules('amount', 'Amount', 'required|numeric');
       $this->form_validation->set_rules('dateCreation','Date', 'required|callback_check_date');
@@ -254,18 +287,24 @@ class Ordershopping extends CI_Controller {
       {
          $this->runViewProjectOrderShoppingsInClient($data['idProject'],$data['idClient']);
       }else{
-          $this->ordershopping_model->newOrderShopping($data);
-          redirect('ordershopping/runViewProjectOrderShoppingsInClient/'.$data['idProject'].'/'.$data['idClient']);
+          $data['department'] = $this->department_model->getDepartmentid($data['nameDepartment']);
+              $data['idDepartment'] = $data['department']->idDepartment;
+              $this->ordershopping_model->newOrderShopping($data);
+              redirect('ordershopping/runViewProjectOrderShoppingsInClient/'.$data['idProject'].'/'.$data['idClient']);
       }
   }
 
   function updateorderShopping(){
     $data = array(
+      'nameProject'=>$this->input->post('nameProject'),
       'concept'=>$this->input->post('concept'),
       'amount'=>$this->input->post('amount'),
       'dateCreation'=>$this->input->post('dateCreation'),
-      'dateTermination'=>$this->input->post('dateTermination')
-    );
+      'nameDepartment'=>$this->input->post('nameDepartment'),
+      'dateTermination'=>'',
+      'idproject'=>'',
+      'idDepartment'=>''
+     );
     $idOrderShopping = $this->uri->segment(3);
     $this->form_validation->set_rules('concept', 'Concept', 'required');
     $this->form_validation->set_rules('amount', 'Amount', 'required|numeric');
@@ -276,7 +315,8 @@ class Ordershopping extends CI_Controller {
     {
       $this->runViewEditorderShopping($idOrderShopping);
     }else{
-      $data['idProject'] = $this->ordershopping_model->getorderShopping($idOrderShopping)->idproject;
+      $data['idDepartment'] = $this->department_model->getDepartmentId($data['nameDepartment']);
+      $data['idProject'] = $this->ordershopping_model->getorderShopping($idOrderShopping)->idProject;
       $this->ordershopping_model->updateorderShopping($idOrderShopping ,$data);
       redirect('ordershopping');
     }
@@ -284,15 +324,19 @@ class Ordershopping extends CI_Controller {
 
   function updateorderShoppingProyectInClient(){
     $data = array(
+      'nameProject'=>$this->input->post('nameProject'),
       'concept'=>$this->input->post('concept'),
       'amount'=>$this->input->post('amount'),
       'dateCreation'=>$this->input->post('dateCreation'),
-      'dateTermination'=>$this->input->post('dateTermination')
-    );
+      'nameDepartment'=>$this->input->post('nameDepartment'),
+      'dateTermination'=>'',
+      'idproject'=>'',
+      'idDepartment'=>''
+     );
     $data['idOrderShopping'] = $this->uri->segment(3);
     $data['idProject'] = $this->uri->segment(4);
     $data['idClient'] = $this->uri->segment(5);
-    $projectid = $this->ordershopping_model->getorderShopping($data['idOrderShopping'])->idproject;
+    $projectid = $this->ordershopping_model->getorderShopping($data['idOrderShopping'])->idProject;
     $this->form_validation->set_rules('nameProject', 'Project Name' , 'required|callback_check_nameProyect['.$projectid.']');
     $this->form_validation->set_rules('concept', 'Concept', 'required');
     $this->form_validation->set_rules('amount', 'Amount', 'required|numeric');
@@ -303,49 +347,28 @@ class Ordershopping extends CI_Controller {
     {
       $this->runViewEditOrderShoppingProjectInClient($data['idOrderShopping'], $data['idProject'],$data['idClient']);
     }else{
+      $data['idDepartment'] = $this->department_model->getDepartmentId($data['nameDepartment'])->idDepartment;
       $this->ordershopping_model->updateOrderShopping($data['idOrderShopping'] ,$data);
       redirect('ordershopping/runViewProjectOrderShoppingsInClient/'.$data['idProject'].'/'.$data['idClient']);
     }
   }
 
-  function updateorderShoppingProyectInDepartment(){
-    $data = array(
-      'concept'=>$this->input->post('concept'),
-      'amount'=>$this->input->post('amount'),
-      'dateCreation'=>$this->input->post('dateCreation'),
-      'dateTermination'=>$this->input->post('dateTermination')
-    );
-    $data['idOrderShopping'] = $this->uri->segment(3);
-    $data['idProject'] = $this->uri->segment(4);
-    $data['idDepartment'] = $this->uri->segment(5);
-    $projectid = $this->ordershopping_model->getorderShopping($data['idOrderShopping'])->idproject;
-    $this->form_validation->set_rules('nameProject', 'Project Name' , 'required|callback_check_nameProyect['.$projectid.']');
-    $this->form_validation->set_rules('concept', 'Concept', 'required');
-    $this->form_validation->set_rules('amount', 'Amount', 'required|numeric');
-    $this->form_validation->set_rules('dateCreation','Date', 'required|callback_check_date');
-    $this->form_validation->set_rules('dateTermination','Date', 'required|callback_check_date');
-
-    if($this->form_validation->run() == FALSE)
-    {
-      $this->runViewEditOrderShoppingProjectInDepartment($data['idOrderShopping'], $data['idProject'],$data['idDepartment']);
-    }else{
-      $this->ordershopping_model->updateOrderShopping($data['idOrderShopping'] ,$data);
-      redirect('ordershopping/runViewProjectOrderShoppingInDepartment/'.$data['idProject'].'/'.$data['idDepartment']);
-    }
-  }
-
   function updateorderShoppingProyectClientinSector(){
     $data = array(
+      'nameProject'=>$this->input->post('nameProject'),
       'concept'=>$this->input->post('concept'),
       'amount'=>$this->input->post('amount'),
       'dateCreation'=>$this->input->post('dateCreation'),
-      'dateTermination'=>$this->input->post('dateTermination')
-    );
+      'nameDepartment'=>$this->input->post('nameDepartment'),
+      'dateTermination'=>'',
+      'idproject'=>'',
+      'idDepartment'=>''
+     );
     $data['idOrderShopping'] = $this->uri->segment(3);
     $data['idProject'] = $this->uri->segment(4);
     $data['idClient']  = $this->uri->segment(5);
     $data['idSector']  = $this->uri->segment(6);   
-    $projectid = $this->ordershopping_model->getorderShopping($data['idOrderShopping'])->idproject;
+    $projectid = $this->ordershopping_model->getorderShopping($data['idOrderShopping'])->idProject;
     $this->form_validation->set_rules('nameProject', 'Project Name' , 'required|callback_check_nameProyect['.$projectid.']');
     $this->form_validation->set_rules('concept', 'Concept', 'required');
     $this->form_validation->set_rules('amount', 'Amount', 'required|numeric');
@@ -356,6 +379,7 @@ class Ordershopping extends CI_Controller {
     {
       $this->runViewEditOrderShoppingsProjectClientInSector($data['idOrderShopping'],$data['idProject'],$data['idClient'],$data['idSector']);
     }else{
+      $data['idDepartment'] = $this->department_model->getDepartmentId($data['nameDepartment']);
       $this->ordershopping_model->updateOrderShopping($data['idOrderShopping'] ,$data);
       redirect('ordershopping/runViewOrderShoppingsProjectClientInSector/'.$data['idProject'].'/'.$data['idClient'].'/'.$data['idSector']);
     }
@@ -363,14 +387,18 @@ class Ordershopping extends CI_Controller {
 
   function updateorderShoppingInProyect(){
     $data = array(
+      'nameProject'=>$this->input->post('nameProject'),
       'concept'=>$this->input->post('concept'),
       'amount'=>$this->input->post('amount'),
       'dateCreation'=>$this->input->post('dateCreation'),
-      'dateTermination'=>$this->input->post('dateTermination')
-    );
+      'nameDepartment'=>$this->input->post('nameDepartment'),
+      'dateTermination'=>'',
+      'idproject'=>'',
+      'idDepartment'=>''
+     );
     $data['idOrderShopping'] = $this->uri->segment(3);
     $data['idProject'] = $this->uri->segment(4);
-    $projectid = $this->ordershopping_model->getorderShopping($data['idOrderShopping'])->idproject;
+    $projectid = $this->ordershopping_model->getorderShopping($data['idOrderShopping'])->idProject;
     $this->form_validation->set_rules('nameProject', 'Project Name' , 'required|callback_check_nameProyect['.$projectid.']');
     $this->form_validation->set_rules('concept', 'Concept', 'required');
     $this->form_validation->set_rules('amount', 'Amount', 'required|numeric');
@@ -381,6 +409,7 @@ class Ordershopping extends CI_Controller {
     {
       $this->runViewEditOrderShoppingsInProject($data['idOrderShopping'],$data['idProject']);
     }else{
+      $data['idDepartment'] = $this->department_model->getDepartmentId($data['nameDepartment'])->idDepartment;
       $this->ordershopping_model->updateOrderShopping($data['idOrderShopping'] ,$data);
       redirect('ordershopping/runViewProjectOrderShoppings/'.$data['idProject']);
     }
@@ -390,15 +419,19 @@ class Ordershopping extends CI_Controller {
 
   function updateorderShoppingProyectInSector(){
     $data = array(
+      'nameProject'=>$this->input->post('nameProject'),
       'concept'=>$this->input->post('concept'),
       'amount'=>$this->input->post('amount'),
       'dateCreation'=>$this->input->post('dateCreation'),
-      'dateTermination'=>$this->input->post('dateTermination')
-    );
+      'nameDepartment'=>$this->input->post('nameDepartment'),
+      'dateTermination'=>'',
+      'idproject'=>'',
+      'idDepartment'=>''
+     );
     $data['idOrderShopping'] = $this->uri->segment(3);
     $data['idProject'] = $this->uri->segment(4);
     $data['idSector'] = $this->uri->segment(5);
-    $projectid = $this->ordershopping_model->getorderShopping($data['idOrderShopping'])->idproject;
+    $projectid = $this->ordershopping_model->getorderShopping($data['idOrderShopping'])->idProject;
     $this->form_validation->set_rules('nameProject', 'Project Name' , 'required|callback_check_nameProyect['.$projectid.']');
     $this->form_validation->set_rules('concept', 'Concept', 'required');
     $this->form_validation->set_rules('amount', 'Amount', 'required|numeric');
@@ -409,6 +442,7 @@ class Ordershopping extends CI_Controller {
     {
       $this->runViewEditOrderShoppingProjectInSector($data['idOrderShopping'],$data['idProject'],$data['idSector']);
     }else{
+      $data['idDepartment'] = $this->department_model->getDepartmentId($data['nameDepartment']);
       $this->ordershopping_model->updateOrderShopping($data['idOrderShopping'] ,$data);
       redirect('ordershopping/runViewProjectOrderShoppingsInSector/'.$data['idProject'].'/'.$data['idSector']);
     }
@@ -421,8 +455,13 @@ class Ordershopping extends CI_Controller {
     $data['idProject'] = $this->uri->segment(3);
     $data['idClient'] = $this->uri->segment(4);
     $data['idSector'] = $this->uri->segment(5);
+    $data['department'] = $this->department_model->getDepartmentId($data['ordershopping']->idDepartment);
+    $data['departments'] = $this->department_model->getAllDepartments();
     $data['Project'] = $this->projects_model->getProject($data['idProject']);
     $data['query'] =  $this->ordershopping_model->get_OrderShoppingsProjectClientInSector($data['idProject']);
+    if ($data['Project']) {
+      # code...
+    }
     $this->load->view('ehtml/headercrud',$data);
     $this->load->helper(array('form'));
     $this->load->view('home/sectors/sector-client-project-ordershoppings',$data);
@@ -434,12 +473,19 @@ class Ordershopping extends CI_Controller {
     $data['nameUser'] = $session_data['nameUser'];
     $data['idUser'] =  $session_data['idUser'];
     $data['id'] = $this->uri->segment(3);
+    $data['department'] = $this->department_model->getDepartment($data['ordershopping']->idDepartment);
+    $data['departments'] = $this->department_model->getAllDepartments();
     $data['ordershopping'] = $this->ordershopping_model->getorderShopping($data['id']);
+    $data['Project'] = $this->projects_model->getProject($data['ordershopping']->idproject);
     $data['projects'] = $this->projects_model->getAllProjects();
-    $this->load->view('ehtml/headercrud',$data);
-    $this->load->helper(array('form'));
-    $this->load->view('home/ordershopping/edit-ordershopping',$data);
-    $this->load->view('ehtml/footercrud');
+    if ($data['Project']) {    
+      $this->load->view('ehtml/headercrud',$data);
+      $this->load->helper(array('form'));
+      $this->load->view('home/ordershopping/edit-ordershopping',$data);
+      $this->load->view('ehtml/footercrud');
+    }else{
+      redirect('ordershopping');
+    }
   }
 
   function runViewEditOrderShoppingsProjectClientInSector(){
@@ -451,11 +497,18 @@ class Ordershopping extends CI_Controller {
     $data['idProject'] = $this->uri->segment(4);
     $data['idClient'] = $this->uri->segment(5);
     $data['idSector'] = $this->uri->segment(6);
+    $data['department'] = $this->department_model->getDepartmentId($data['ordershopping']->idDepartment);
+    $data['departments'] = $this->department_model->getAllDepartments();
+    $data['Project'] = $this->projects_model->getProject($data['ordershopping']->idproject);
     $data['projects'] = $this->projects_model->getAllProjects();
-    $this->load->view('ehtml/headercrud',$data);
-    $this->load->helper(array('form'));
-    $this->load->view('home/sectors/edit-ordershopping-proyect-client-in-sector',$data);
-    $this->load->view('ehtml/footercrud');
+    if ($data['Project']) {
+      $this->load->view('ehtml/headercrud',$data);
+      $this->load->helper(array('form'));
+      $this->load->view('home/sectors/edit-ordershopping-proyect-client-in-sector',$data);
+      $this->load->view('ehtml/footercrud');
+    }else{
+      redirect('sectors');
+    }
   }
 
   function runViewProjectOrderShoppings(){
@@ -463,6 +516,7 @@ class Ordershopping extends CI_Controller {
     $data['nameUser'] = $session_data['nameUser'];
     $data['idUser'] =  $session_data['idUser'];
     $data['idProject'] = $this->uri->segment(3);
+    $data['departments'] = $this->department_model->getAllDepartments();
     $data['Project'] = $this->projects_model->getProject($data['idProject']);
     if ($data['Project']) {
       $data['query'] = $this->ordershopping_model->getProjectOrderShoppings($data['idProject']);
@@ -482,6 +536,8 @@ class Ordershopping extends CI_Controller {
     $data['idUser'] =  $session_data['idUser'];
     $data['idProject'] = $this->uri->segment(3);
     $data['idSector'] = $this->uri->segment(4);
+    $data['department'] = $this->department_model->getDepartment($data['ordershopping']->idDepartment);
+    $data['departments'] = $this->department_model->getAllDepartments();
     $data['Project'] = $this->projects_model->getProject($data['idProject']);
     $data['sector'] = $this->sector_model->getSector($data['idSector']);
     if ($data['Project'] && $data['sector']) {
@@ -502,36 +558,18 @@ class Ordershopping extends CI_Controller {
     $data['idUser'] =  $session_data['idUser'];
     $data['idProject'] = $this->uri->segment(3);
     $data['idClient'] = $this->uri->segment(4);
-    $data['Project'] = $this->projects_model->getProject($data['idProject']);
-    $data['Client'] = $this->client_model->getClient($data['idClient']);
-    if ($data['Project'] && $data['Client']) {
+    $data['departments'] = $this->department_model->getAllDepartments();
+    $data['project'] =$this->projects_model->getProject($data['idProject']);
+    $data['client'] = $this->client_model->getClient($data['idClient']);
+    if ($data['project'] && $data['client']) {
+      $data['projects'] = $this->projects_model->getAllProjects();
       $data['query'] = $this->ordershopping_model->getProjectOrderShoppings($data['idProject']);
       $this->load->view('ehtml/headercrud',$data);
       $this->load->helper(array('form'));
       $this->load->view('home/clients/client-project-ordershoppings',$data);
       $this->load->view('ehtml/footercrud');
     }else{
-      redirect('projects');
-    }
-    
-  }
-
-  function runViewProjectOrderShoppingInDepartment(){
-    $session_data = $this->session->userdata('logged_in');
-    $data['nameUser'] = $session_data['nameUser'];
-    $data['idUser'] =  $session_data['idUser'];
-    $data['idProject'] = $this->uri->segment(3);
-    $data['idDepartment'] = $this->uri->segment(4);
-    $data['Project'] = $this->projects_model->getProject($data['idProject']);
-    $data['Department'] = $this->department_model->getDepartment($data['idDepartment']);
-    if ($data['Project'] && $data['Department']) {
-      $data['query'] = $this->ordershopping_model->getProjectOrderShoppings($data['idProject']);
-      $this->load->view('ehtml/headercrud',$data);
-      $this->load->helper(array('form'));
-      $this->load->view('home/departments/department-project-ordershoppings',$data);
-      $this->load->view('ehtml/footercrud');
-    }else{
-      redirect('departments');
+      redirect('clients');
     }
     
   }
@@ -544,9 +582,11 @@ class Ordershopping extends CI_Controller {
     $data['ordershopping'] = $this->ordershopping_model->getorderShopping($data['idOrderShopping']);
     $data['idProject'] = $this->uri->segment(4);
     $data['idClient'] = $this->uri->segment(5);
-    $data['Client'] = $this->client_model->getClient($data['idClient']);
-    $data['Project'] = $this->projects_model->getProject($data['idProject']);
-    if ($data['Client'] && $data['Project']) {
+    $data['department'] = $this->department_model->getDepartment($data['ordershopping']->idDepartment);
+    $data['departments'] = $this->department_model->getAllDepartments();
+    $data['client'] = $this->client_model->getClient($data['idClient']);
+    $data['project'] = $this->projects_model->getProject($data['idProject']);
+    if ($data['client'] && $data['project']) {
       $data['projects'] = $this->projects_model->getAllProjects();
       $this->load->view('ehtml/headercrud',$data);
       $this->load->helper(array('form'));
@@ -564,6 +604,8 @@ class Ordershopping extends CI_Controller {
     $data['idUser'] =  $session_data['idUser'];
     $data['idOrderShopping'] = $this->uri->segment(3);
     $data['ordershopping'] = $this->ordershopping_model->getorderShopping($data['idOrderShopping']);
+    $data['department'] = $this->department_model->getDepartment($data['ordershopping']->idDepartment);
+    $data['departments'] = $this->department_model->getAllDepartments();
     $data['idProject'] = $this->uri->segment(4);
     $data['idSector'] = $this->uri->segment(5);
     $data['sector'] = $this->sector_model->getSector($data['idSector']);
@@ -578,29 +620,7 @@ class Ordershopping extends CI_Controller {
       redirect('sectors');
     }
     
-  }
-
-  function runViewEditOrderShoppingProjectInDepartment(){
-    $session_data = $this->session->userdata('logged_in');
-    $data['nameUser'] = $session_data['nameUser'];
-    $data['idUser'] =  $session_data['idUser'];
-    $data['idOrderShopping'] = $this->uri->segment(3);
-    $data['ordershopping'] = $this->ordershopping_model->getorderShopping($data['idOrderShopping']);
-    $data['idProject'] = $this->uri->segment(4);
-    $data['idDepartment'] = $this->uri->segment(5);
-    $data['department'] = $this->department_model->getDepartment($data['idDepartment']);
-    $data['Project'] = $this->projects_model->getProject($data['idProject']);
-    if ($data['department'] && $data['Project']) {
-      $data['projects'] = $this->projects_model->getAllProjects();
-      $this->load->view('ehtml/headercrud',$data);
-      $this->load->helper(array('form'));
-      $this->load->view('home/departments/edit-ordershopping-project-in-department',$data);
-      $this->load->view('ehtml/footercrud');
-    }else{
-      redirect('sectors');
-    }
-    
-  }  
+  } 
 
   function runViewEditOrderShoppingsInProject(){
     $session_data = $this->session->userdata('logged_in');
@@ -608,34 +628,40 @@ class Ordershopping extends CI_Controller {
     $data['idUser'] =  $session_data['idUser'];
     $data['idOrderShopping'] = $this->uri->segment(3);
     $data['ordershopping'] = $this->ordershopping_model->getorderShopping($data['idOrderShopping']);
+    $data['department'] = $this->department_model->getDepartment($data['ordershopping']->idDepartment);
+    $data['departments'] = $this->department_model->getAllDepartments();
     $data['idProject'] = $this->uri->segment(4);
-    $data['projects'] = $this->projects_model->getAllProjects();
-    $this->load->view('ehtml/headercrud',$data);
-    $this->load->helper(array('form'));
-    $this->load->view('home/projects/edit-ordershopping-in-project',$data);
-    $this->load->view('ehtml/footercrud');
+    $data['project'] = $this->projects_model->getProject($data['idProject']);
+    if ($data['department']) {  
+      $data['projects'] = $this->projects_model->getAllProjects();
+      $this->load->view('ehtml/headercrud',$data);
+      $this->load->helper(array('form'));
+      $this->load->view('home/projects/edit-ordershopping-in-project',$data);
+      $this->load->view('ehtml/footercrud');
+    }else{
+      redirect('ordershopping');
+    }
   }
 
   function deleteorderShopping(){
-    $id = $this->uri->segment(3);
-    $this->ordershopping_model->deleteorderShopping($id);
+    $idOrderShopping = $this->uri->segment(3);
+    $this->ordershopping_model->deleteorderShopping($idOrderShopping);
     redirect('ordershopping');
   }
 
   function deleteorderShoppingInProject(){
-    $id = $this->uri->segment(3);
+    $idOrderShopping = $this->uri->segment(3);
     $idProject = $this->uri->segment(4);
-    $this->ordershopping_model->deleteorderShopping($id);
+    $this->ordershopping_model->deleteorderShopping($idOrderShopping);
     redirect('ordershopping/runViewProjectOrderShoppings/'.$idProject);
   }
 
-  function deleteordershoppingProjectInDepartment(){
-    $id = $this->uri->segment(3);
+  function deleteordershoppingProjectInClient(){
+    $idOrderShopping = $this->uri->segment(3);
     $idProject = $this->uri->segment(4);
     $idClient = $this->uri->segment(5);
-    $idDepartment = $this->uri->segment(6);
-    $this->ordershopping_model->deleteorderShopping($id);
-    redirect('ordershopping/runViewProjectOrderShoppingInDepartment/'.$idProject.'/'.$idClient.'/'.$idDepartment);
+    $this->ordershopping_model->deleteorderShopping($idOrderShopping);
+    redirect('ordershopping/runViewProjectOrderShoppingsInClient/'.$idProject.'/'.$idClient);
   }
 
   function deleteorderShoppingProjectClientInSector(){
@@ -643,7 +669,7 @@ class Ordershopping extends CI_Controller {
     $idProject = $this->uri->segment(4);
     $idClient = $this->uri->segment(5);
     $idSector = $this->uri->segment(6);
-    $this->ordershopping_model->deleteorderShopping($id);
+    $this->ordershopping_model->deleteorderShopping($idOrderShopping);
     redirect('ordershopping/runViewOrderShoppingsProjectClientInSector/'.$idProject.'/'.$idClient.'/'.$idSector);
   }
 

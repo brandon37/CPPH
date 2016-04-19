@@ -39,19 +39,6 @@
                              <input type="text" size="20" id="nameProject" name="projectname" value="<?=$project->nameProject?>" placeholder="Name Project" class="form-projectname form-control" required/>
                          </div>
                          <div class="form-group">
-                            <label class="" for="text">Department:</label>
-                            <?= form_error('department')?>
-                            <select name="department"  class="form-control" value="<?= $project->nameDepartment ?>" required>
-                                <?php 
-                                foreach ($department->result() as $opt) { 
-                                ?>
-                                  <option value="<?=$opt->nameDepartment ?>"><?=$opt->nameDepartment?></option> 
-                               <?php
-                                }
-                                ?>
-                            </select>
-                         </div>
-                         <div class="form-group">
                             <label class="" for="price">Price:</label>
                             <?= form_error('price')?>
                             <input type="text" size="20" id="price" name="price" placeholder="Price" class="form-price form-control" value="<?=$project->price?>" required/>

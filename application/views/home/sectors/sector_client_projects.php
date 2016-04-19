@@ -46,7 +46,6 @@
                                 <thead>
                                     <tr>
                                         <th>Name</th>
-                                        <th>Department</th>
                                         <th>Price</th>
                                         <th>DC</th>
                                         <th>DT</th>
@@ -61,7 +60,6 @@
                                         foreach ($query->result() as $opc) { ?>
                                             <tr>
                                                 <td><?= $opc->nameProject?></td>
-                                                <td><?= $opc->nameDepartment?></td>
                                                 <td><?= $opc->price?></td>
                                                 <td><?= $opc->dateCreation?></td>
                                                 <td><?= $opc->dateTermination?></td>
@@ -108,26 +106,6 @@
                               <label class="" for="projectname">Name Project:</label>
                               <?=  form_error('projectname') ?>
                               <input type="text" size="20" id="projectname" name="projectname" placeholder="Name Project" class="form-projectname form-control" required/>
-                           </div>
-                           <div class="form-group">
-                            <label class="" for="text">Department:</label>
-                           <?= form_error('department')?>
-                           <?php if ($departments) 
-                                  { ?>
-                                    <select name="department"  class="form-control" required> 
-                                      <?php        
-                                        foreach ($departments->result() as $opt) { 
-                           ?>
-                                        <option value="<?=$opt->nameDepartment ?>"><?=$opt->nameDepartment?></option> 
-                           <?php 
-                                       }
-                           ?>
-                                    </select>
-                           <?php
-                                     }else{
-                                          echo "<h5 class='text-danger'>No Hay Departmantos Favor de Agregar</h5>";
-                                      }
-                             ?>
                            </div>
                            <div class="form-group">
                               <label class="" for="price">Price:</label>

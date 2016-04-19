@@ -6,7 +6,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                         Control De Ordenes De Compras del Proyecto <?= $Project->nameProject ?>
+                         Control De Ordenes De Compras Del Proyecto <b class="text-primary"><?= $project->nameProject ?></b>
                         </h1>
                         <ol class="breadcrumb">
                             <li>
@@ -18,7 +18,7 @@
                             </li>
 
                              <li>
-                                <i class="fa fa-table"> <a href="<?=base_url()?>clients/runViewClientProjects/<?= $idClient ?>">Proyectos del Cliente</a> </i>
+                                <i class="fa fa-table"> <a href="<?=base_url()?>projects/runViewClientProjects/<?= $idClient ?>">Proyectos del Cliente</a> </i>
                              </li>
 
                             <li class="active">
@@ -45,7 +45,8 @@
                                     <thead class="text-center">
                                         <tr class="text-center">
                                             <th>Cliente</th>
-                                            <th>Name</th>
+                                            <th>Proyecto</th>
+                                            <th>Departamento</th>
                                             <th>Concepto</th>
                                             <th>Monto</th>
                                             <th>DC</th>
@@ -61,6 +62,7 @@
                                                 <tr>
                                                     <td><?= $opc->nameClient?></td>
                                                     <td><?= $opc->nameProject?></td>
+                                                    <td><?= $opc->nameDepartment ?></td>
                                                     <td><?= $opc->concept?></td>
                                                     <td><?= $opc->amount?></td>
                                                     <td><?= $opc->dateCreation?></td>
@@ -69,7 +71,7 @@
                                                     <td><a href="<?=base_url()?>ordershopping/runViewEditOrderShoppingProjectInClient/<?=$opc->idOrderShopping?>/<?= $idProject?>/<?= $idClient?>" >Edit</a>
                                                     </td>
                                                     <td class="text-center text-danger">
-                                                        <a href="<?=base_url()?>ordershopping/deleteordershoppingProjectInSector/<?=$opc->idOrderShopping?>/<?= $idProject?>/<?=$idClient ?>" class="confirmationDeleteOrderShopping">X</a>  
+                                                        <a href="<?=base_url()?>ordershopping/deleteordershoppingProjectInClient/<?=$opc->idOrderShopping?>/<?= $idProject?>/<?=$idClient ?>" class="confirmationDeleteOrderShopping">X</a>  
                                                     </td>
                                                 </tr>
 
@@ -107,10 +109,30 @@
                     <div class="modal-body">
                        <?= form_open('ordershopping/newOrderShoppingProjectInClient/'.$idProject.'/'.$idClient) ?>
                           <div class="form-group">
-                               <?= form_error('nameProject') ?>
-                               <input type="hidden" size="20" id="nameProject" name="nameProject" value="<?=
-                               $Project->nameProject?>" placeholder="Name Project" class="form-nameProject form-control" required/>
-                           </div>
+                           <?= form_error('nameProject') ?>
+                           <input type="hidden" size="20" id="nameProject" name="nameProject" value="<?= $project->nameProject ?>" class="form-nameProject form-control" required/>
+                       </div>
+                       <div class="form-group">
+                           <?= form_error('nameDepartment') ?>
+                           <label class="" for="nameDepartment">Name Department:</label>
+                           <?php 
+                              if ($departments) 
+                                {?>
+                                 <select name="nameDepartment"  class="form-control" required>
+                                    <?php 
+                                    foreach ($departments->result() as $opt)
+                                     { 
+                                       ?>
+                                         <option value="<?=$opt->nameDepartment ?>"><?=$opt->nameDepartment?></option>  
+                                    <?php
+                                   }
+                              ?></select> <?php
+                                 }else{
+                                  echo '<h4 class="text-danger">"No Hay Departamentos Favor De Agregar"</h4>';
+                                 }
+                              
+                              ?>   
+                       </div>
                            <div class="form-group">
                               <label class="" for="text">concept:</label>
                               <?= form_error('concept') ?>

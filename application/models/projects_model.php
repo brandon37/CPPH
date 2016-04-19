@@ -20,18 +20,6 @@ class Projects_model extends CI_Model {
 		$this->db->delete('projects', array('idProject'=>$idProject));
 	}
 
-	function indexDepartment($data){
-		$this->db->insert('projects_has_departments',
-			array('idProject'=>$data['idProject'],
-				'idDepartment'=>$data['idDepartment']));
-	}
-	function updateIndexDepartment($idProject, $data){
-		$info = array('idProject'=>$idProject,
-				'idDepartment'=>$data['idDepartment']);
-		$this->db->where('projects_has_departments.idProject',$idProject);
-		$this->db->update('projects_has_departments',$info);
-	}
-
 	function getProjectId($nameProject){
 		$this->db->where('nameProject',$nameProject);
 		$query = $this->db->get('projects');
@@ -41,22 +29,18 @@ class Projects_model extends CI_Model {
 
 	function getAllProjects(){
 		$this->db->select('*');
-		$this->db->from('projects_has_departments');
-		$this->db->join('projects', 'projects_has_departments.idProject = projects.idProject');
-		$this->db->join('departments', 'projects_has_departments.idDepartment = departments.idDepartment');
+		$this->db->from('projects');
 		$this->db->join('clients', 'projects.idClient = clients.idClient');
-		return $this->db->get();
+		$query = $this->db->get();
 		if($query->num_rows() >0) return $query;
 		else return false;
 	}
 
 	function getProject($idProject){
 		$this->db->select('*');
-		$this->db->from('projects_has_departments');
-		$this->db->join('projects', 'projects_has_departments.idProject = projects.idProject');
-		$this->db->join('departments', 'projects_has_departments.idDepartment = departments.idDepartment');
+		$this->db->from('projects');
 		$this->db->join('clients', 'projects.idClient = clients.idClient');
-		$this->db->where('projects_has_departments.idProject',$idProject);
+		$this->db->where('projects.idProject',$idProject);
 		$query =  $this->db->get();
 		if($query->num_rows() >0) return $query->row();
 		else return false;
@@ -75,30 +59,20 @@ class Projects_model extends CI_Model {
 	}
 
 	function getclientProjects($idClient){
-		$this->db->join('projects', 'projects_has_departments.idProject = projects.idProject');
-		$this->db->join('departments', 'projects_has_departments.idDepartment = departments.idDepartment');
 		$this->db->join('clients', 'projects.idClient = clients.idClient');
 		$this->db->where('projects.idClient', $idClient);
-		$query = $this->db->get("projects_has_departments");
+		$query = $this->db->get("projects");
 		if($query->num_rows() >0) return $query;
 		else return false;
 	}
 
-	function getDepartmentProjects($idDepartment){
-		$this->db->join('projects', 'projects_has_departments.idProject = projects.idProject');
-		$this->db->join('departments', 'projects_has_departments.idDepartment = departments.idDepartment');
-		$this->db->join('clients', 'projects.idClient = clients.idClient');
-		$this->db->where('departments.idDepartment', $idDepartment);
-		return $this->db->get("projects_has_departments");
-	}
-
 	function getSectorProjects($idSector){
-		$this->db->join('projects', 'projects_has_departments.idProject = projects.idProject');
-		$this->db->join('departments', 'projects_has_departments.idDepartment = departments.idDepartment');
 		$this->db->join('clients', 'projects.idClient = clients.idClient');
 		$this->db->join('sectors', 'sectors.idSector = clients.idSector');
 		$this->db->where('sectors.idSector', $idSector);
-		return $this->db->get("projects_has_departments");
+		$query = $this->db->get("projects");
+		if($query->num_rows() >0) return $query;
+		else return false;
 	}
 
 	function no_page(){
@@ -111,10 +85,8 @@ class Projects_model extends CI_Model {
 	}
 
 	function get_pagination($number_per_page){
-		$this->db->join('projects', 'projects_has_departments.idProject = projects.idProject');
-		$this->db->join('departments', 'projects_has_departments.idDepartment = departments.idDepartment');
 		$this->db->join('clients', 'projects.idClient = clients.idClient');
-		return $this->db->get("projects_has_departments", $number_per_page, $this->uri->segment(3));
+		return $this->db->get("projects", $number_per_page, $this->uri->segment(3));
 	}
 
 }

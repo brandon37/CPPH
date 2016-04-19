@@ -33,15 +33,39 @@
                            <?= form_error('nameProject') ?>
                            <label class="" for="nameProject">Name Project:</label>
                            <select name="nameProject"  class="form-control" value="<?= $ordershopping->nameProject ?>" required>
+                              <option value="<?= $ordershopping->nameProject ?>"><?= $ordershopping->nameProject ?></option>
                               <?php 
                               foreach ($projects->result() as $opt) { 
+                                if ($ordershopping->nameProject != $opt->nameProject ) 
+                                {
+                                ?>
+                                  <option value="<?=$opt->nameProject ?>"><?=$opt->nameProject?></option> 
+                                <?php
+                                }
                               ?>
-                                <option value="<?=$opt->nameProject ?>"><?=$opt->nameProject?></option> 
                              <?php
                               }
                               ?>
-                           </select>
-                           
+                           </select>     
+                       </div>
+                       <div class="form-group">
+                           <?= form_error('nameDepartment') ?>
+                           <label class="" for="nameDepartment">Name Project:</label>
+                           <select name="nameDepartment"  class="form-control" value="<?= $ordershopping->nameDepartment ?>" required>
+                              <option value="<?= $ordershopping->nameDepartment ?>"><?= $ordershopping->nameDepartment ?></option>
+                              <?php 
+                              foreach ($departments->result() as $opt) { 
+                                if ($ordershopping->nameDepartment != $opt->nameDepartment ) 
+                                {
+                                ?>
+                                  <option value="<?=$opt->nameDepartment ?>"><?=$opt->nameDepartment?></option> 
+                                <?php
+                                }
+                              ?>
+                             <?php
+                              }
+                              ?>
+                           </select>     
                        </div>
                        <div class="form-group">
                           <label class="" for="text">concept:</label>

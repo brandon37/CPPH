@@ -23,7 +23,7 @@
                          </li>
                          
                          <li>
-                              <i class="fa fa-table"> <a href="<?=base_url()?>runViewProjectOrderShoppingsInClient/<?=$idProject?>/<?=$idClient ?>"></a> Ordenes De Compras</i>
+                              <i class="fa fa-table"> <a href="<?=base_url()?>ordershopping/runViewProjectOrderShoppingsInClient/<?=$idProject?>/<?=$idClient ?>"> Ordenes De Compras</a> </i>
                          </li>
                            
                           <li class="active">
@@ -41,6 +41,25 @@
                              <?= form_error('nameProject') ?>
                              <input type="hidden" size="20" id="nameProject" name="nameProject"placeholder="nameProject" class="form-nameProject form-control" value="<?= $ordershopping->nameProject ?>" required/>
                          </div>
+                         <div class="form-group">
+                           <?= form_error('nameDepartment') ?>
+                           <label class="" for="nameDepartment">Name Department:</label>
+                           <select name="nameDepartment"  class="form-control" value="<?= $ordershopping->nameDepartment ?>" required>
+                              <option value="<?= $ordershopping->nameDepartment ?>"><?= $ordershopping->nameDepartment ?></option>
+                              <?php 
+                              foreach ($departments->result() as $opt) { 
+                                if ($ordershopping->nameDepartment != $opt->nameDepartment ) 
+                                {
+                                ?>
+                                  <option value="<?=$opt->nameDepartment ?>"><?=$opt->nameDepartment?></option> 
+                                <?php
+                                }
+                              ?>
+                             <?php
+                              }
+                              ?>
+                           </select>     
+                       </div>
                          <div class="form-group">
                             <label class="" for="text">concept:</label>
                             <?= form_error('concept') ?>

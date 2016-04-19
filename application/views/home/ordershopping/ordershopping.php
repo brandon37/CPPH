@@ -33,7 +33,8 @@
                                 <thead class="text-center">
                                     <tr class="text-center">
                                         <th>Cliente</th>
-                                        <th>Name</th>
+                                        <th>Name Project</th>
+                                        <th>Name Department</th>
                                         <th>Concepto</th>
                                         <th>Monto</th>
                                         <th>DC</th>
@@ -51,6 +52,7 @@
                                             <tr>
                                                 <td><?= $opc->nameClient?></td>
                                                 <td><?= $opc->nameProject?></td>
+                                                <td><?= $opc->nameDepartment ?></td>
                                                 <td><?= $opc->concept?></td>
                                                 <td><?= $opc->amount?></td>
                                                 <td><?= $opc->dateCreation?></td>
@@ -95,12 +97,51 @@
                       <h3 class="myModalLabel text-center" id="exampleModalLabel">New Ordershopping</h3>
                     </div>
                     <div class="modal-body">
-                       <?= form_open('ordershopping/newordershopping') ?>
+                       <?= form_open('ordershopping/neworderShopping') ?>
                           <div class="form-group">
-                               <label class="" for="nameProject">Name Project:</label>
-                               <?= form_error('nameProject') ?>
-                               <input type="text" size="20" id="nameProject" name="nameProject" placeholder="Name Project" class="form-nameProject form-control" required/>
-                           </div>
+                           <?= form_error('nameProject') ?>
+                           <label class="" for="nameProject">Name Project:</label>
+                           <?php 
+                              if ($projects) 
+                                {?>
+                                  <select name="nameProject"  class="form-control" required>
+                                  <?php 
+                                   
+                                   foreach ($projects->result() as $opt)
+                                     { 
+                                       ?>
+                                        <option value="<?=$opt->nameProject ?>"><?=$opt->nameProject?></option>
+
+                                     
+                                    <?php
+                                   }
+                                ?></select> <?php
+                                }else{
+                                  echo '<h4 class="text-danger">"No Hay Projectos Favor De Agregar"</h4>';
+                                }
+                              ?>
+                       </div>
+                       <div class="form-group">
+                           <?= form_error('nameDepartment') ?>
+                           <label class="" for="nameDepartment">Name Department:</label>
+                           <?php 
+                              if ($departments) 
+                                {?>
+                                 <select name="nameDepartment"  class="form-control" required>
+                                    <?php 
+                                    foreach ($departments->result() as $opt)
+                                     { 
+                                       ?>
+                                         <option value="<?=$opt->nameDepartment ?>"><?=$opt->nameDepartment?></option>  
+                                    <?php
+                                   }
+                              ?></select> <?php
+                                 }else{
+                                  echo '<h4 class="text-danger">"No Hay Departamentos Favor De Agregar"</h4>';
+                                 }
+                              
+                              ?>   
+                       </div>
                            <div class="form-group">
                               <label class="" for="text">concept:</label>
                               <?= form_error('concept') ?>

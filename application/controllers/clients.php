@@ -322,26 +322,6 @@ class Clients extends CI_Controller {
     $this->load->view('ehtml/footercrud');
   }
 
-  function runViewClientProjects(){
-    $session_data = $this->session->userdata('logged_in');
-    $data['nameUser'] = $session_data['nameUser'];
-    $data['idUser'] =  $session_data['idUser'];
-    $data['idClient'] = $this->uri->segment(3);
-    $data['Client'] = $this->client_model->getClient($data['idClient']);
-    if ($data['Client']) {
-      $data['nameClient'] = $data['Client']->nameClient;
-      $data['departments'] = $this->department_model->getAllDepartments();
-      $data['query'] = $this->projects_model->getclientProjects($data['idClient']);
-      $this->load->view('ehtml/headercrud',$data);
-      $this->load->helper(array('form'));
-      $this->load->view('home/clients/client_projects',$data);
-      $this->load->view('ehtml/footercrud');
-    }else{
-      redirect('clients');
-    }
-    
-  }
-
   function runViewClientProjectsInSector(){
     $session_data = $this->session->userdata('logged_in');
     $data['nameUser'] = $session_data['nameUser'];

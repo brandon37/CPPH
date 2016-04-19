@@ -40,6 +40,27 @@
                              <input type="hidden" size="20" id="nameProject" name="nameProject"placeholder="nameProject" class="form-nameProject form-control" value="<?= $ordershopping->nameProject ?>" required/>
                          </div>
                          <div class="form-group">
+                           <?= form_error('nameDepartment') ?>
+                           <label class="" for="nameDepartment">Name Department:</label>
+                           <?php 
+                              if ($departments) 
+                                {?>
+                                 <select name="nameDepartment"  class="form-control" value="<?= $ordershopping->nameDepartment ?>" required>
+                                    <?php 
+                                    foreach ($departments->result() as $opt)
+                                     { 
+                                       ?>
+                                         <option value="<?=$opt->nameDepartment ?>"><?=$opt->nameDepartment?></option>  
+                                    <?php
+                                   }
+                              ?></select> <?php
+                                 }else{
+                                  echo '<h4 class="text-danger">"No Hay Departamentos Favor De Agregar"</h4>';
+                                 }
+                              
+                              ?>   
+                       </div>
+                         <div class="form-group">
                             <label class="" for="text">concept:</label>
                             <?= form_error('concept') ?>
                             <input type="text" size="20" id="concept" name="concept"placeholder="concept" class="form-concept form-control" value="<?= $ordershopping->concept ?>" required/>
@@ -75,4 +96,3 @@
               </div>
 
           </div>            
-                               

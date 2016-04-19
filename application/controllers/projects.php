@@ -7,8 +7,8 @@ class Projects extends CI_Controller {
    $this->session_user();
    $this->load->library('form_validation');
    $this->load->model('client_model','',TRUE);
-   $this->load->model('department_model','',TRUE);
-   $this->load->model('projects_model','',TRUE); 
+   $this->load->model('projects_model','',TRUE);
+   $this->load->model('department_model','',TRUE); 
    $this->load->model('sector_model','', TRUE);
    $this->load->library("pagination");
  }
@@ -23,7 +23,6 @@ class Projects extends CI_Controller {
    $config = $this->pagination();
    $this->pagination->initialize($config);
    $data['query'] = $this->projects_model->getAllProjects();
-   $data['departments'] = $this->department_model->getAllDepartments();
    $data['clients'] = $this->client_model->getAllClients();
    $data['pagination'] = $this->pagination->create_links();
    $this->load->view('ehtml/headercrud',$data);
@@ -71,7 +70,6 @@ function pagination(){
 
  function form_validation_newProyect(){
    $this->form_validation->set_rules('projectname', 'Name Project', 'required|is_unique[projects.nameProject]');
-   $this->form_validation->set_rules('department', 'Department', 'required|callback_check_department');
    $this->form_validation->set_rules('price', 'Price', 'required|numeric');
    $this->form_validation->set_rules('dateCreation','Date', 'required|callback_check_date');
    $this->form_validation->set_rules('nameClient', 'Name Client', 'required|callback_check_client');
@@ -82,7 +80,6 @@ function pagination(){
       'idProject'=>"",
       'idDepartment'=>"",
       'nameProject'=>$this->input->post('projectname'),
-      'nameDepartment'=>$this->input->post('department'),
       'price'=>$this->input->post('price'),
       'dateCreation'=>$this->input->post('dateCreation'),
       'dateTermination'=>"",
@@ -101,9 +98,6 @@ function pagination(){
           $queryProject =  $this->projects_model->getProjectId($data['nameProject']);
           $data['idProject'] = $queryProject->idProject;
 
-          $queryDepartment =  $this->client_models->department_model->getDepartmentId($data['nameDepartment']);
-          $data['idDepartment'] = $queryDepartment->idDepartment;
-          $this->projects_model->indexDepartment($data);
           redirect('projects');
       }
 
@@ -112,9 +106,7 @@ function pagination(){
   function newProjectClientInSector(){
       $data = array(
       'idProject'=>"",
-      'idDepartment'=>"",
       'nameProject'=>$this->input->post('projectname'),
-      'nameDepartment'=>$this->input->post('department'),
       'price'=>$this->input->post('price'),
       'dateCreation'=>$this->input->post('dateCreation'),
       'dateTermination'=>"",
@@ -134,9 +126,6 @@ function pagination(){
           $queryProject =  $this->projects_model->getProjectId($data['nameProject']);
           $data['idProject'] = $queryProject->idProject;
 
-          $queryDepartment =  $this->department_model->getDepartmentId($data['nameDepartment']);
-          $data['idDepartment'] = $queryDepartment->idDepartment;
-          $this->projects_model->indexDepartment($data);
           redirect('clients/runViewClientProjectsInSector/'.$idClient.'/'.$idSector);
       }
 
@@ -145,9 +134,7 @@ function pagination(){
   function newProjectInClient(){
       $data = array(
       'idProject'=>"",
-      'idDepartment'=>"",
       'nameProject'=>$this->input->post('projectname'),
-      'nameDepartment'=>$this->input->post('department'),
       'price'=>$this->input->post('price'),
       'dateCreation'=>$this->input->post('dateCreation'),
       'dateTermination'=>"",
@@ -166,10 +153,7 @@ function pagination(){
           $queryProject =  $this->projects_model->getProjectId($data['nameProject']);
           $data['idProject'] = $queryProject->idProject;
 
-          $queryDepartment =  $this->department_model->getDepartmentId($data['nameDepartment']);
-          $data['idDepartment'] = $queryDepartment->idDepartment;
-          $this->projects_model->indexDepartment($data);
-          redirect('clients/runViewClientProjects/'.$idClient);
+          redirect('projects/runViewClientProjects/'.$idClient);
       }
 
   }
@@ -177,9 +161,7 @@ function pagination(){
   function newProjectInSector(){
       $data = array(
       'idProject'=>"",
-      'idDepartment'=>"",
       'nameProject'=>$this->input->post('projectname'),
-      'nameDepartment'=>$this->input->post('department'),
       'price'=>$this->input->post('price'),
       'dateCreation'=>$this->input->post('dateCreation'),
       'dateTermination'=>"",
@@ -193,14 +175,9 @@ function pagination(){
       }else{
           $queryclient =  $this->client_model->getClientId($data['nameClient']);
           $data['idClient'] = $queryclient->idClient;
-          
           $this->projects_model->newproject($data);
           $queryProject =  $this->projects_model->getProjectId($data['nameProject']);
           $data['idProject'] = $queryProject->idProject;
-
-          $queryDepartment =  $this->department_model->getDepartmentId($data['nameDepartment']);
-          $data['idDepartment'] = $queryDepartment->idDepartment;
-          $this->projects_model->indexDepartment($data);
           redirect('projects/runViewSectorProjects/'.$idSector);
       }
 
@@ -236,7 +213,6 @@ function pagination(){
   }  
 
   function check_department($nameDepartment){
-      $queryDepartment =  $this->department_model->getDepartmentId($this->input->post('department'));
       $nameDepartment_db = null;
       if ($queryDepartment) {
         $nameDepartment_db = $queryDepartment->nameDepartment;
@@ -298,7 +274,6 @@ function pagination(){
       'idProject'=>"",
       'idDepartment'=>"",
       'nameProject'=>$this->input->post('projectname'),
-      'nameDepartment'=>$this->input->post('department'),
       'price'=>$this->input->post('price'),
       'dateCreation'=>$this->input->post('dateCreation'),
       'dateTermination'=>$this->input->post('dateTermination'),
@@ -316,7 +291,7 @@ function pagination(){
           {
             $this->form_validation->set_rules('projectname', 'Name Project', 'required');
           }
-        $this->form_validation->set_rules('department', 'Department', 'required|callback_check_department');
+        
         $this->form_validation->set_rules('price', 'Price', 'required|numeric');
         $this->form_validation->set_rules('dateCreation','Date', 'required|callback_check_date');
         $this->form_validation->set_rules('dateTermination','Date', 'required|callback_check_date');
@@ -331,12 +306,7 @@ function pagination(){
             $queryclient =  $this->client_model->getClientId($data['nameClient']);
             $data['idClient'] = $queryclient->idClient;
 
-            $queryDepartment =  $this->department_model->getDepartmentId($data['nameDepartment']);
-            $data['idDepartment'] = $queryDepartment->idDepartment;
-
             $this->projects_model->updateProject($id,$data);
-
-            $this->projects_model->updateIndexDepartment($id,$data);
             redirect('projects');
           }
 
@@ -353,7 +323,6 @@ function pagination(){
       'idProject'=>"",
       'idDepartment'=>"",
       'nameProject'=>$this->input->post('projectname'),
-      'nameDepartment'=>$this->input->post('department'),
       'price'=>$this->input->post('price'),
       'dateCreation'=>$this->input->post('dateCreation'),
       'dateTermination'=>$this->input->post('dateTermination'),
@@ -373,7 +342,7 @@ function pagination(){
           {
             $this->form_validation->set_rules('projectname', 'Name Project', 'required');
           }
-        $this->form_validation->set_rules('department', 'Department', 'required|callback_check_department');
+        
         $this->form_validation->set_rules('price', 'Price', 'required|numeric');
         $this->form_validation->set_rules('dateCreation','Date', 'required|callback_check_date');
         $this->form_validation->set_rules('dateTermination','Date', 'required|callback_check_date');
@@ -387,14 +356,7 @@ function pagination(){
           {
             $queryclient =  $this->client_model->getClientId($data['nameClient']);
             $data['idClient'] = $queryclient->idClient;
-
-            $queryDepartment =  $this->department_model->getDepartmentId($data['nameDepartment']);
-            $data['idDepartment'] = $queryDepartment->idDepartment;
-
             $this->projects_model->updateProject($data['idProject'],$data);
-
-            $this->projects_model->updateIndexDepartment($data['idProject'],$data);
-            redirect('clients/runViewClientProjectsInSector/'.$data['idClient'].'/'.$data['idSector']);
           }
 
      }
@@ -404,60 +366,7 @@ function pagination(){
      }
   }
 
-  function updateProjectInDeparment(){
-    $data = array(
-      'idProject'=>"",
-      'idDepartment'=>"",
-      'nameProject'=>$this->input->post('projectname'),
-      'nameDepartment'=>$this->input->post('department'),
-      'price'=>$this->input->post('price'),
-      'dateCreation'=>$this->input->post('dateCreation'),
-      'dateTermination'=>$this->input->post('dateTermination'),
-      'nameClient'=>$this->input->post('nameClient')
-    );  
-      $data['idProject'] = $this->uri->segment(3);
-      $data['idDepartment'] = $this->uri->segment(4);
-      $queryProject = $this->projects_model->getProject($data['idProject']);
-    if($queryProject) 
-     {
-        if ($data['nameProject'] != $queryProject->nameProject) 
-          {
-            $this->form_validation->set_rules('projectname', 'Name Project', 'required|is_unique[projects.nameProject]');
-          }
-        else
-          {
-            $this->form_validation->set_rules('projectname', 'Name Project', 'required');
-          }
-        $this->form_validation->set_rules('department', 'Department', 'required|callback_check_department');
-        $this->form_validation->set_rules('price', 'Price', 'required|numeric');
-        $this->form_validation->set_rules('dateCreation','Date', 'required|callback_check_date');
-        $this->form_validation->set_rules('dateTermination','Date', 'required|callback_check_date');
-        $this->form_validation->set_rules('nameClient', 'Name Client', 'required|callback_check_client');
-        
-        if($this->form_validation->run() == FALSE)
-          {
-            $this->runViewEditProjectInSector($data['idProject'],$data['idDepartment']);
-          }
-        else
-          {
-            $queryclient =  $this->client_model->getClientId($data['nameClient']);
-            $data['idClient'] = $queryclient->idClient;
-
-            $queryDepartment =  $this->department_model->getDepartmentId($data['nameDepartment']);
-            $data['idDepartment'] = $queryDepartment->idDepartment;
-
-            $this->projects_model->updateProject($data['idProject'],$data);
-
-            $this->projects_model->updateIndexDepartment($data['idProject'],$data);
-            redirect('projects/runViewDepartmentProjects/'.$data['idDepartment']);
-          }
-
-     }
-    else
-     {
-      redirect('projects/runViewDepartmentProjects/'.$data['idDepartment']);
-     }
-  }
+  
 
   function updateProjectInSector(){
     $data = array(
@@ -483,7 +392,7 @@ function pagination(){
           {
             $this->form_validation->set_rules('projectname', 'Name Project', 'required');
           }
-        $this->form_validation->set_rules('department', 'Department', 'required|callback_check_department');
+        
         $this->form_validation->set_rules('price', 'Price', 'required|numeric');
         $this->form_validation->set_rules('dateCreation','Date', 'required|callback_check_date');
         $this->form_validation->set_rules('dateTermination','Date', 'required|callback_check_date');
@@ -498,12 +407,9 @@ function pagination(){
             $queryclient =  $this->client_model->getClientId($data['nameClient']);
             $data['idClient'] = $queryclient->idClient;
 
-            $queryDepartment =  $this->department_model->getDepartmentId($data['nameDepartment']);
-            $data['idDepartment'] = $queryDepartment->idDepartment;
-
             $this->projects_model->updateProject($data['idProject'],$data);
 
-            $this->projects_model->updateIndexDepartment($data['idProject'],$data);
+            $this->p($data['idProject'],$data);
             redirect('projects/runViewSectorProjects/'.$data['idSector']);
           }
 
@@ -538,7 +444,7 @@ function pagination(){
           {
             $this->form_validation->set_rules('projectname', 'Name Project', 'required');
           }
-        $this->form_validation->set_rules('department', 'Department', 'required|callback_check_department');
+        
         $this->form_validation->set_rules('price', 'Price', 'required|numeric');
         $this->form_validation->set_rules('dateCreation','Date', 'required|callback_check_date');
         $this->form_validation->set_rules('dateTermination','Date', 'required|callback_check_date');
@@ -553,12 +459,9 @@ function pagination(){
             $queryclient =  $this->client_model->getClientId($data['nameClient']);
             $data['idClient'] = $queryclient->idClient;
 
-            $queryDepartment =  $this->department_model->getDepartmentId($data['nameDepartment']);
-            $data['idDepartment'] = $queryDepartment->idDepartment;
-
             $this->projects_model->updateProject($data['idProject'],$data);
 
-            $this->projects_model->updateIndexDepartment($data['idProject'],$data);
+            $this->p($data['idProject'],$data);
             redirect('clients/runViewClientProjects/'.$data['idClient']);
           }
 
@@ -577,7 +480,6 @@ function pagination(){
     $data['query'] = $this->projects_model->getSectorProjects($data['idSector']);
     $data['sector'] = $this->sector_model->getSector($data['idSector']);
     if ($data['sector']) {
-        $data['departments'] = $this->department_model->getAllDepartments();
         $data['clients'] = $this->client_model->getAllClients();
         $this->load->view('ehtml/headercrud',$data);
         $this->load->helper(array('form'));
@@ -588,24 +490,22 @@ function pagination(){
     }
   }
 
-  function runViewDepartmentProjects(){
+  function runViewClientProjects(){
     $session_data = $this->session->userdata('logged_in');
-    $name = 'General';
     $data['nameUser'] = $session_data['nameUser'];
     $data['idUser'] =  $session_data['idUser'];
-    $data['email'] = $session_data['email'];
-    $data['idDepartment'] = $this->uri->segment(3);
-    $data['clients'] = $this->client_model->getAllClients();
-    $data['department'] = $this->department_model->getDepartment($data['idDepartment']);
-    if ($data['department']) {
-      $this->load->model('projects_model','',TRUE);
-    $data['query'] = $this->projects_model->getDepartmentProjects($data['idDepartment']);
-    $this->load->view('ehtml/headercrud',$data);
-    $this->load->helper(array('form'));
-    $this->load->view('home/departments/department_projects',$data);
-    $this->load->view('ehtml/footercrud');
+    $data['idClient'] = $this->uri->segment(3);
+    $data['client'] = $this->client_model->getClient($data['idClient']);
+    if ($data['client']) {
+      $data['nameClient'] = $data['client']->nameClient;
+      $data['departments'] = $this->department_model->getAllDepartments();
+      $data['query'] = $this->projects_model->getclientProjects($data['idClient']);
+      $this->load->view('ehtml/headercrud',$data);
+      $this->load->helper(array('form'));
+      $this->load->view('home/clients/client_projects',$data);
+      $this->load->view('ehtml/footercrud');
     }else{
-      redirect('departments');
+      redirect('clients');
     }
     
   }
@@ -616,7 +516,6 @@ function pagination(){
     $data['idUser'] =  $session_data['idUser'];
     $data['id'] = $this->uri->segment(3);
     $data['project'] = $this->projects_model->getProject($data['id']);
-    $data['department'] = $this->department_model->getAllDepartments();
     $data['client'] = $this->client_model->getAllActiveClients();
     $this->load->view('ehtml/headercrud',$data);
     $this->load->helper(array('form'));
@@ -631,34 +530,11 @@ function pagination(){
     $data['idProject'] = $this->uri->segment(3);
     $data['idClient'] = $this->uri->segment(4);
     $data['project'] = $this->projects_model->getProject($data['idProject']);
-    $data['department'] = $this->department_model->getAllDepartments();
     $data['client'] = $this->client_model->getAllActiveClients();
     $this->load->view('ehtml/headercrud',$data);
     $this->load->helper(array('form'));
     $this->load->view('home/clients/edit-project',$data);
     $this->load->view('ehtml/footercrud'); 
-  }
-
-  function runViewEditProjectInDepartment(){
-    $session_data = $this->session->userdata('logged_in');
-    $data['nameUser'] = $session_data['nameUser'];
-    $data['idUser'] =  $session_data['idUser'];
-    $data['idProject'] = $this->uri->segment(3);
-    $data['idDepartment'] = $this->uri->segment(4);
-    $data['department'] = $this->department_model->getDepartment($data['idDepartment']);
-    $data['departments'] = $this->department_model->getAllDepartments();
-    if ($data['department']) {
-        $data['Project'] = $this->projects_model->getProject($data['idProject']);
-        $data['client'] = $this->client_model->getClient($data['Project']->idClient);
-        $data['clients'] = $this->client_model->getAllActiveClients();
-        $this->load->view('ehtml/headercrud',$data);
-        $this->load->helper(array('form'));
-        $this->load->view('home/departments/edit-project-in-deparment',$data);
-        $this->load->view('ehtml/footercrud'); 
-    }else{
-        redirect('departments');
-    }
-   
   }
 
   function runViewEditProjectInSector(){
@@ -668,7 +544,6 @@ function pagination(){
     $data['idProject'] = $this->uri->segment(3);
     $data['idSector'] =$this->uri->segment(4);
     $data['project'] = $this->projects_model->getProject($data['idProject']);
-    $data['department'] = $this->department_model->getAllDepartments();
     $data['client'] = $this->client_model->getAllActiveClients();
     $this->load->view('ehtml/headercrud',$data);
     $this->load->helper(array('form'));
@@ -684,7 +559,6 @@ function pagination(){
     $data['idClient'] = $this->uri->segment(4);
     $data['idSector'] =$this->uri->segment(5);
     $data['project'] = $this->projects_model->getProject($data['idProject']);
-    $data['department'] = $this->department_model->getAllDepartments();
     $data['client'] = $this->client_model->getAllActiveClients();
     $this->load->view('ehtml/headercrud',$data);
     $this->load->helper(array('form'));
@@ -700,7 +574,7 @@ function pagination(){
 
   function deleteProjectInClient($idProject, $idClient){
     $this->projects_model->deleteproject($idProject);
-    redirect('clients/runViewClientProjects/'.$idClient);
+    redirect('projects/runViewClientProjects/'.$idClient);
   }
 
   function deleteProjectInSector($idProject, $idSector){
