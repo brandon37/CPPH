@@ -46,6 +46,7 @@
                                             <th>Monto</th>
                                             <th>DC</th>
                                             <th>DT</th>
+                                            <th>Factura</th>
                                             <th>Edit</th>
                                             <th >Delete</th>
                                         </tr>
@@ -60,10 +61,11 @@
                                                     <td><?= $opc->amount?></td>
                                                     <td><?= $opc->dateCreation?></td>
                                                     <td><?= $opc->dateTermination?></td>
+                                                    <td><a href="<?=base_url() ?>Invoices/runViewInvoiceOrderShoppingInProject/<?= $opc->idOrderShopping ?>/<?= $idProject ?>">Mostrar</a></td>
                                                     <td><a href="<?=base_url()?>ordershopping/runViewEditOrderShoppingsInProject/<?=$opc->idOrderShopping?>/<?= $idProject?>" >Edit</a>
                                                     </td>
                                                     <td class="text-center text-danger">
-                                                        <a href="<?=base_url()?>ordershopping/deleteordershopping/<?=$opc->idOrderShopping?>/<?= $idProject ?>" class="confirmationDeleteOrderShopping">X</a>  
+                                                        <a href="<?=base_url()?>ordershopping/deleteorderShoppingInProject/<?=$opc->idOrderShopping?>/<?= $idProject ?>" class="confirmationDeleteOrderShopping">X</a>  
                                                     </td>
                                                 </tr>
 
@@ -99,11 +101,11 @@
                       <h3 class="myModalLabel text-center" id="exampleModalLabel">New Ordershopping</h3>
                     </div>
                     <div class="modal-body">
-                       <?= form_open('ordershopping/newordershopping') ?>
+                       <?= form_open('ordershopping/newOrderShoppingProject/'.$idProject) ?>
                           <div class="form-group">
-                               <?= form_error('nameProject') ?>
-                               <input type="hidden" size="20" id="nameProject" name="nameProject" value="<?=
-                               $Project->nameProject?>" placeholder="Name Project" class="form-nameProject form-control" required/>
+                               <?= form_error('idProject') ?>
+                               <input type="hidden" size="20" id="idProject" name="idProject" value="<?=
+                               $idProject?>" class="form-nameProject form-control" required/>
                            </div>
                            <div class="form-group">
                               <label class="" for="text">concept:</label>

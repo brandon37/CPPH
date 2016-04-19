@@ -20,18 +20,6 @@ class Projects_model extends CI_Model {
 		$this->db->delete('projects', array('idProject'=>$idProject));
 	}
 
-	function indexDepartment($data){
-		$this->db->insert('projects_has_departments',
-			array('idProject'=>$data['idProject'],
-				'idDepartment'=>$data['idDepartment']));
-	}
-	function updateIndexDepartment($idProject, $data){
-		$info = array('idProject'=>$idProject,
-				'idDepartment'=>$data['idDepartment']);
-		$this->db->where('projects_has_departments.idProject',$idProject);
-		$this->db->update('projects_has_departments',$info);
-	}
-
 	function getProjectId($nameProject){
 		$this->db->where('nameProject',$nameProject);
 		$query = $this->db->get('projects');
@@ -51,13 +39,9 @@ class Projects_model extends CI_Model {
 	}
 
 	function getProject($idProject){
-		$this->db->select('*');
-		$this->db->from('projects_has_departments');
-		$this->db->join('projects', 'projects_has_departments.idProject = projects.idProject');
-		$this->db->join('departments', 'projects_has_departments.idDepartment = departments.idDepartment');
 		$this->db->join('clients', 'projects.idClient = clients.idClient');
-		$this->db->where('projects_has_departments.idProject',$idProject);
-		$query =  $this->db->get();
+		$this->db->where('idProject',$id);
+		$query = $this->db->get('projects');
 		if($query->num_rows() >0) return $query->row();
 		else return false;
 	}

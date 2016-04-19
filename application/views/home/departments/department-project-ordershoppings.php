@@ -18,7 +18,7 @@
                             </li>
 
                              <li>
-                                <i class="fa fa-table"> <a href="<?=base_url()?>projects/runViewDeparmentProjects/<?= $idDepartment?>">Proyectos del Departamento</a> </i>
+                                <i class="fa fa-table"> <a href="<?=base_url()?>projects/runViewDepartmentProjects/<?= $idDepartment?>">Proyectos del Departamento</a> </i>
                              </li>
 
                             <li class="active">
@@ -50,6 +50,7 @@
                                             <th>Monto</th>
                                             <th>DC</th>
                                             <th>DT</th>
+                                            <th>Factura</th>
                                             <th>Edit</th>
                                             <th >Delete</th>
                                         </tr>
@@ -64,10 +65,11 @@
                                                     <td><?= $opc->amount?></td>
                                                     <td><?= $opc->dateCreation?></td>
                                                     <td><?= $opc->dateTermination?></td>
-                                                    <td><a href="<?=base_url()?>ordershopping/runViewProjectOrderShoppingInDepartments/<?=$opc->idOrderShopping?>/<?= $idProject?>/<?= $idSector?>" >Edit</a>
+                                                    <td><a href="<?= base_url() ?>invoices/runViewInvoiceOrderShoppingProjectInDepartment/<?= $opc->idOrderShopping ?>/<?= $idProject ?>/<?= $idDepartment ?>">Mostrar</a></td>
+                                                    <td><a href="<?=base_url()?>ordershopping/runViewEditOrderShoppingProjectInDepartment/<?=$opc->idOrderShopping?>/<?= $idProject?>/<?= $idDepartment?>" >Edit</a>
                                                     </td>
                                                     <td class="text-center text-danger">
-                                                        <a href="<?=base_url()?>ordershopping/deleteordershoppingProjectInSector/<?=$opc->idOrderShopping?>/<?= $idProject?>/<?=$idSector ?>" class="confirmationDeleteOrderShopping">X</a>  
+                                                        <a href="<?=base_url()?>ordershopping/deleteordershoppingProjectInDepartment/<?=$opc->idOrderShopping?>/<?= $idProject?>/<?=$idDepartment ?>" class="confirmationDeleteOrderShopping">X</a>  
                                                     </td>
                                                 </tr>
 
@@ -103,7 +105,7 @@
                       <h3 class="myModalLabel text-center" id="exampleModalLabel">New Ordershopping</h3>
                     </div>
                     <div class="modal-body">
-                       <?= form_open('ordershopping/newordershopping') ?>
+                       <?= form_open('ordershopping/newOrderShoppingProjectInDepartment') ?>
                           <div class="form-group">
                                <?= form_error('nameProject') ?>
                                <input type="hidden" size="20" id="nameProject" name="nameProject" value="<?=

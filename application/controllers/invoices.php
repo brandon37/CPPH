@@ -6,6 +6,7 @@ class invoices extends CI_Controller {
       parent::__construct();
       $this->session_user();
       $this->load->model('invoice_model','',TRUE);
+      $this->load->model('ordershopping_model','',TRUE);
       $this->load->library("pagination");
 
   }
@@ -66,14 +67,79 @@ class invoices extends CI_Controller {
   }
 
   function newinvoice(){
-      $data = array(
+    $data = array(
       'noInvoice'=>$this->input->post('noInvoice'),
       'status'=>$this->input->post('status'),
       'idOrderShopping'=>1
     );
 
       $this->invoice_model->newinvoice($data);
-      redirect('invoices');
+      redirect('invoices/');
+  }
+
+  function newInvoiceOrderShoppingProjectClientInSector(){
+     $data = array(
+      'noInvoice'=>$this->input->post('noInvoice'),
+      'status'=>$this->input->post('status'),
+      'idOrderShopping'=>$this->input->post('idOrderShopping')
+    );
+     $data['idOrderShopping'] = $this->uri->segment(3);
+     $data['idProject'] = $this->uri->segment(4);
+     $data['idClient'] = $this->uri->segment(5);
+     $data['idSector'] = $this->uri->segment(6);
+     $this->invoice_model->newinvoice($data);
+      redirect('invoices/runViewInvoiceOrderShoppingProjectClientInSector/'.$data['idOrderShopping'].'/'.$data['idProject'].'/'.$data['idClient'].'/'.$data['idSector']);
+  }
+
+  function newInvoiceOrderShoppingInProject(){
+    $data = array(
+      'noInvoice'=>$this->input->post('noInvoice'),
+      'status'=>$this->input->post('status'),
+      'idOrderShopping'=>$this->input->post('idOrderShopping')
+    );
+     $data['idOrderShopping'] = $this->uri->segment(3);
+     $data['idProject'] = $this->uri->segment(4);
+     $this->invoice_model->newinvoice($data);
+      redirect('invoices/runViewInvoiceOrderShoppingInProject/'.$data['idOrderShopping'].'/'.$data['idProject']);
+  }
+
+  function newInvoiceOrderShoppingProjectInSector(){
+     $data = array(
+      'noInvoice'=>$this->input->post('noInvoice'),
+      'status'=>$this->input->post('status'),
+      'idOrderShopping'=>$this->input->post('idOrderShopping')
+    );
+     $data['idOrderShopping'] = $this->uri->segment(3);
+     $data['idProject'] = $this->uri->segment(4);
+     $data['idSector'] = $this->uri->segment(6);
+     $this->invoice_model->newinvoice($data);
+      redirect('invoices/runViewInvoiceOrderShoppingProjectInSector/'.$data['idOrderShopping'].'/'.$data['idProject'].'/'.$data['idSector']);
+  }
+
+  function newInvoiceOrderShoppingProjectInClient(){
+     $data = array(
+      'noInvoice'=>$this->input->post('noInvoice'),
+      'status'=>$this->input->post('status'),
+      'idOrderShopping'=>$this->input->post('idOrderShopping')
+    );
+     $data['idOrderShopping'] = $this->uri->segment(3);
+     $data['idProject'] = $this->uri->segment(4);
+     $data['idClient'] = $this->uri->segment(6);
+     $this->invoice_model->newinvoice($data);
+      redirect('invoices/runViewInvoiceOrderShoppingProjectInSector/'.$data['idOrderShopping'].'/'.$data['idProject'].'/'.$data['idClient']);
+  }
+
+  function newInvoiceOrderShoppingProjectInDepartment(){
+     $data = array(
+      'noInvoice'=>$this->input->post('noInvoice'),
+      'status'=>$this->input->post('status'),
+      'idOrderShopping'=>$this->input->post('idOrderShopping')
+    );
+     $data['idOrderShopping'] = $this->uri->segment(3);
+     $data['idProject'] = $this->uri->segment(4);
+     $data['idDepartment'] = $this->uri->segment(6);
+     $this->invoice_model->newinvoice($data);
+      redirect('invoices/runViewInvoiceOrderShoppingProjectInDepartment/'.$data['idOrderShopping'].'/'.$data['idProject'].'/'.$data['idDepartment']);
   }
 
   function updateinvoice(){
@@ -85,23 +151,202 @@ class invoices extends CI_Controller {
         redirect('invoices');
   }
 
-  function runViewEditinvoice($id){
-        $session_data = $this->session->userdata('logged_in');
-        $data['nameUser'] = $session_data['nameUser'];
-        $data['idUser'] =  $session_data['idUser'];
-        $data['invoice'] = $this->invoice_model->getinvoice($id);
-        $data['id'] = $id;
-        $this->load->view('ehtml/headercrud',$data);
-        $this->load->helper(array('form'));
-        $this->load->view('home/invoice/edit-invoice',$data);
-        $this->load->view('ehtml/footercrud');
+  function runViewInvoiceOrderShoppingProjectClientInSector(){
+     $session_data = $this->session->userdata('logged_in');
+     $name = 'General';
+     $data['nameUser'] = $session_data['nameUser'];
+     $data['idUser'] =  $session_data['idUser'];
+     $data['email'] = $session_data['email'];
+     $config = $this->pagination();
+     $this->pagination->initialize($config);
+     $result = $this->invoice_model->get_pagination($config['per_page']);
+     $data['query'] = $result;
+     $data['idOrderShopping'] = $this->uri->segment(3);
+     $data['ordershopping'] = $this->ordershopping_model->getorderShopping($data['idOrderShopping']);
+     $data['idProject'] = $this->uri->segment(4);
+     $data['idClient'] = $this->uri->segment(5);
+     $data['idSector'] = $this->uri->segment(6);
+     $data['pagination'] = $this->pagination->create_links();
+     $this->load->view('ehtml/headercrud',$data);
+     $this->load->helper(array('form'));
+     $this->load->view('home/sectors/sector-client-project-ordershopping-invoice',$data);
+     $this->load->view('ehtml/footercrud');
+  }
 
+  function runViewInvoiceOrderShoppingProjectInSector(){
+     $session_data = $this->session->userdata('logged_in');
+     $name = 'General';
+     $data['nameUser'] = $session_data['nameUser'];
+     $data['idUser'] =  $session_data['idUser'];
+     $data['email'] = $session_data['email'];
+     $config = $this->pagination();
+     $this->pagination->initialize($config);
+     $result = $this->invoice_model->get_pagination($config['per_page']);
+     $data['query'] = $result;
+     $data['idOrderShopping'] = $this->uri->segment(3);
+     $data['ordershopping'] = $this->ordershopping_model->getorderShopping($data['idOrderShopping']);
+     $data['idProject'] = $this->uri->segment(4);
+     $data['idSector'] = $this->uri->segment(5);
+     $data['pagination'] = $this->pagination->create_links();
+     $this->load->view('ehtml/headercrud',$data);
+     $this->load->helper(array('form'));
+     $this->load->view('home/sectors/sector-project-ordershopping-invoice',$data);
+     $this->load->view('ehtml/footercrud');
+  }
+
+  function runViewInvoiceOrderShoppingProjectInClient(){
+     $session_data = $this->session->userdata('logged_in');
+     $name = 'General';
+     $data['nameUser'] = $session_data['nameUser'];
+     $data['idUser'] =  $session_data['idUser'];
+     $data['email'] = $session_data['email'];
+     $config = $this->pagination();
+     $this->pagination->initialize($config);
+     $result = $this->invoice_model->get_pagination($config['per_page']);
+     $data['query'] = $result;
+     $data['idOrderShopping'] = $this->uri->segment(3);
+     $data['ordershopping'] = $this->ordershopping_model->getorderShopping($data['idOrderShopping']);
+     $data['idProject'] = $this->uri->segment(4);
+     $data['idClient'] = $this->uri->segment(5);
+     $data['pagination'] = $this->pagination->create_links();
+     $this->load->view('ehtml/headercrud',$data);
+     $this->load->helper(array('form'));
+     $this->load->view('home/clients/client-project-ordershopping-invoice',$data);
+     $this->load->view('ehtml/footercrud');
+  }
+
+  function runViewInvoiceOrderShoppingProjectInDepartment(){
+     $session_data = $this->session->userdata('logged_in');
+     $name = 'General';
+     $data['nameUser'] = $session_data['nameUser'];
+     $data['idUser'] =  $session_data['idUser'];
+     $data['email'] = $session_data['email'];
+     $config = $this->pagination();
+     $this->pagination->initialize($config);
+     $result = $this->invoice_model->get_pagination($config['per_page']);
+     $data['query'] = $result;
+     $data['idOrderShopping'] = $this->uri->segment(3);
+     $data['ordershopping'] = $this->ordershopping_model->getorderShopping($data['idOrderShopping']);
+     $data['idProject'] = $this->uri->segment(4);
+     $data['idDepartment'] = $this->uri->segment(5);
+     $data['pagination'] = $this->pagination->create_links();
+     $this->load->view('ehtml/headercrud',$data);
+     $this->load->helper(array('form'));
+     $this->load->view('home/departments/department-project-ordershopping-invoice',$data);
+     $this->load->view('ehtml/footercrud');
+  }
+
+  function runViewInvoiceOrderShoppingInProject(){
+    $session_data = $this->session->userdata('logged_in');
+    $name = 'General';
+    $data['nameUser'] = $session_data['nameUser'];
+    $data['idUser'] =  $session_data['idUser'];
+    $data['email'] = $session_data['email'];
+    $config = $this->pagination();
+    $this->pagination->initialize($config);
+    $result = $this->invoice_model->get_pagination($config['per_page']);
+    $data['query'] = $result;
+    $data['idOrderShopping'] = $this->uri->segment(3);
+    $data['ordershopping'] = $this->ordershopping_model->getorderShopping($data['idOrderShopping']);
+    $data['idProject'] = $this->uri->segment(4);
+    $data['pagination'] = $this->pagination->create_links();
+    $this->load->view('ehtml/headercrud',$data);
+    $this->load->helper(array('form'));
+    $this->load->view('home/projects/project-ordershopping-invoice',$data);
+    $this->load->view('ehtml/footercrud');
+  
+  }
+
+  function runViewInvoiceInOrderShopping(){
+    $session_data = $this->session->userdata('logged_in');
+    $name = 'General';
+    $data['nameUser'] = $session_data['nameUser'];
+    $data['idUser'] =  $session_data['idUser'];
+    $data['email'] = $session_data['email'];
+    $config = $this->pagination();
+    $this->pagination->initialize($config);
+    $result = $this->invoice_model->get_pagination($config['per_page']);
+    $data['query'] = $result;
+    $data['idOrderShopping'] = $this->uri->segment(3);
+    $data['ordershopping'] = $this->ordershopping_model->getorderShopping($data['idOrderShopping']);
+    $data['pagination'] = $this->pagination->create_links();
+    $this->load->view('ehtml/headercrud',$data);
+    $this->load->helper(array('form'));
+    $this->load->view('home/ordershopping/ordershopping-invoice',$data);
+    $this->load->view('ehtml/footercrud');
+  }
+
+  function runViewEditinvoice(){
+    $session_data = $this->session->userdata('logged_in');
+    $data['nameUser'] = $session_data['nameUser'];
+    $data['idUser'] =  $session_data['idUser'];
+    $data['idInvoice'] = $this->uri->segment(3);
+    $data['invoice'] = $this->invoice_model->getinvoice($data['idInvoice']);
+    $this->load->view('ehtml/headercrud',$data);
+    $this->load->helper(array('form'));
+    $this->load->view('home/invoice/edit-invoice',$data);
+    $this->load->view('ehtml/footercrud');
+  }
+  
+  function updateInvoiceOrderShoppingProjectInSector(){
+    $data = array(
+      'noinvoice'=>$this->input->post('noinvoice'),
+      'status'=>$this->input->post('status')
+    );
+    $data['idInvoice'] = $this->uri->segment(3);
+    $data['idOrderShopping'] = $this->uri->segment(4);
+    $data['idProject'] = $this->uri->segment(5);
+    $data['idSector'] = $this->uri->segment(6);
+    $this->invoice_model->updateinvoice($data['idInvoice'],$data);
+    redirect('invoices/runViewInvoiceOrderShoppingProjectInSector/'.$data['idInvoice'].'/'.$data['idOrderShopping'].'/'.$data['idProject'].'/'.$data['idSector']);
+  }
+
+  function updateInvoiceOrderShoppingInProject(){
+    $data = array(
+      'noinvoice'=>$this->input->post('noinvoice'),
+      'status'=>$this->input->post('status')
+    );
+    $data['idInvoice'] = $this->uri->segment(3);
+    $data['idOrderShopping'] = $this->uri->segment(4);
+    $data['idProject'] = $this->uri->segment(5);
+    $this->invoice_model->updateinvoice($data['idInvoice'],$data);
+    redirect('invoices/runViewInvoiceOrderShoppingInProject/'.$data['idInvoice'].'/'.$data['idOrderShopping'].'/'.$data['idProject']);
+  }
+
+  function updateInvoiceOrderShoppingProjectInClient(){
+    $data = array(
+      'noinvoice'=>$this->input->post('noinvoice'),
+      'status'=>$this->input->post('status')
+    );
+    $data['idInvoice'] = $this->uri->segment(3);
+    $data['idOrderShopping'] = $this->uri->segment(4);
+    $data['idProject'] = $this->uri->segment(5);
+    $data['idClient'] = $this->uri->segment(6);
+    $this->invoice_model->updateinvoice($data['idInvoice'],$data);
+    redirect('invoices/runViewInvoiceOrderShoppingProjectInClient/'.$data['idInvoice'].'/'.$data['idOrderShopping'].'/'.$data['idProject'].'/'.$data['idClient']);
+  }
+
+  function updateInvoiceOrderShoppingProjectClientInSector(){
+    $data = array(
+      'noinvoice'=>$this->input->post('noinvoice'),
+      'status'=>$this->input->post('status')
+    );
+    $data['idInvoice'] = $this->uri->segment(3);
+    $data['idOrderShopping'] = $this->uri->segment(4);
+    $data['idProject'] = $this->uri->segment(5);
+    $data['idClient'] = $this->uri->segment(6);
+    $data['idSector'] = $this->uri->segment(7);
+    $this->invoice_model->updateinvoice($data['idInvoice'],$data);
+    redirect('invoices/runViewInvoiceOrderShoppingProjectClientInSector/'.$data['idInvoice'].'/'.$data['idOrderShopping'].'/'.$data['idProject'].'/'.$data['idClient'].'/'.$data['idSector']);
   }
 
   function deleteinvoice(){
-        $id = $this->uri->segment(3);
-        $this->invoice_model->deleteinvoice($id);
-        redirect('invoices');
+    $session_data = $this->session->userdata('logged_in');
+    $data['nameUser'] = $session_data['nameUser'];
+    $data['idUser'] =  $session_data['idUser'];
+    $id = $this->uri->segment(3);
+    $this->invoice_model->deleteinvoice($id);
+    redirect('invoices');
   
   }
 

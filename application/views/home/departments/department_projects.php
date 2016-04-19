@@ -59,7 +59,7 @@
                                               <td><?= $opc->dateCreation?></td>
                                               <td><?= $opc->dateTermination?></td>
                                               <td><?= $opc->nameClient?></td>
-                                              <td><a href="ordershopping/runViewProjectOrderShoppingInDepartments/<?=$opc->idProject?>/<?= $department->idDepartment ?>">Mostrar</a></td>
+                                              <td><a href="<?=base_url() ?>ordershopping/runViewProjectOrderShoppingInDepartment/<?=$opc->idProject?>/<?= $department->idDepartment ?>">Mostrar</a></td>
                                               <td><a href="<?=base_url()?>projects/runViewEditProjectInDepartment/<?=$opc->idProject?>/<?=$idDepartment ?>" >Edit</a>
                                               </td>
                                               <td class="text-center text-danger">

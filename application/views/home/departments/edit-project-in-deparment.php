@@ -21,7 +21,7 @@
                           </li>
 
                           <li>
-                             <i class="fa fa-table"> <a href="<?=base_url()?>projects/runViewDeparmentProjects/<?= $idDepartment?>"> Proyectos Del Departamento </a></i> 
+                             <i class="fa fa-table"> <a href="<?=base_url()?>projects/runViewDepartmentProjects/<?= $idDepartment?>"> Proyectos Del Departamento </a></i> 
                           </li>
                            
                           <li class="active">
