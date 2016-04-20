@@ -48,7 +48,7 @@
                                           { ?>
                                             <tr>
                                                 <td><?= $opc->noInvoice?></td>
-                                                <td><a href="<?=base_url()?>invoices/runViewEditinvoice/<?=$opc->idInvoice?>" >Edit</a></td>
+                                                <td><a href="<?=base_url()?>invoices/runViewEditInvoice/<?=$opc->idInvoice?>" >Edit</a></td>
                                                 <td class="text-center text-danger">
                                                     <a href="<?=base_url()?>invoices/deleteinvoice/<?=$opc->idInvoice?>" class="confirmationDeleteInvoice">X</a>  
                                                 </td>
@@ -90,10 +90,12 @@
                               <input type="text" size="20" id="invoice" name="noInvoice" placeholder="Factura" value="" class="form-invoice form-control" required/>
                            </div>
                             <div class="form-group">
-                              <label class="" for="status">status:</label>
+                              <label class="" for="text">Status:</label>
                               <?= form_error('status') ?>
-                              <input type="text" size="20" id="status" name="status" placeholder="Estado" value="" class="form-status form-control" required/>
-                              
+                              <select name="status"  class="form-control" required>
+                                 <option value="No Pagado">No Pagado</option> 
+                                 <option value="Pagado">Pagado</option> 
+                              </select>
                            </div>
                          <div class="modal-footer">
                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

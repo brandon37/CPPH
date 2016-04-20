@@ -47,7 +47,7 @@
                                 <thead class="text-center">
                                     <tr class="text-center">
                                         <th>Cliente</th>
-                                        <th>Name</th>
+                                        <th>Departamento</th>
                                         <th>Concepto</th>
                                         <th>Monto</th>
                                         <th>DC</th>
@@ -64,16 +64,16 @@
                                         foreach ($query->result() as $opc) { ?>
                                             <tr>
                                                 <td><?= $opc->nameClient?></td>
-                                                <td><?= $opc->nameProject?></td>
+                                                <td><?= $opc->nameDepartment?></td>
                                                 <td><?= $opc->concept?></td>
                                                 <td><?= $opc->amount?></td>
                                                 <td><?= $opc->dateCreationOS?></td>
                                                 <td><?= $opc->dateTerminationOS?></td>
-                                                <td><a href="<?= base_url()?>invoices/runViewInvoiceOrderShoppingProjectClientInSector/<?= $opc->idOrderShopping ?>/<?= $idProject ?>/<?= $idClient ?>/<?= $idSector ?>">Crear</a></td>
-                                                <td><a href="<?=base_url()?>ordershopping/runViewEditOrderShoppingsProjectClientInSector/<?=$opc->idOrderShopping?>/<?=$opc->idproject?>/<?= $idClient?>/<?=$idSector?>" >Edit</a>
+                                                <td><a href="<?= base_url()?>invoices/runViewInvoiceOrderShoppingProjectClientInSector/<?= $opc->idOrderShopping ?>/<?= $idProject ?>/<?= $idClient ?>/<?= $idSector ?>">Mostrar</a></td>
+                                                <td><a href="<?=base_url()?>ordershopping/runViewEditOrderShoppingsProjectClientInSector/<?=$opc->idOrderShopping?>/<?=$opc->idProject?>/<?= $idClient?>/<?=$idSector?>" >Edit</a>
                                                 </td>
                                                 <td class="text-center text-danger">
-                                                    <a href="<?=base_url()?>ordershopping/deleteorderShoppingProjectClientInSector/<?=$opc->idOrderShopping?>/<?= $opc->idproject ?>/<?= $idClient ?>/<?=$idSector?>" class="confirmationDeleteOrderShopping">X</a>  
+                                                    <a href="<?=base_url()?>ordershopping/deleteorderShoppingProjectClientInSector/<?=$opc->idOrderShopping?>/<?= $opc->idProject ?>/<?= $idClient ?>/<?=$idSector?>" class="confirmationDeleteOrderShopping">X</a>  
                                                 </td>
                                             </tr>
                                       <?php } ?>

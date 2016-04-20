@@ -42,6 +42,25 @@
                          <input type="hidden" size="20" id="nameProject" name="nameProject"placeholder="nameProject" class="form-nameProject form-control" value="<?= $ordershopping->nameProject ?>" required/>
                      </div>
                      <div class="form-group">
+                           <?= form_error('nameDepartment') ?>
+                           <label class="" for="nameDepartment">Name Department:</label>
+                           <select name="nameDepartment"  class="form-control" value="<?= $ordershopping->nameDepartment ?>" required>
+                              <option value="<?= $ordershopping->nameDepartment ?>"><?= $ordershopping->nameDepartment ?></option>
+                              <?php 
+                              foreach ($departments->result() as $opt) { 
+                                if ($ordershopping->nameDepartment != $opt->nameDepartment ) 
+                                {
+                                ?>
+                                  <option value="<?=$opt->nameDepartment ?>"><?=$opt->nameDepartment?></option> 
+                                <?php
+                                }
+                              ?>
+                             <?php
+                              }
+                              ?>
+                           </select>     
+                       </div>
+                     <div class="form-group">
                         <label class="" for="text">concept:</label>
                         <?= form_error('concept') ?>
                         <input type="text" size="20" id="concept" name="concept"placeholder="concept" class="form-concept form-control" value="<?= $ordershopping->concept ?>" required/>
@@ -62,7 +81,6 @@
                         <input type="date" size="20" id="dateTermination" name="dateTermination" placeholder="Date Termination" class="form-dateTermination form-control" value="<?= $ordershopping->dateTerminationOS ?>" required/>
                      </div>
                    <div class="modal-footer">
-                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                        <button type="submit" class="btn btn-primary">Save</button> 
                    </div> 
 

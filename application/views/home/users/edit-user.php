@@ -53,7 +53,6 @@
                     <input type="password" size="20" id="passowrd" name="passwordconf"placeholder="Repeat Password" class="form-password form-control" value="" required/>
                 </div>
                <button type="submit" class="btn btn-primary">Save</button> 
-         
            </form>
 
               <?php

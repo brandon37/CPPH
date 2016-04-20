@@ -39,26 +39,24 @@
                              <?= form_error('nameProject') ?>
                              <input type="hidden" size="20" id="nameProject" name="nameProject"placeholder="nameProject" class="form-nameProject form-control" value="<?= $ordershopping->nameProject ?>" required/>
                          </div>
-                         <div class="form-group">
+                        <div class="form-group">
                            <?= form_error('nameDepartment') ?>
                            <label class="" for="nameDepartment">Name Department:</label>
-                           <?php 
-                              if ($departments) 
-                                {?>
-                                 <select name="nameDepartment"  class="form-control" value="<?= $ordershopping->nameDepartment ?>" required>
-                                    <?php 
-                                    foreach ($departments->result() as $opt)
-                                     { 
-                                       ?>
-                                         <option value="<?=$opt->nameDepartment ?>"><?=$opt->nameDepartment?></option>  
-                                    <?php
-                                   }
-                              ?></select> <?php
-                                 }else{
-                                  echo '<h4 class="text-danger">"No Hay Departamentos Favor De Agregar"</h4>';
-                                 }
-                              
-                              ?>   
+                           <select name="nameDepartment"  class="form-control" value="<?= $ordershopping->nameDepartment ?>" required>
+                              <option value="<?= $ordershopping->nameDepartment ?>"><?= $ordershopping->nameDepartment ?></option>
+                              <?php 
+                              foreach ($departments->result() as $opt) { 
+                                if ($ordershopping->nameDepartment != $opt->nameDepartment ) 
+                                {
+                                ?>
+                                  <option value="<?=$opt->nameDepartment ?>"><?=$opt->nameDepartment?></option> 
+                                <?php
+                                }
+                              ?>
+                             <?php
+                              }
+                              ?>
+                           </select>     
                        </div>
                          <div class="form-group">
                             <label class="" for="text">concept:</label>
@@ -81,7 +79,6 @@
                             <input type="date" size="20" id="dateTermination" name="dateTermination" placeholder="Date Termination" class="form-dateTermination form-control" value="<?= $ordershopping->dateTerminationOS ?>" required/>
                          </div>
                        <div class="modal-footer">
-                           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                            <button type="submit" class="btn btn-primary">Save</button> 
                        </div> 
 

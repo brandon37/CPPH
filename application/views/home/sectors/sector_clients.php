@@ -53,8 +53,8 @@
                                 <tbody>
                                    
                                     <?php 
-                                        if ($query){
-                                        foreach ($query->result() as $opc) { ?>
+                                        foreach ($query->result() as $opc) 
+                                          { ?>
                                             <tr>
                                                 <td><?= $opc->nameClient?></td>
                                                 <td><?= $opc->status?></td>
@@ -119,4 +119,3 @@
                 </div>
              </div>
         </div>
-

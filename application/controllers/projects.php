@@ -480,7 +480,7 @@ function pagination(){
     $data['query'] = $this->projects_model->getSectorProjects($data['idSector']);
     $data['sector'] = $this->sector_model->getSector($data['idSector']);
     if ($data['sector']) {
-        $data['clients'] = $this->client_model->getAllClients();
+        $data['clients'] = $this->client_model->getSectorClients($data['idSector']);
         $this->load->view('ehtml/headercrud',$data);
         $this->load->helper(array('form'));
         $this->load->view('home/sectors/sector_projects',$data);

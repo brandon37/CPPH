@@ -73,7 +73,9 @@ class Client_model extends CI_Model {
 	function getSectorClients($id){
 		$this->db->join('sectors', 'clients.idSector = sectors.idSector');
 		$this->db->where('clients.idSector', $id);
-		return $this->db->get("clients");
+		$query = $this->db->get("clients");
+		if($query->num_rows() >0) return $query;
+		else return false;
 	}
 
 	function getCountClients(){
@@ -95,7 +97,7 @@ class Client_model extends CI_Model {
 		$this->db->where('status',"Activo");
 		$this->db->join('sectors', 'clients.idSector = sectors.idSector');
 		$query = $this->db->get("clients", $number_per_page, $this->uri->segment(3));
-		if($query->num_rows() >0) return $query->row();
+		if($query->num_rows() >0) return $query;
 		else return false;
 	}
 
@@ -103,7 +105,7 @@ class Client_model extends CI_Model {
 		$this->db->where('status',"Inactivo");
 		$this->db->join('sectors', 'clients.idSector = sectors.idSector');
 		$query = $this->db->get("clients", $number_per_page, $this->uri->segment(3));
-		if($query->num_rows() >0) return $query->row();
+		if($query->num_rows() >0) return $query;
 		else return false;
 	}
 

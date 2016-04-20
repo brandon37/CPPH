@@ -6,7 +6,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                         Control De Facturas
+                         Control De Factura De La Orden De Cuenta
                         </h1>
                         <ol class="breadcrumb">
                               <li>
@@ -43,7 +43,7 @@
 
                 <div class="row">
                     <div class="col-lg-6">
-                        <h2>Facturas</h2>
+                        <h2>Factura</h2>
                         <div class="table-responsive">
                    <?php if ($query)
                               { ?>
@@ -61,9 +61,9 @@
                                           { ?>
                                             <tr>
                                                 <td><?= $opc->noInvoice?></td>
-                                                <td><a href="<?=base_url()?>invoices/runViewEditinvoice/<?=$opc->idInvoice?>" >Edit</a></td>
+                                                <td><a href="<?=base_url()?>invoices/runViewEditInvoiceOrderShoppingProjectClientInSector/<?=$opc->idInvoice?>/<?= $idOrderShopping ?>/<?= $idProject ?>/<?= $idClient ?>/<?= $idSector ?>" >Edit</a></td>
                                                 <td class="text-center text-danger">
-                                                    <a href="<?=base_url()?>invoices/deleteinvoice/<?=$opc->idInvoice?>" class="confirmationDeleteInvoice">X</a>  
+                                                    <a href="<?=base_url()?>invoices/deleteInvoiceOrderShoppingProjectClientInSector/<?=$opc->idInvoice?>/<?= $idOrderShopping ?>/<?= $idProject ?>/<?= $idClient ?>/<?= $idSector ?>" class="confirmationDeleteInvoice">X</a>  
                                                 </td>
                                             </tr>
                                    <?php } ?>           
@@ -71,14 +71,13 @@
                                 </tbody>
                             </table>
                      <?php }else{
-                                echo "<h5 class='text-danger'>No Hay Ninguna Factura En El Sistema Favor De Agregar</h5>";
+                                echo "<h5 class='text-danger'>La Orden De Compra No Contiene Factura Favor De Agregar</h5>";
                                 }
                             ?>  
                         </div>
                     </div>
                 </div>
                 <!-- /.row -->
-                  <?= $pagination?>
             </div>
             <!-- /.container-fluid -->
 
@@ -99,20 +98,21 @@
                     <div class="modal-body">
                        <?= form_open('invoices/newInvoiceOrderShoppingProjectClientInSector/'.$idOrderShopping.'/'.$idProject.'/'.$idClient.'/'.$idSector) ?>
                            <div class="form-group">
-                              <label class="" for="invoice">Number Invoice:</label>
                               <?= form_error('idOrderShopping') ?>
-                              <input type="text" size="20" id="idOrderShopping" name="idOrderShopping" placeholder="Factura" value="<?= $idOrderShopping ?>" class="form-invoice form-control" required/>
+                              <input type="hidden" size="20" id="idOrderShopping" name="idOrderShopping" placeholder="Factura" value="<?= $idOrderShopping ?>" class="form-invoice form-control" required/>
                            </div>
                            <div class="form-group">
                               <label class="" for="invoice">Number Invoice:</label>
                               <?= form_error('noInvoice') ?>
                               <input type="text" size="20" id="invoice" name="noInvoice" placeholder="Factura" value="" class="form-invoice form-control" required/>
                            </div>
-                            <div class="form-group">
-                              <label class="" for="status">status:</label>
+                           <div class="form-group">
+                              <label class="" for="text">Status:</label>
                               <?= form_error('status') ?>
-                              <input type="text" size="20" id="status" name="status" placeholder="Estado" value="" class="form-status form-control" required/>
-                              
+                              <select name="status"  class="form-control" required>
+                                 <option value="No Pagado">No Pagado</option> 
+                                 <option value="Pagado">Pagado</option> 
+                              </select>
                            </div>
                          <div class="modal-footer">
                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

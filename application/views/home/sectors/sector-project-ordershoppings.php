@@ -45,7 +45,7 @@
                                     <thead class="text-center">
                                         <tr class="text-center">
                                             <th>Cliente</th>
-                                            <th>Name</th>
+                                            <th>Departmanento</th>
                                             <th>Concepto</th>
                                             <th>Monto</th>
                                             <th>DC</th>
@@ -60,11 +60,11 @@
                                             foreach ($query->result() as $opc) { ?>
                                                 <tr>
                                                     <td><?= $opc->nameClient?></td>
-                                                    <td><?= $opc->nameProject?></td>
+                                                    <td><?= $opc->nameDepartment?></td>
                                                     <td><?= $opc->concept?></td>
                                                     <td><?= $opc->amount?></td>
-                                                    <td><?= $opc->dateCreation?></td>
-                                                    <td><?= $opc->dateTermination?></td>
+                                                    <td><?= $opc->dateCreationOS?></td>
+                                                    <td><?= $opc->dateTerminationOS?></td>
                                                     <td><a href="<?= base_url()?>invoices/runViewInvoiceOrderShoppingProjectInSector/<?= $opc->idOrderShopping?>/<?= $idProject?>/<?= $idSector ?>">crear</a></td>
                                                     <td><a href="<?=base_url()?>ordershopping/runViewEditOrderShoppingProjectInSector/<?=$opc->idOrderShopping?>/<?= $idProject?>/<?= $idSector?>" >Edit</a>
                                                     </td>
@@ -80,7 +80,7 @@
                                 </table>
                             <?php 
                               }else{
-                                      echo "<h4 class='text-danger'>No Existe Ninguna Orden De compra En El Proyecto".$Project->nameProject." Favor De Agregar</h4>";
+                                      echo "<h5 class='text-danger'>No Existe Ninguna Orden De compra En El Proyecto  \" ".$Project->nameProject." \" Favor De Agregar</h5>";
                                   }
                               ?>   
                         </div>
@@ -105,12 +105,33 @@
                       <h3 class="myModalLabel text-center" id="exampleModalLabel">New Ordershopping</h3>
                     </div>
                     <div class="modal-body">
-                       <?= form_open('ordershopping/newInvoiceOrderShoppingProjectInSector/'.$idOrderShopping.'/'.$idProject.'/'.$idSector) ?>
+                       <?= form_open('ordershopping/newOrderShoppingProjectInSector/'.$idProject.'/'.$idSector) ?>
                           <div class="form-group">
                                <?= form_error('nameProject') ?>
                                <input type="hidden" size="20" id="nameProject" name="nameProject" value="<?=
                                $Project->nameProject?>" placeholder="Name Project" class="form-nameProject form-control" required/>
                            </div>
+                           <div class="form-group">
+                           <?= form_error('nameDepartment') ?>
+                           <label class="" for="nameDepartment">Name Department:</label>
+                           <?php 
+                              if ($departments) 
+                                {?>
+                                 <select name="nameDepartment"  class="form-control" required>
+                                    <?php 
+                                    foreach ($departments->result() as $opt)
+                                     { 
+                                       ?>
+                                         <option value="<?=$opt->nameDepartment ?>"><?=$opt->nameDepartment?></option>  
+                                    <?php
+                                   }
+                              ?></select> <?php
+                                 }else{
+                                  echo '<h5 class="text-danger">"No Hay Departamentos Favor De Agregar"</h5>';
+                                 }
+                              
+                              ?>   
+                       </div>
                            <div class="form-group">
                               <label class="" for="text">concept:</label>
                               <?= form_error('concept') ?>

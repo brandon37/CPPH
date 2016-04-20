@@ -26,7 +26,7 @@
                       </ol>
                   </div>
               </div>
-              <?= form_open('invoices/updateinvoice/'.$idInvoice); ?>    
+              <?= form_open('invoices/updateInvoiceOrderShoppingInProject/'.$idInvoice.'/'.$idOrderShopping.'/'.$idProject); ?>    
                 <?php 
                     if ($invoice){
                        ?>

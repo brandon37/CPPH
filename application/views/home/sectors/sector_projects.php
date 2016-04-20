@@ -6,7 +6,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                         Control De Proyectos Del Sector <?= $sector->typeSector ?>
+                         Control De Proyectos Del Sector <b class="text-primary"><?= $sector->typeSector ?></b>
                         </h1>
                         <ol class="breadcrumb">
                             <li>
@@ -130,7 +130,7 @@
                                 ?>
                                       </select>
                               <?php } else{
-                                          echo "<h5 class='text-danger'>No Hay Clientes Favor de Agregar</h5>";
+                                          echo "<h5 class='text-danger'>No Hay Clientes En El Sector \" ".$sector->typeSector." "."\" Favor de Agregar</h5>";
                                       }?> 
                            </div>
                          <div class="modal-footer">

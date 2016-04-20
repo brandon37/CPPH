@@ -52,7 +52,7 @@ class Sector_model extends CI_Model {
 
 	function get_pagination($number_per_page){
 		$query = $this->db->get("sectors", $number_per_page, $this->uri->segment(3));
-		if($query->num_rows() >0) return $query->row();
+		if($query->num_rows() >0) return $query;
 		else return false;
 	}
 }
