@@ -94,13 +94,17 @@ class Client_model extends CI_Model {
 	function get_paginationActiveClients($number_per_page){
 		$this->db->where('status',"Activo");
 		$this->db->join('sectors', 'clients.idSector = sectors.idSector');
-		return $this->db->get("clients", $number_per_page, $this->uri->segment(3));
+		$query = $this->db->get("clients", $number_per_page, $this->uri->segment(3));
+		if($query->num_rows() >0) return $query->row();
+		else return false;
 	}
 
 	function get_paginationInactiveClients($number_per_page){
 		$this->db->where('status',"Inactivo");
 		$this->db->join('sectors', 'clients.idSector = sectors.idSector');
-		return $this->db->get("clients", $number_per_page, $this->uri->segment(3));
+		$query = $this->db->get("clients", $number_per_page, $this->uri->segment(3));
+		if($query->num_rows() >0) return $query->row();
+		else return false;
 	}
 
 }

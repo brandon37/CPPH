@@ -29,6 +29,8 @@
                     <div class="col-lg-10">
                         <h2>Ordenes De Compras</h2>
                         <div class="table-responsive">
+                <?php 
+                  if ($query){ ?>
                             <table class="table table-striped">
                                 <thead class="text-center">
                                     <tr class="text-center">
@@ -45,9 +47,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                   
                                     <?php 
-                                        if ($query){
                                         foreach ($query->result() as $opc) { ?>
                                             <tr>
                                                 <td><?= $opc->nameClient?></td>
@@ -66,14 +66,14 @@
                                             </tr>
 
 
-                                        <?php } 
-                                        }else{
-                                            echo "Error No Existe Ningun Cliente Favor De Agregar";
-                                        }
-                                    ?>           
+                                        <?php }  ?>           
                                    
                                 </tbody>
                             </table>
+                    <?php  }else{
+                              echo "<h5 class='text-danger'> No Hay Ordenes de Compras En El Sistema Favor De Agregar</h5>";
+                                }
+                        ?>  
                         </div>
                     </div>
                 </div>
@@ -110,14 +110,12 @@
                                    foreach ($projects->result() as $opt)
                                      { 
                                        ?>
-                                        <option value="<?=$opt->nameProject ?>"><?=$opt->nameProject?></option>
-
-                                     
+                                        <option value="<?=$opt->nameProject ?>"><?=$opt->nameProject?></option>       
                                     <?php
                                    }
                                 ?></select> <?php
                                 }else{
-                                  echo '<h4 class="text-danger">"No Hay Projectos Favor De Agregar"</h4>';
+                                  echo '<h5 class="text-danger">"No Hay Projectos Favor De Agregar"</h5>';
                                 }
                               ?>
                        </div>
@@ -137,7 +135,7 @@
                                    }
                               ?></select> <?php
                                  }else{
-                                  echo '<h4 class="text-danger">"No Hay Departamentos Favor De Agregar"</h4>';
+                                  echo '<h5 class="text-danger">"No Hay Departamentos Favor De Agregar"</h5>';
                                  }
                               
                               ?>   

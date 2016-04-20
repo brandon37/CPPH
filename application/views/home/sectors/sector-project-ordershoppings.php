@@ -80,7 +80,7 @@
                                 </table>
                             <?php 
                               }else{
-                                      echo "<h4 class='text-danger'>No Existe Ninguna Orden de compra Favor De Agregar</h4>";
+                                      echo "<h4 class='text-danger'>No Existe Ninguna Orden De compra En El Proyecto".$Project->nameProject." Favor De Agregar</h4>";
                                   }
                               ?>   
                         </div>

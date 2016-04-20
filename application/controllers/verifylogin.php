@@ -13,8 +13,8 @@ class VerifyLogin extends CI_Controller {
    //This method will have the credentials validation
    $this->load->library('form_validation');
  
-   $this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean');
-   $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|callback_check_database');
+   $this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean|callback_check_database');
+   $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');
  
    if($this->form_validation->run() == FALSE)
    {
@@ -31,10 +31,10 @@ class VerifyLogin extends CI_Controller {
  
  }
  
- function check_database($password)
+ function check_database($username)
  {
    //Field validation succeeded.  Validate against database
-   $username = $this->input->post('username');
+   $password = $this->input->post('password');
  
    //query the database
    $result = $this->user_model->login($username, $password);

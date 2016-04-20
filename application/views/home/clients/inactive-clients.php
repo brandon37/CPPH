@@ -29,6 +29,9 @@
                     <div class="col-lg-6">
                         <h2>Clientes</h2>
                         <div class="table-responsive">
+                         <?php 
+                        if ($query)
+                          {?>
                             <table class="table table-hover table-striped">
                                 <thead>
                                     <tr>
@@ -40,10 +43,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                   
-                                    <?php 
-                                        if ($query){
-                                        foreach ($query->result() as $opc) { ?>
+                            <?php foreach ($query->result() as $opc)
+                                     { ?>
                                             <tr>
                                                 <td><?= $opc->nameClient?></td>
                                                 <td><?= $opc->status?></td>
@@ -55,14 +56,13 @@
                                             </tr>
 
 
-                                        <?php } 
-                                        }else{
-                                            echo "Error No Existe Ningun Cliente Favor De Agregar";
-                                        }
-                                    ?>           
-                                   
+                              <?php } ?>           
                                 </tbody>
                             </table>
+                     <?php }else{
+                              echo "<h5 class='text-danger'> No Hay Clientes Inactivos En El Sistema</h5>";
+                                }
+                            ?>  
                         </div>
                     </div>
                 </div>

@@ -38,6 +38,7 @@
                     <div class="col-lg-6">
                         <h2>Facturas</h2>
                         <div class="table-responsive">
+          <?php if ($query){?>
                             <table class="table table-hover table-striped">
                                 <thead>
                                     <tr>
@@ -46,11 +47,9 @@
                                         <th class="text-center">Delete</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                   
-                                    <?php 
-                                        if ($query){
-                                        foreach ($query->result() as $opc) { ?>
+                                <tbody>   
+                                <?php foreach ($query->result() as $opc)
+                                         { ?>
                                             <tr>
                                                 <td><?= $opc->noInvoice?></td>
                                                 <td><a href="<?=base_url()?>invoices/runViewEditinvoice/<?=$opc->idInvoice?>" >Edit</a></td>
@@ -60,14 +59,13 @@
                                             </tr>
 
 
-                                        <?php } 
-                                        }else{
-                                            echo "Error No Existe Ningun Cliente Favor De Agregar";
-                                        }
-                                    ?>           
-                                   
+                                    <?php } ?>           
                                 </tbody>
                             </table>
+                     <?php }else{
+                                  echo "<h5 class='tetx-danger'> No Hay Ningun Factura En La Orden De Compra Favor De Agregar</h5>";
+                                }
+                         ?>   
                         </div>
                     </div>
                 </div>

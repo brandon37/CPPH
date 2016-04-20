@@ -57,7 +57,7 @@
                               </table>
                                <?php 
                               }else{
-                                  echo "No Existe Ningun Proyecto En El Departmento Favor De Agregar";
+                                  echo "<h5 class='text-danger'>No Hay Departmentos En El Sistema Favor De Agregar</h5>";
                               }
                           ?>   
                         </div>

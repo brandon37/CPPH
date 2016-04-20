@@ -76,7 +76,7 @@
                                 </table>
                             <?php 
                               }else{
-                                      echo "<h4 class='text-danger'>No Existe Ninguna Orden de compra Favor De Agregar</h4>";
+                                      echo "<h5 class='text-danger'>No Existe Ninguna Orden de compra En El Proyecto".$Project->nameProject." Favor De Agregar</h5>";
                                   }
                               ?>   
                         </div>

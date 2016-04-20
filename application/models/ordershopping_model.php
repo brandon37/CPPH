@@ -13,7 +13,7 @@ class Ordershopping_model extends CI_Model {
 	}
 
 	function deleteOrderShopping($idOrderShopping){
-		$this->db->delete('orderShoppings', array('idorderShopping'=>$idOrderShopping));
+		$this->db->delete('orderShoppings', array('idOrderShopping'=>$idOrderShopping));
 	}
 
 	function getAllOrderShopping($idOrderShopping){
@@ -40,7 +40,7 @@ class Ordershopping_model extends CI_Model {
 		$this->db->join('projects', 'orderShoppings.idProject = projects.idProject');
 		$this->db->join('clients', 'projects.idClient = clients.idClient');
 		$this->db->join('departments', 'orderShoppings.idDepartment = departments.idDepartment');
-		$this->db->where('idorderShopping',$idOrderShopping);
+		$this->db->where('idOrderShopping',$idOrderShopping);
 		$query = $this->db->get('orderShoppings');
 		if($query->num_rows() >0) return $query->row();
 		else return false;
@@ -65,7 +65,7 @@ class Ordershopping_model extends CI_Model {
 			'idProject'=>$data['idProject'],
 			'idDepartment'=>$data['idDepartment']
 		 );
-		$this->db->where('idorderShopping',$idOrderShopping);
+		$this->db->where('idOrderShopping',$idOrderShopping);
 		$this->db->update('orderShoppings',$info);
 	}
 
@@ -78,7 +78,9 @@ class Ordershopping_model extends CI_Model {
 		$this->db->join('projects', 'orderShoppings.idProject = projects.idProject');
 		$this->db->join('clients', 'projects.idClient = clients.idClient');
 		$this->db->join('departments', 'orderShoppings.idDepartment = departments.idDepartment');
-		return $this->db->get("orderShoppings", $number_per_page, $this->uri->segment(3));
+		$query = $this->db->get("orderShoppings", $number_per_page, $this->uri->segment(3));
+		if($query->num_rows() >0) return $query;
+		else return false;
 	}
 	
 }

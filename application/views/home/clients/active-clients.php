@@ -32,6 +32,9 @@
                     <div class="col-lg-6">
                         <h2>Clientes</h2>
                         <div class="table-responsive">
+                      <?php 
+                        if ($query)
+                          { ?>
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
@@ -44,9 +47,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                   
                                     <?php 
-                                        if ($query){
                                         foreach ($query->result() as $opc) { ?>
                                             <tr>
                                                 <td><?= $opc->nameClient?></td>
@@ -58,16 +59,14 @@
                                                     <a href="<?=base_url()?>clients/deleteActiveClient/<?=$opc->idClient?>" class="confirmationDeleteClient">X</a>  
                                                 </td>
                                             </tr>
-
-
-                                        <?php } 
-                                        }else{
-                                            echo "Error No Existe Ningun Cliente Favor De Agregar";
-                                        }
-                                    ?>           
-                                   
+                                        <?php }  ?>           
                                 </tbody>
                             </table>
+                            <?php 
+                             }else{
+                                echo "<h5 class='text-danger'>No Hay Clientes En El Sistema Favor De Agregar</h5>";
+                             }
+                                ?>   
                         </div>
                     </div>
                 </div>

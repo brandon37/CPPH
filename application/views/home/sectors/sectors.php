@@ -31,6 +31,8 @@
                     <div class="col-lg-6">
                         <h2>Sectores</h2>
                         <div class="table-responsive">
+                <?php if ($query)
+                        { ?>
                             <table class="table table-hover table-striped">
                                 <thead>
                                     <tr>
@@ -42,9 +44,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                   
                                     <?php 
-                                        if ($query){
                                         foreach ($query->result() as $opc) { ?>
                                             <tr>
                                                 <td><?= $opc->typeSector?></td>
@@ -55,16 +55,15 @@
                                                     <a href="<?=base_url()?>sectors/deleteSector/<?=$opc->idSector?>" class="confirmationDeleteSector">X</a>  
                                                 </td>
                                             </tr>
-
-
-                                        <?php } 
-                                        }else{
-                                            echo "Error No Existe Ningun Cliente Favor De Agregar";
-                                        }
-                                    ?>           
+                                        <?php } ?>           
                                    
                                 </tbody>
                             </table>
+                   <?php  
+                        }else{
+                            echo "<h5 class='text-danger'> No Hay Ningun Sector En El Sistema Favor De Agregar</h5>";
+                        }
+                        ?> 
                         </div>
                     </div>
                 </div>

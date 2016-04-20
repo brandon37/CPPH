@@ -36,6 +36,9 @@
                     <div class="col-lg-6">
                         <h2>Clientes</h2>
                         <div class="table-responsive">
+                    <?php 
+                    if ($query)
+                      {?>
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
@@ -62,14 +65,13 @@
                                                     <a href="<?=base_url()?>clients/deleteClientInSector/<?=$opc->idClient?>/<?=$idSector?>" class="confirmationDeleteClient">X</a>  
                                                 </td>
                                             </tr>
-                                        <?php } 
-                                        }else{
-                                            echo "No Existe Ningun Cliente";
-                                        }
-                                    ?>           
-                                   
+                                    <?php }  ?>    
                                 </tbody>
                             </table>
+                  <?php }else{
+                            echo "<h5 class='text-danger'>No Hay Ningun Cliente En Esl Sector".$sector->typeSector." En El Sistema</h5>";
+                        }
+                    ?> 
                         </div>
                     </div>
                 </div>

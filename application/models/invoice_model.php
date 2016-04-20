@@ -47,8 +47,9 @@ class Invoice_model extends CI_Model {
 
 	function get_pagination($number_per_page){
 
-		return $this->db->get("invoices", $number_per_page, $this->uri->segment(3));
-
+		$query = $this->db->get("invoices", $number_per_page, $this->uri->segment(3));
+		if($query->num_rows() >0) return $query->row();
+		else return false;
 	}
 	
 }

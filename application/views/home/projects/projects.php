@@ -64,7 +64,7 @@
                             </table>
                              <?php
                                         }else{
-                                            echo "Error No Existe Ningun Proyecto Favor De Agregar";
+                                            echo "<h5 class='text-danger'>Error No Existe Ningun Proyecto Favor De Agregar</h5>";
                                         }
                                     ?>   
                         </div>
