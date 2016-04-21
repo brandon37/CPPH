@@ -76,9 +76,8 @@
                         <input type="date" size="20" id="dateCreation" name="dateCreation" placeholder="Date Creation"  class="form-dateCreation form-control" value="<?= $ordershopping->dateCreationOS ?>" required/>
                      </div>
                      <div class="form-group">
-                        <label class="" for="dateTermination">Date Termination:</label>
                         <?= form_error('dateTermination') ?>
-                        <input type="date" size="20" id="dateTermination" name="dateTermination" placeholder="Date Termination" class="form-dateTermination form-control" value="<?= $ordershopping->dateTerminationOS ?>" required/>
+                        <input type="hidden" size="20" id="dateTermination" name="dateTermination" placeholder="Date Termination" class="form-dateTermination form-control" value="<?= $ordershopping->dateTerminationOS ?>" />
                      </div>
                    <div class="modal-footer">
                        <button type="submit" class="btn btn-primary">Save</button> 

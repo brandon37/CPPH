@@ -91,7 +91,7 @@
                        <?= form_open('invoices/newInvoiceOrderShoppingInProject/'.$idOrderShopping.'/'.$idProject) ?>
                            <div class="form-group">
                               <?= form_error('idOrderShopping') ?>
-                              <input type="hidden" size="20" id="idOrderShopping" name="idOrderShopping" placeholder="Factura" value="<?= $idOrderShopping ?>" class="form-invoice form-control" required/>
+                              <input type="hidden" size="20" id="idOrderShopping" name="idOrderShopping" value="<?= $idOrderShopping ?>" class="form-invoice form-control" required/>
                            </div>
                            <div class="form-group">
                               <label class="" for="invoice">Number Invoice:</label>

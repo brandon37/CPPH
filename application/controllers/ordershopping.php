@@ -175,6 +175,34 @@ class Ordershopping extends CI_Controller {
         }  
   }
 
+  function check_paidOrderShopping(){
+    $data['nameProject'] = $this->input->post('nameProject');
+    $data['project'] = $this->projects_model->getProjectid($data['nameProject']);
+    $sumAmountOrderShopping = $this->ordershopping_model->sumAmountOrderShoppingProject($data['project']->idProject);
+    $sum = $sumAmountOrderShopping + $this->input->post('amount');
+    if ($sum <= $data['project']->price) {
+        return true;   
+    }else{
+      $result = $data['project']->price - $sumAmountOrderShopping;
+      $this->form_validation->set_message('check_paidOrderShopping', "Se A Excedido Del Monto, El Rango De La Cantidad Es De 1 A ".$result);
+      return false;
+    }
+  }
+
+  function end_project($idOrderShopping){
+    $data['project'] = $this->projects_model->getProject($data['orderShopping']->idProject);
+      $date = date("Y") . "-" . date("m") . "-" . date("d");
+      $info = array(
+      'nameProject'=>$data['nameProject'],
+      'price'=>$data['price'],
+      'dateCreation'=>$data['dateCreation'],
+      'dateTermination'=>$date,
+      'idClient'=>$data['idClient']
+      );
+      $this->project_model->updateProject($data['project']->idProject, $info);       
+  }
+
+
   function neworderShopping(){
      $data = array(
       'nameProject'=>$this->input->post('nameProject'),
@@ -187,9 +215,9 @@ class Ordershopping extends CI_Controller {
       'idDepartment'=>''
      );
       $this->form_validation->set_rules('nameProject', 'Name Project', 'required|callback_check_project');
-      $this->form_validation->set_rules('nameDepartment','Name Department', 'required|callback_check_check_department');
+      $this->form_validation->set_rules('nameDepartment','Name Department', 'required|callback_check_department');
       $this->form_validation->set_rules('concept', 'Concept', 'required');
-      $this->form_validation->set_rules('amount', 'Amount', 'required|numeric');
+      $this->form_validation->set_rules('amount', 'Amount', 'required|numeric|callback_check_paidOrderShopping');
       $this->form_validation->set_rules('dateCreation','Date', 'required|callback_check_date');
      if($this->form_validation->run() == FALSE)
       {
@@ -202,7 +230,6 @@ class Ordershopping extends CI_Controller {
         $this->ordershopping_model->newOrderShopping($data);
         redirect('ordershopping');
       }
-
   }
 
   function newOrderShoppingProjectClientSector(){
@@ -220,9 +247,9 @@ class Ordershopping extends CI_Controller {
       $data['idClient'] = $this->uri->segment(4);
       $data['idSector'] = $this->uri->segment(5);
       $this->form_validation->set_rules('idProject','Id Project', 'required|numeric|callback_check_idProject');
-      $this->form_validation->set_rules('nameDepartment','Name Department', 'required|callback_check_check_department');
+      $this->form_validation->set_rules('nameDepartment','Name Department', 'required|callback_check_department');
       $this->form_validation->set_rules('concept', 'Concept', 'required');
-      $this->form_validation->set_rules('amount', 'Amount', 'required|numeric');
+      $this->form_validation->set_rules('amount', 'Amount', 'required|numeric|callback_check_paidOrderShopping');
       $this->form_validation->set_rules('dateCreation','Date', 'required|callback_check_date');
      if($this->form_validation->run() == FALSE)
       {
@@ -232,7 +259,6 @@ class Ordershopping extends CI_Controller {
           $data['idDepartment'] = $data['department']->idDepartment;
           $this->ordershopping_model->newOrderShopping($data);
           redirect('ordershopping/runViewOrderShoppingsProjectClientInSector/'.$data['idProject'].'/'.$data['idClient'].'/'.$data['idSector']);
-        
       }
   }
 
@@ -249,9 +275,9 @@ class Ordershopping extends CI_Controller {
      );
       $data['idProject']= $this->uri->segment(3);
       $this->form_validation->set_rules('idProject','Id Project', 'required|numeric|callback_check_idProject');
-      $this->form_validation->set_rules('nameDepartment','Name Department', 'required|callback_check_check_department');
+      $this->form_validation->set_rules('nameDepartment','Name Department', 'required|callback_check_department');
       $this->form_validation->set_rules('concept', 'Concept', 'required');
-      $this->form_validation->set_rules('amount', 'Amount', 'required|numeric');
+      $this->form_validation->set_rules('amount', 'Amount', 'required|numeric|callback_check_paidOrderShopping');
       $this->form_validation->set_rules('dateCreation','Date', 'required|callback_check_date');
      if($this->form_validation->run() == FALSE)
       {
@@ -279,9 +305,9 @@ class Ordershopping extends CI_Controller {
       $data['idProject']= $this->uri->segment(3);
       $data['idClient'] = $this->uri->segment(4);
       $this->form_validation->set_rules('nameProject','Name Project', 'required');
-      $this->form_validation->set_rules('nameDepartment','Name Department', 'required|callback_check_check_department');
+      $this->form_validation->set_rules('nameDepartment','Name Department', 'required|callback_check_department');
       $this->form_validation->set_rules('concept', 'Concept', 'required');
-      $this->form_validation->set_rules('amount', 'Amount', 'required|numeric');
+      $this->form_validation->set_rules('amount', 'Amount', 'required|numeric|callback_check_paidOrderShopping');
       $this->form_validation->set_rules('dateCreation','Date', 'required|callback_check_date');
      if($this->form_validation->run() == FALSE)
       {
@@ -308,9 +334,9 @@ class Ordershopping extends CI_Controller {
       $data['idProject']= $this->uri->segment(3);
       $data['idSector'] = $this->uri->segment(4);
       $this->form_validation->set_rules('nameProject','Name Project', 'required');
-      $this->form_validation->set_rules('nameDepartment','Name Department', 'required|callback_check_check_department');
+      $this->form_validation->set_rules('nameDepartment','Name Department', 'required');
       $this->form_validation->set_rules('concept', 'Concept', 'required');
-      $this->form_validation->set_rules('amount', 'Amount', 'required|numeric');
+      $this->form_validation->set_rules('amount', 'Amount', 'required|numeric|callback_check_paidOrderShopping');
       $this->form_validation->set_rules('dateCreation','Date', 'required|callback_check_date');
      if($this->form_validation->run() == FALSE)
       {
@@ -338,8 +364,6 @@ class Ordershopping extends CI_Controller {
     $this->form_validation->set_rules('concept', 'Concept', 'required');
     $this->form_validation->set_rules('amount', 'Amount', 'required|numeric');
     $this->form_validation->set_rules('dateCreation','Date', 'required|callback_check_date');
-    $this->form_validation->set_rules('dateTermination','Date', 'required|callback_check_date');
-
     if($this->form_validation->run() == FALSE)
     {
       $this->runViewEditorderShopping($idOrderShopping);
@@ -370,8 +394,6 @@ class Ordershopping extends CI_Controller {
     $this->form_validation->set_rules('concept', 'Concept', 'required');
     $this->form_validation->set_rules('amount', 'Amount', 'required|numeric');
     $this->form_validation->set_rules('dateCreation','Date', 'required|callback_check_date');
-    $this->form_validation->set_rules('dateTermination','Date', 'required|callback_check_date');
-
     if($this->form_validation->run() == FALSE)
     {
       $this->runViewEditOrderShoppingProjectInClient($data['idOrderShopping'], $data['idProject'],$data['idClient']);
@@ -402,8 +424,6 @@ class Ordershopping extends CI_Controller {
     $this->form_validation->set_rules('concept', 'Concept', 'required');
     $this->form_validation->set_rules('amount', 'Amount', 'required|numeric');
     $this->form_validation->set_rules('dateCreation','Date', 'required|callback_check_date');
-    $this->form_validation->set_rules('dateTermination','Date', 'required|callback_check_date');
-
     if($this->form_validation->run() == FALSE)
     {
       $this->runViewEditOrderShoppingsProjectClientInSector($data['idOrderShopping'],$data['idProject'],$data['idClient'],$data['idSector']);
@@ -432,8 +452,6 @@ class Ordershopping extends CI_Controller {
     $this->form_validation->set_rules('concept', 'Concept', 'required');
     $this->form_validation->set_rules('amount', 'Amount', 'required|numeric');
     $this->form_validation->set_rules('dateCreation','Date', 'required|callback_check_date');
-    $this->form_validation->set_rules('dateTermination','Date', 'required|callback_check_date');
-
     if($this->form_validation->run() == FALSE)
     {
       $this->runViewEditOrderShoppingsInProject($data['idOrderShopping'],$data['idProject']);
@@ -465,8 +483,6 @@ class Ordershopping extends CI_Controller {
     $this->form_validation->set_rules('concept', 'Concept', 'required');
     $this->form_validation->set_rules('amount', 'Amount', 'required|numeric');
     $this->form_validation->set_rules('dateCreation','Date', 'required|callback_check_date');
-    $this->form_validation->set_rules('dateTermination','Date', 'required|callback_check_date');
-
     if($this->form_validation->run() == FALSE)
     {
       $this->runViewEditOrderShoppingProjectInSector($data['idOrderShopping'],$data['idProject'],$data['idSector']);
@@ -690,6 +706,7 @@ class Ordershopping extends CI_Controller {
     $this->ordershopping_model->deleteorderShopping($idOrderShopping);
     redirect('ordershopping/runViewProjectOrderShoppingsInClient/'.$idProject.'/'.$idClient);
   }
+
   function deleteordershoppingProjectInSector(){
     $idOrderShopping = $this->uri->segment(3);
     $idProject = $this->uri->segment(4);
@@ -699,7 +716,7 @@ class Ordershopping extends CI_Controller {
   }
 
   function deleteorderShoppingProjectClientInSector(){
-    $id = $this->uri->segment(3);
+    $idOrderShopping = $this->uri->segment(3);
     $idProject = $this->uri->segment(4);
     $idClient = $this->uri->segment(5);
     $idSector = $this->uri->segment(6);

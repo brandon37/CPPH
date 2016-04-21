@@ -29,11 +29,15 @@
                     </div>
                 </div>
                 <!-- /.row -->
-
+                
                 <div class="row">
                     <div class="col-lg-6">
                         <h2>Factura</h2>
                         <div class="table-responsive">
+                        <h1><?php 
+                          $date = date("Y") . "-" . date("m") . "-" . date("d");
+                                echo $date;
+                             ?></h1>
                <?php if ($query)
                         {?>
                             <table class="table table-hover table-striped">
@@ -91,6 +95,7 @@
                               <?= form_error('idOrderShopping') ?>
                               <input type="hidden" size="20" id="idOrderShopping" name="idOrderShopping" placeholder="Factura" value="<?= $idOrderShopping ?>" class="form-invoice form-control" required/>
                            </div>
+                           
                            <div class="form-group">
                               <label class="" for="invoice">Number Invoice:</label>
                               <?= form_error('noInvoice') ?>

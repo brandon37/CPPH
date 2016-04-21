@@ -37,11 +37,9 @@ class Projects_model extends CI_Model {
 	}
 
 	function getProject($idProject){
-		$this->db->select('*');
-		$this->db->from('projects');
 		$this->db->join('clients', 'projects.idClient = clients.idClient');
 		$this->db->where('projects.idProject',$idProject);
-		$query =  $this->db->get();
+		$query =  $this->db->get('projects');
 		if($query->num_rows() >0) return $query->row();
 		else return false;
 	}

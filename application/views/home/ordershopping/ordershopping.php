@@ -55,8 +55,8 @@
                                                 <td><?= $opc->nameDepartment ?></td>
                                                 <td><?= $opc->concept?></td>
                                                 <td><?= $opc->amount?></td>
-                                                <td><?= $opc->dateCreation?></td>
-                                                <td><?= $opc->dateTermination?></td>
+                                                <td><?= $opc->dateCreationOS?></td>
+                                                <td><?= $opc->dateTerminationOS?></td>
                                                 <td><a href="<?=base_url()?>invoices/runViewInvoiceInOrderShopping/<?=$opc->idOrderShopping?>">Mostrar</a></td>
                                                 <td><a href="<?=base_url()?>ordershopping/runViewEditordershopping/<?=$opc->idOrderShopping?>" >Edit</a>
                                                 </td>
@@ -98,48 +98,48 @@
                     </div>
                     <div class="modal-body">
                        <?= form_open('ordershopping/neworderShopping') ?>
-                          <div class="form-group">
-                           <?= form_error('nameProject') ?>
-                           <label class="" for="nameProject">Name Project:</label>
-                           <?php 
-                              if ($projects) 
-                                {?>
-                                  <select name="nameProject"  class="form-control" required>
-                                  <?php 
-                                   
-                                   foreach ($projects->result() as $opt)
-                                     { 
-                                       ?>
-                                        <option value="<?=$opt->nameProject ?>"><?=$opt->nameProject?></option>       
-                                    <?php
-                                   }
-                                ?></select> <?php
-                                }else{
-                                  echo '<h5 class="text-danger">"No Hay Projectos Favor De Agregar"</h5>';
-                                }
-                              ?>
-                       </div>
-                       <div class="form-group">
-                           <?= form_error('nameDepartment') ?>
-                           <label class="" for="nameDepartment">Name Department:</label>
-                           <?php 
-                              if ($departments) 
-                                {?>
-                                 <select name="nameDepartment"  class="form-control" required>
-                                    <?php 
-                                    foreach ($departments->result() as $opt)
-                                     { 
-                                       ?>
-                                         <option value="<?=$opt->nameDepartment ?>"><?=$opt->nameDepartment?></option>  
-                                    <?php
-                                   }
-                              ?></select> <?php
-                                 }else{
-                                  echo '<h5 class="text-danger">"No Hay Departamentos Favor De Agregar"</h5>';
-                                 }
-                              
-                              ?>   
-                       </div>
+                            <div class="form-group">
+                               <?= form_error('nameProject') ?>
+                               <label class="" for="nameProject">Name Project:</label>
+                               <?php 
+                                  if ($projects) 
+                                    {?>
+                                      <select name="nameProject"  class="form-control" required>
+                                      <?php 
+                                       
+                                       foreach ($projects->result() as $opt)
+                                         { 
+                                           ?>
+                                            <option value="<?=$opt->nameProject ?>"><?=$opt->nameProject?></option>       
+                                        <?php
+                                       }
+                                    ?></select> <?php
+                                    }else{
+                                      echo '<h5 class="text-danger">"No Hay Projectos Favor De Agregar"</h5>';
+                                    }
+                                  ?>
+                           </div>
+                           <div class="form-group">
+                               <?= form_error('nameDepartment') ?>
+                               <label class="" for="nameDepartment">Name Department:</label>
+                               <?php 
+                                  if ($departments) 
+                                    {?>
+                                     <select name="nameDepartment"  class="form-control" required>
+                                        <?php 
+                                        foreach ($departments->result() as $opt)
+                                         { 
+                                           ?>
+                                             <option value="<?=$opt->nameDepartment ?>"><?=$opt->nameDepartment?></option>  
+                                  <?php
+                                       }
+                                  ?></select> <?php
+                                     }else{
+                                      echo '<h5 class="text-danger">"No Hay Departamentos Favor De Agregar"</h5>';
+                                     }
+                                  
+                                  ?>   
+                           </div>
                            <div class="form-group">
                               <label class="" for="text">concept:</label>
                               <?= form_error('concept') ?>

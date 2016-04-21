@@ -19,7 +19,7 @@
                           </li>
                            
                           <li>
-                              <i class="fa fa-table"></i> <a href="<?= base_url()?>/invoices/runViewInvoiceOrderShoppingProjectInClient/<?=$idOrderShopping ?>/<?= $idProject ?><?= $idClient ?>">Factura</a> 
+                              <i class="fa fa-table"></i> <a href="<?= base_url()?>invoices/runViewInvoiceInOrderShopping/<?=$idOrderShopping ?>">Factura</a> 
                           </li> 
                           <li class="active">
                               <i class="fa fa-edit"></i> Editar Factura
@@ -34,15 +34,30 @@
                        ?>
                     <div class="col-xs-6 col-sm-6 well"> 
                       <div class="form-group">
+                          <?= form_error('idOrderShopping') ?>
+                          <input type="hidden" size="20" id="invoice" name="idOrderShopping" placeholder="Factura" value="<?= $invoice->idOrderShopping ?>" class="form-invoice form-control" required/>
+                       </div>
+                      <div class="form-group">
                           <label class="" for="invoice">Number Invoice:</label>
                           <?= form_error('noInvoice') ?>
                           <input type="text" size="20" id="invoice" name="noinvoice" placeholder="Factura" value="<?= $invoice->noInvoice ?>" class="form-invoice form-control" required/>
                        </div>
                        <div class="form-group">
-                          <label class="" for="status">status:</label>
-                          <?= form_error('status') ?>
-                          <input type="text" size="20" id="status" name="status" placeholder="Estado" class="form-status form-control" value="<?= $invoice->status ?>" required/>             
-                       </div>
+                            <label>Status:</label>
+                            <?= form_error('status') ?>
+                            <select name="status"  class="form-control" required>
+                            <?php if($invoice->status == 'Pagado')
+                                 { ?>
+                                    <option value="Pagado selected="Selected"">Pagado</option> 
+                                    <option value="No Pagado" >No Pagado</option> 
+                                    
+                             <?php } else 
+                                    {?>
+                                      <option value="No Pagado" selected="Selected">No Pagado</option> 
+                                      <option value="Pagado">Pagado</option> 
+                                <?php } ?>
+                            </select>
+                         </div>
                        <div class="modal-footer">
                          <button type="submit" class="btn btn-primary">Save</button> 
                        </div> 

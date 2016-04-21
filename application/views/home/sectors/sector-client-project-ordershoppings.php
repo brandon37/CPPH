@@ -112,6 +112,27 @@
                                <input type="hidden" size="20" id="idProject" name="idProject" value="<?= $idProject ?>" class="form-idProject form-control" required/>
                            </div>
                            <div class="form-group">
+                             <?= form_error('nameDepartment') ?>
+                             <label class="" for="nameDepartment">Name Department:</label>
+                             <?php 
+                                if ($departments) 
+                                  {?>
+                                   <select name="nameDepartment"  class="form-control" value="<?= $ordershopping->nameDepartment ?>" required>
+                                      <?php 
+                                      foreach ($departments->result() as $opt)
+                                       { 
+                                         ?>
+                                           <option value="<?=$opt->nameDepartment ?>"><?=$opt->nameDepartment?></option>  
+                                      <?php
+                                     }
+                                ?></select> <?php
+                                   }else{
+                                    echo '<h5 class="text-danger">"No Hay Departamentos Favor De Agregar"</h5>';
+                                   }
+                                
+                                ?>   
+                           </div>
+                           <div class="form-group">
                               <label class="" for="text">concept:</label>
                               <?= form_error('concept') ?>
                               <input type="text" size="20" id="concept" name="concept"placeholder="Concepto" class="form-concept form-control" required/>

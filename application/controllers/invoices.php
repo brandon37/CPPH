@@ -8,6 +8,7 @@ class invoices extends CI_Controller {
       $this->load->model('invoice_model','',TRUE);
       $this->load->model('ordershopping_model','',TRUE);
       $this->load->library("pagination");
+      $this->load->library('form_validation');
 
   }
 
@@ -87,8 +88,15 @@ class invoices extends CI_Controller {
      $data['idProject'] = $this->uri->segment(4);
      $data['idClient'] = $this->uri->segment(5);
      $data['idSector'] = $this->uri->segment(6);
-     $this->invoice_model->newinvoice($data);
-      redirect('invoices/runViewInvoiceOrderShoppingProjectClientInSector/'.$data['idOrderShopping'].'/'.$data['idProject'].'/'.$data['idClient'].'/'.$data['idSector']);
+     $this->form_validation->set_rules('noInvoice',"",'callback_Exist_Invoice');
+     if($this->form_validation->run() == FALSE)
+      {
+        $this->runViewInvoiceOrderShoppingProjectClientInSector($data['idOrderShopping'], $data['idProject'], $data['idClient'], $data['idSector']);
+      }else{
+        $this->invoice_model->newinvoice($data);
+        redirect('invoices/runViewInvoiceOrderShoppingProjectClientInSector/'.$data['idOrderShopping'].'/'.$data['idProject'].'/'.$data['idClient'].'/'.$data['idSector']);
+      }
+    
   }
 
   function newInvoiceOrderShoppingInProject(){
@@ -99,8 +107,14 @@ class invoices extends CI_Controller {
     );
      $data['idOrderShopping'] = $this->uri->segment(3);
      $data['idProject'] = $this->uri->segment(4);
-     $this->invoice_model->newinvoice($data);
-      redirect('invoices/runViewInvoiceOrderShoppingInProject/'.$data['idOrderShopping'].'/'.$data['idProject']);
+     $this->form_validation->set_rules('noInvoice',"",'callback_Exist_Invoice');
+     if($this->form_validation->run() == FALSE)
+      {
+        $this->runViewInvoiceOrderShoppingInProject($data['idOrderShopping'], $data['idProject']);
+      }else{
+        $this->invoice_model->newinvoice($data);
+        redirect('invoices/runViewInvoiceOrderShoppingInProject/'.$data['idOrderShopping'].'/'.$data['idProject']);
+      }
   }
 
   function newInvoiceInOrderShopping(){
@@ -110,8 +124,14 @@ class invoices extends CI_Controller {
       'idOrderShopping'=>$this->input->post('idOrderShopping')
     );
      $data['idOrderShopping'] = $this->uri->segment(3);
-     $this->invoice_model->newinvoice($data);
-      redirect('invoices/runViewInvoiceInOrderShopping/'.$data['idOrderShopping']);
+     $this->form_validation->set_rules('noInvoice',"",'callback_Exist_Invoice');
+     if($this->form_validation->run() == FALSE)
+      {
+        $this->runViewInvoiceInOrderShopping($data['idOrderShopping']);
+      }else{
+        $this->invoice_model->newinvoice($data);
+        redirect('invoices/runViewInvoiceInOrderShopping/'.$data['idOrderShopping']);
+      }
   }
 
   function newInvoiceOrderShoppingProjectInSector(){
@@ -122,9 +142,15 @@ class invoices extends CI_Controller {
     );
      $data['idOrderShopping'] = $this->uri->segment(3);
      $data['idProject'] = $this->uri->segment(4);
-     $data['idSector'] = $this->uri->segment(5);
-     $this->invoice_model->newinvoice($data);
-      redirect('invoices/runViewInvoiceOrderShoppingProjectInSector/'.$data['idOrderShopping'].'/'.$data['idProject'].'/'.$data['idSector']);
+     $data['idSector'] = $this->uri->segment(5); 
+     $this->form_validation->set_rules('noInvoice',"",'callback_Exist_Invoice');
+     if($this->form_validation->run() == FALSE)
+      {
+        $this->runViewInvoiceOrderShoppingProjectInSector($data['idOrderShopping'],$data['idProject'],$data['idSector']);
+      }else{
+       $this->invoice_model->newinvoice($data);
+       redirect('invoices/runViewInvoiceOrderShoppingProjectInSector/'.$data['idOrderShopping'].'/'.$data['idProject'].'/'.$data['idSector']);
+      }
   }
 
   function newInvoiceOrderShoppingProjectInClient(){
@@ -133,17 +159,24 @@ class invoices extends CI_Controller {
       'status'=>$this->input->post('status'),
       'idOrderShopping'=>$this->input->post('idOrderShopping')
     );
-     $data['idOrderShopping'] = $this->uri->segment(3);
-     $data['idProject'] = $this->uri->segment(4);
-     $data['idClient'] = $this->uri->segment(5);
-     $this->invoice_model->newinvoice($data);
-      redirect('invoices/runViewInvoiceOrderShoppingProjectInClient/'.$data['idOrderShopping'].'/'.$data['idProject'].'/'.$data['idClient']);
+      $data['idOrderShopping'] = $this->uri->segment(3);
+      $data['idProject'] = $this->uri->segment(4);
+      $data['idClient'] = $this->uri->segment(5);
+      $this->form_validation->set_rules('noInvoice',"",'callback_Exist_Invoice');
+      if($this->form_validation->run() == FALSE)
+      {
+        $this->runViewInvoiceOrderShoppingProjectInClient($data['idOrderShopping'], $data['idProject'], $data['idClient']);
+      }else{
+        $this->invoice_model->newinvoice($data);
+        redirect('invoices/runViewInvoiceOrderShoppingProjectInClient/'.$data['idOrderShopping'].'/'.$data['idProject'].'/'.$data['idClient']);
+      }
   }
 
   function updateInvoice(){
         $data = array(
           'noinvoice'=>$this->input->post('noinvoice'),
-          'status'=>$this->input->post('status')
+          'status'=>$this->input->post('status'),
+          'idOrderShopping'=>$this->input->post('idOrderShopping')
         );
         $this->invoice_model->updateinvoice($this->uri->segment(3),$data);
         redirect('invoices');
@@ -152,57 +185,153 @@ class invoices extends CI_Controller {
   function updateInvoiceInOrderShopping(){
     $data = array(
       'noinvoice'=>$this->input->post('noinvoice'),
-      'status'=>$this->input->post('status')
+      'status'=>$this->input->post('status'),
+      'idOrderShopping'=>$this->input->post('idOrderShopping')
     );
     $data['idInvoice'] = $this->uri->segment(3);
     $data['idOrderShopping'] = $this->uri->segment(4);
     $this->invoice_model->updateinvoice($data['idInvoice'],$data);
+    $this->check_paidInvoice($data['idInvoice'],$data['idOrderShopping']);
     redirect('invoices/runViewInvoiceInOrderShopping/'.$data['idOrderShopping']);
   }
 
   function updateInvoiceOrderShoppingInProject(){
     $data = array(
       'noinvoice'=>$this->input->post('noinvoice'),
-      'status'=>$this->input->post('status')
+      'status'=>$this->input->post('status'),
+      'idOrderShopping'=>$this->input->post('idOrderShopping')
     );
     $data['idInvoice'] = $this->uri->segment(3);
     $data['idOrderShopping'] = $this->uri->segment(4);
     $data['idProject'] = $this->uri->segment(5);
     $this->invoice_model->updateinvoice($data['idInvoice'],$data);
-    redirect('invoices/runViewInvoiceOrderShoppingInProject/'.$data['idInvoice'].'/'.$data['idOrderShopping'].'/'.$data['idProject']);
+    $this->check_paidInvoice($data['idInvoice'],$data['idOrderShopping']);
+    redirect('invoices/runViewInvoiceOrderShoppingInProject/'.$data['idOrderShopping'].'/'.$data['idProject']);
   }
+
+  function check_status($status){
+  //Field validation succeeded.  Validate against database
+   $status = $this->input->post('status');
+   
+     if($status == "Pagado" || $status == "No Pagado") {
+        return TRUE;
+     }else{
+       $this->form_validation->set_message('check_status', "Sorry, This Status Doesn't Exist.");
+       return false;
+     }
+  }
+
+  function Exist_Invoice(){
+   $idOrderShopping = $this->input->post('idOrderShopping');
+   $invoices = $this->invoice_model->getInvoiceOrderShopping($idOrderShopping);
+   if ($invoices) 
+     {
+       if($invoices->num_rows()>0) 
+         {
+          $this->form_validation->set_message('Exist_Invoice', "No Puedes Crear Mas De Una Factura Por Orden De Compra");
+           return false;
+         }else
+          { 
+            return TRUE;
+          }
+     }else
+       {
+         return TRUE;
+          
+       }
+  } 
+
+  function check_paidInvoice($idInvoice,$idOrderShopping){
+    $data['invoice'] = $this->invoice_model->getinvoice($idInvoice);
+    if ($data['invoice']) 
+      {
+        if ($data['invoice']->status == "Pagado") 
+          {
+            $date = date("Y") . "-" . date("m") . "-" . date("d");
+            $data['ordershopping'] = $this->ordershopping_model->getOrderShopping($data['invoice']->idOrderShopping);
+            $info = array(
+              'concept'=>$data['ordershopping']->concept,
+              'amount'=>$data['ordershopping']->amount,
+              'dateCreation'=>$data['ordershopping']->dateCreationOS,
+              'dateTermination'=>$date,
+              'idProject'=>$data['ordershopping']->idProject,
+              'idDepartment'=>$data['ordershopping']->idDepartment
+             );
+            $this->ordershopping_model->updateOrderShopping($data['invoice']->idOrderShopping, $info);
+          }else{
+            $data['ordershopping'] = $this->ordershopping_model->getOrderShopping($data['invoice']->idOrderShopping);
+            $info = array(
+              'concept'=>$data['ordershopping']->concept,
+              'amount'=>$data['ordershopping']->amount,
+              'dateCreation'=>$data['ordershopping']->dateCreationOS,
+              'dateTermination'=>'',
+              'idProject'=>$data['ordershopping']->idProject,
+              'idDepartment'=>$data['ordershopping']->idDepartment
+             );
+            $this->ordershopping_model->updateOrderShopping($data['invoice']->idOrderShopping, $info);
+          }
+      }
+  }
+
+/*
+  function check_invoice(){
+    $idOrderShopping = $this->input->post('idOrderShopping');
+    $no_invoice = $this->input->post('noinvoice');
+    $invoices = $this->invoice_model->getInvoiceOrderShopping($idOrderShopping);
+    if ($invoices) 
+      {
+       foreach ($invoices->result() as $opt) 
+         {
+            if ($no_invoice != $opt->noInvoice) {
+            }else{
+              $this->form_validation->set_message('check_invoice', "Sorry, This Number Invoice Exist In OrderShopping.");
+              return false;
+            }
+
+          }
+      }else{
+        $this->form_validation->set_message('check_invoice', "Sorry, This OrderShopping Doesn't Exist.");
+        return false;
+      }
+
+  }*/
 
   function updateInvoiceOrderShoppingProjectInClient(){
     $data = array(
       'noinvoice'=>$this->input->post('noinvoice'),
-      'status'=>$this->input->post('status')
+      'status'=>$this->input->post('status'),
+      'idOrderShopping'=>$this->input->post('idOrderShopping')
     );
     $data['idInvoice'] = $this->uri->segment(3);
     $data['idOrderShopping'] = $this->uri->segment(4);
     $data['idProject'] = $this->uri->segment(5);
     $data['idClient'] = $this->uri->segment(6);
     $this->invoice_model->updateinvoice($data['idInvoice'],$data);
-    redirect('invoices/runViewInvoiceOrderShoppingProjectInClient/'.$data['idInvoice'].'/'.$data['idOrderShopping'].'/'.$data['idProject'].'/'.$data['idClient']);
+    $this->check_paidInvoice($data['idInvoice'],$data['idOrderShopping']);
+    redirect('invoices/runViewInvoiceOrderShoppingProjectInClient/'.$data['idOrderShopping'].'/'.$data['idProject'].'/'.$data['idClient']);
   }
 
 
   function updateInvoiceOrderShoppingProjectInSector(){
     $data = array(
       'noinvoice'=>$this->input->post('noinvoice'),
-      'status'=>$this->input->post('status')
+      'status'=>$this->input->post('status'),
+      'idOrderShopping'=>$this->input->post('idOrderShopping')
     );
     $data['idInvoice'] = $this->uri->segment(3);
     $data['idOrderShopping'] = $this->uri->segment(4);
     $data['idProject'] = $this->uri->segment(5);
     $data['idSector'] = $this->uri->segment(6);
     $this->invoice_model->updateinvoice($data['idInvoice'],$data);
-    redirect('invoices/runViewInvoiceOrderShoppingProjectInSector/'.$data['idInvoice'].'/'.$data['idOrderShopping'].'/'.$data['idProject'].'/'.$data['idSector']);
+    $this->check_paidInvoice($data['idInvoice'],$data['idOrderShopping']);
+    redirect('invoices/runViewInvoiceOrderShoppingProjectInSector/'.$data['idOrderShopping'].'/'.$data['idProject'].'/'.$data['idSector']);
   }
 
   function updateInvoiceOrderShoppingProjectClientInSector(){
     $data = array(
       'noinvoice'=>$this->input->post('noinvoice'),
-      'status'=>$this->input->post('status')
+      'status'=>$this->input->post('status'),
+      'idOrderShopping'=>$this->input->post('idOrderShopping')
     );
     $data['idInvoice'] = $this->uri->segment(3);
     $data['idOrderShopping'] = $this->uri->segment(4);
@@ -210,7 +339,8 @@ class invoices extends CI_Controller {
     $data['idClient'] = $this->uri->segment(6);
     $data['idSector'] = $this->uri->segment(7);
     $this->invoice_model->updateinvoice($data['idInvoice'],$data);
-    redirect('invoices/runViewInvoiceOrderShoppingProjectClientInSector/'.$data['idInvoice'].'/'.$data['idOrderShopping'].'/'.$data['idProject'].'/'.$data['idClient'].'/'.$data['idSector']);
+    $this->check_paidInvoice($data['idInvoice'],$data['idOrderShopping']);
+    redirect('invoices/runViewInvoiceOrderShoppingProjectClientInSector/'.$data['idOrderShopping'].'/'.$data['idProject'].'/'.$data['idClient'].'/'.$data['idSector']);
   }
 
   function runViewInvoiceOrderShoppingProjectClientInSector(){
@@ -265,27 +395,6 @@ class invoices extends CI_Controller {
      $this->load->view('ehtml/headercrud',$data);
      $this->load->helper(array('form'));
      $this->load->view('home/clients/client-project-ordershopping-invoice',$data);
-     $this->load->view('ehtml/footercrud');
-  }
-
-  function runViewInvoiceOrderShoppingProjectInDepartment(){
-     $session_data = $this->session->userdata('logged_in');
-     $name = 'General';
-     $data['nameUser'] = $session_data['nameUser'];
-     $data['idUser'] =  $session_data['idUser'];
-     $data['email'] = $session_data['email'];
-     $config = $this->pagination();
-     $this->pagination->initialize($config);
-     $result = $this->invoice_model->get_pagination($config['per_page']);
-     $data['query'] = $result;
-     $data['idOrderShopping'] = $this->uri->segment(3);
-     $data['ordershopping'] = $this->ordershopping_model->getorderShopping($data['idOrderShopping']);
-     $data['idProject'] = $this->uri->segment(4);
-     $data['idDepartment'] = $this->uri->segment(5);
-     $data['pagination'] = $this->pagination->create_links();
-     $this->load->view('ehtml/headercrud',$data);
-     $this->load->helper(array('form'));
-     $this->load->view('home/departments/department-project-ordershopping-invoice',$data);
      $this->load->view('ehtml/footercrud');
   }
 

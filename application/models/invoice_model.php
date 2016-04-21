@@ -12,8 +12,8 @@ class Invoice_model extends CI_Model {
 			'idOrderShopping'=>$data['idOrderShopping']));
 	}
 
-	function deleteInvoice($id){
-		$this->db->delete('invoices', array('idInvoice'=>$id));
+	function deleteInvoice($idInvoice){
+		$this->db->delete('invoices', array('idInvoice'=>$idInvoice));
 	}
 
 	function getAllInvoices(){
@@ -31,20 +31,20 @@ class Invoice_model extends CI_Model {
 		else return false;
 	}
 
-	function getInvoice($id){
-		$this->db->where('idInvoice',$id);
+	function getInvoice($idInvoice){
+		$this->db->where('idInvoice',$idInvoice);
 		$query = $this->db->get('invoices');
 		if($query->num_rows() >0) return $query->row();
 		else return false;
 	}
 
-	function updateInvoice($id,$data){
+	function updateInvoice($idInvoice,$data){
 		$info = array(
 			'noinvoice'=>$data['noinvoice'],
 			'status'=>$data['status'],
 
 		 );
-		$this->db->where('idInvoice',$id);
+		$this->db->where('idInvoice',$idInvoice);
 		$this->db->update('invoices',$info);
 	}
 

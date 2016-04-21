@@ -74,6 +74,16 @@ class Ordershopping_model extends CI_Model {
 		return intval($number);
 	}
 
+	function sumAmountOrderShoppingProject($idProject){
+		$number = $this->db->query("SELECT SUM(amount) as number FROM orderShoppings WHERE idProject='$idProject' ")->row()->number;
+		return intval($number);
+	}
+
+	function paidOrderShoppingProject($idProject){
+		$res = $this->db->query("SELECT (dateTerminationOS)  FROM orderShoppings WHERE idProject='$idProject' AND dateTerminationOS=' ' ");
+		return $res;
+	}
+
 	function get_pagination($number_per_page){
 		$this->db->join('projects', 'orderShoppings.idProject = projects.idProject');
 		$this->db->join('clients', 'projects.idClient = clients.idClient');
@@ -84,4 +94,11 @@ class Ordershopping_model extends CI_Model {
 	}
 	
 }
+
+
+
+
+
+
+
 ?>

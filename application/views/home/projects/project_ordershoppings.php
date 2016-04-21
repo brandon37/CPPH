@@ -123,7 +123,7 @@
                                    }
                               ?></select> <?php
                                  }else{
-                                  echo '<h4 class="text-danger">"No Hay Departamentos Favor De Agregar"</h4>';
+                                  echo '<h5 class="text-danger">"No Hay Departamentos Favor De Agregar"</h5>';
                                  }
                               
                               ?>   
