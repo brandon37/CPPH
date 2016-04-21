@@ -11,14 +11,16 @@
                       </h1>
                       <ol class="breadcrumb">
                           <li>
-                              <i class="fa fa-dashboard"></i>  <a href="<?=base_url()?>home">Dashboard</a>
-
-              
+                            <i class="fa fa-dashboard"></i>  <a href="<?=base_url()?>home">Dashboard</a>
                           </li>
-                           <li>
-                             <i class="fa fa-table"> <a href="<?=base_url()?>invoices"> Facturas </a></i> 
+
+                          <li>
+                             <i class="fa fa-table"> <a href="<?=base_url()?>ordershopping"> Ordenes De Coḿpra </a></i> 
                           </li>
                            
+                          <li>
+                              <i class="fa fa-table"></i> <a href="<?= base_url()?>/invoices/runViewInvoiceOrderShoppingProjectInClient/<?=$idOrderShopping ?>/<?= $idProject ?><?= $idClient ?>">Factura</a> 
+                          </li> 
                           <li class="active">
                               <i class="fa fa-edit"></i> Editar Factura
                           </li>

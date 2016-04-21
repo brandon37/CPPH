@@ -10,14 +10,28 @@
                        Control De Facturas
                       </h1>
                       <ol class="breadcrumb">
-                          <li>
-                              <i class="fa fa-dashboard"></i>  <a href="<?=base_url()?>home">Dashboard</a>
+                        <li>
+                            <i class="fa fa-dashboard"></i>  <a href="index.php">Dashboard</a>
+                        </li>
 
-              
-                          </li>
-                           <li>
-                             <i class="fa fa-table"> <a href="<?=base_url()?>invoices"> Facturas </a></i> 
-                          </li>
+                        <li>
+                           <i class="fa fa-table"> <a href="<?=base_url()?>sectors"> Sectores </a></i> 
+                        </li>
+
+                        <li>
+                           <i class="fa fa-table"> <a href="<?=base_url()?>clients/runViewSectorClients/<?=$idSector?>"> Clientes </a></i> 
+                        </li>
+                         
+                        <li>
+                            <i class="fa fa-table"><a href="<?=base_url()?>clients/runViewClientProjectsInSector/<?=$idClient ?>/<?=$idSector?>"> Proyectos del Cliente</a></i> 
+                        </li> 
+                        <li>
+                            <i class="fa fa-table"> <a href="<?=base_url()?>ordershopping/runViewOrderShoppingsProjectClientInSector/<?=$idProject?>/<?= $idClient?>/<?= $idSector ?> "> Ordenes De Compras</a></i>
+                        </li>
+                           
+                          <li>
+                              <i class="fa fa-table"></i><a href="<?= base_url() ?>invoices/runViewInvoiceOrderShoppingProjectClientInSector/<?=$idOrderShopping ?>/<?=$idProject ?>/<?= $idClient ?>/<?= $idSector ?>">Factura</a> 
+                          </li> 
                            
                           <li class="active">
                               <i class="fa fa-edit"></i> Editar Factura

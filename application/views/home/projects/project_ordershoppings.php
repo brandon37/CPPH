@@ -61,7 +61,7 @@
                                                     <td><?= $opc->amount?></td>
                                                     <td><?= $opc->dateCreationOS?></td>
                                                     <td><?= $opc->dateTerminationOS?></td>
-                                                    <td><a href="<?=base_url() ?>Invoices/runViewInvoiceOrderShoppingInProject/<?= $opc->idOrderShopping ?>/<?= $idProject ?>">Mostrar</a></td>
+                                                    <td><a href="<?=base_url() ?>invoices/runViewInvoiceOrderShoppingInProject/<?= $opc->idOrderShopping ?>/<?= $idProject ?>">Mostrar</a></td>
                                                     <td><a href="<?=base_url()?>ordershopping/runViewEditOrderShoppingsInProject/<?=$opc->idOrderShopping?>/<?= $idProject?>" >Edit</a>
                                                     </td>
                                                     <td class="text-center text-danger">

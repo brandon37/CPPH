@@ -12,12 +12,19 @@
                       <ol class="breadcrumb">
                           <li>
                               <i class="fa fa-dashboard"></i>  <a href="<?=base_url()?>home">Dashboard</a>
+                           </li>
 
-              
-                          </li>
-                           <li>
-                             <i class="fa fa-table"> <a href="<?=base_url()?>invoices"> Facturas </a></i> 
-                          </li>
+                         <li>
+                            <i class="fa fa-table"> <a href="<?=base_url()?>projects">Proyectos</a> </i>
+                         </li>
+
+                         <li>
+                            <i class="fa fa-table"><a href="<?= base_url()?>ordershopping/runViewProjectOrderShoppings/<?=$idProject ?>"> Ordenes De Compras</a> </i>
+                         </li>
+                         
+                         <li class="active">
+                            <i class="fa fa-table"></i><a href="<?= base_url() ?>invoices/runViewInvoiceOrderShoppingInProject/<?= $idOrderShopping ?>/<?= $idProject ?>">Factura</a> 
+                         </li> 
                            
                           <li class="active">
                               <i class="fa fa-edit"></i> Editar Factura

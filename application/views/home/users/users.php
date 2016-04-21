@@ -62,41 +62,37 @@
                     <div class="col-lg-6">
                         <h2>Usuarios</h2>
                         <div class="table-responsive">
-                            <table class="table table-hover table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Nombre</th>
-                                        <th>Email</th>
-                                        <th>Edit</th>
-                                        <th class="text-center">Delete</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                   
+                      <?php if ($query)
+                            { ?>
+                                <table class="table table-hover table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Email</th>
+                                            <th>Edit</th>
+                                            <th class="text-center">Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
                                     <?php 
-                                        if ($query){
-                                        foreach ($query->result() as $opc) { ?>
-                                            <tr>
-                                                <td><?= $opc->nameUser?></td>
-                                                <td><?= $opc->email?></td>
-                                                <td><a href="<?=base_url()?>users/runViewEditUser/<?=$opc->idUser?>" >Edit</a></td>
-                                                <td class="text-center text-danger">
-                                                    <a href="<?=base_url()?>users/deleteUser/<?=$opc->idUser?>"
-                                                    class="confirmationDeleteUser">X</a>  
-                                                </td>
-                                            </tr>
-
-
-                                        <?php } 
-                                        }else{
-                                            echo "Error No Existe Ningun Usuario Favor De Agregar";
-                                        }
-                                    ?>           
-                                   
-                                </tbody>
-
-                            </table>
-
+                                        foreach ($query->result() as $opc)
+                                             { ?>
+                                              <tr>
+                                                  <td><?= $opc->nameUser?></td>
+                                                  <td><?= $opc->email?></td>
+                                                  <td><a href="<?=base_url()?>users/runViewEditUser/<?=$opc->idUser?>" >Edit</a></td>
+                                                  <td class="text-center text-danger">
+                                                      <a href="<?=base_url()?>users/deleteUser/<?=$opc->idUser?>"
+                                                      class="confirmationDeleteUser">X</a>  
+                                                  </td>
+                                              </tr>
+                                        <?php } ?>           
+                                    </tbody>
+                                </table>
+                         <?php   }else{
+                                        echo "<h5 class='text-danger'> No Hay Ningun Usuario General En El Sistema Favor De Agregar</h5>";
+                                    }
+                                ?>   
                         </div>
                     </div>
                 </div>

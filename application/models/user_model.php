@@ -94,7 +94,9 @@ class User_model extends CI_Model {
 	function get_pagination($number_per_page){
 
 		$this->db->where('type','General');
-		return $this->db->get("users", $number_per_page, $this->uri->segment(3));
+		$query = $this->db->get("users", $number_per_page, $this->uri->segment(3));
+		if($query->num_rows() >0) return $query;
+		else return false;
 
 	}
 	
