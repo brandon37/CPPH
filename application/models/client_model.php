@@ -26,20 +26,17 @@ class Client_model extends CI_Model {
 	}
 
 	function getAllActiveClients(){
-		$this->db->select('*');
-		$this->db->from('clients');
-		$this->db->where('status',"Activo");
 		$this->db->join('sectors', 'sectors.idSector = clients.idSector');
-		$query = $this->db->get();
+		$this->db->where('status',"Activo");
+		$query = $this->db->get('clients');
 		if($query->num_rows() >0) return $query;
 		else return false;
 	}
 	
 	function getAllInactiveClients(){
-		$this->db->select('*');
-		$this->db->from('clients');
 		$this->db->where('status',"Inactivo");
 		$this->db->join('sectors', 'sectors.idSector = clients.idSector');
+		$query = $this->db->get('clients');
 		$query = $this->db->get();
 		if($query->num_rows() >0) return $query;
 		else return false;

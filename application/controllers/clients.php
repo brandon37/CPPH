@@ -287,10 +287,14 @@ class Clients extends CI_Controller {
     $data['client'] = $this->client_model->getClient($data['id']);
     $data['sector'] = $this->sector_model->getSector($data['client']->idSector);
     $data['sectors'] = $this->sector_model->getAllSectors();
-    $this->load->view('ehtml/headercrud',$data);
-    $this->load->helper(array('form'));
-    $this->load->view('home/clients/edit-active-client',$data);
-    $this->load->view('ehtml/footercrud');
+    if ($data['client']) {  
+      $this->load->view('ehtml/headercrud',$data);
+      $this->load->helper(array('form'));
+      $this->load->view('home/clients/edit-active-client',$data);
+      $this->load->view('ehtml/footercrud');
+    }else{
+      redirect('clients');
+    }
   }
 
   function runViewEditClientInSector(){
@@ -302,10 +306,15 @@ class Clients extends CI_Controller {
     $data['client'] = $this->client_model->getClient($data['id']);
     $data['sector'] = $this->sector_model->getSector($data['client']->idSector);
     $data['sectors'] = $this->sector_model->getAllSectors();
-    $this->load->view('ehtml/headercrud',$data);
-    $this->load->helper(array('form'));
-    $this->load->view('home/sectors/edit-client',$data);
-    $this->load->view('ehtml/footercrud'); 
+    if ($data['client']) {
+      $this->load->view('ehtml/headercrud',$data);
+      $this->load->helper(array('form'));
+      $this->load->view('home/sectors/edit-client',$data);
+      $this->load->view('ehtml/footercrud'); 
+    }else{
+      redirect('sectors');
+    }
+    
   }
 
   function runViewSectorClients(){
@@ -341,13 +350,19 @@ class Clients extends CI_Controller {
     $session_data = $this->session->userdata('logged_in');
     $data['nameUser'] = $session_data['nameUser'];
     $data['idUser'] =  $session_data['idUser'];
-    $data['client'] = $this->client_model->getClient($id);
-    $data['sector'] = $this->sector_model->getSector($data['client']->idSector)->typeSector;
     $data['id'] = $this->uri->segment(3);
-    $this->load->view('ehtml/headercrud',$data);
-    $this->load->helper(array('form'));
-    $this->load->view('home/clients/edit-inactive-client',$data);
-    $this->load->view('ehtml/footercrud');
+    $data['client'] = $this->client_model->getClient($data['id']);
+    $data['sector'] = $this->sector_model->getSector($data['client']->idSector);
+    $data['sectors'] = $this->sector_model->getAllSectors();
+    if ($data['client']) {
+      $this->load->view('ehtml/headercrud',$data);
+      $this->load->helper(array('form'));
+      $this->load->view('home/clients/edit-inactive-client',$data);
+      $this->load->view('ehtml/footercrud');
+    }else{
+      redirect('clients');
+    }
+    
   }
 
  function deleteActiveClient(){

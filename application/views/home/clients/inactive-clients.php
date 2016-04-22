@@ -10,16 +10,11 @@
                         </h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-dashboard"></i>  <a href="index.php">Dashboard</a>
-
-                
+                                <i class="fa fa-dashboard"></i>  <a href="<?= base_url()?>home">Dashboard</a>
                             </li>
                             <li class="active">
                                 <i class="fa fa-table"></i> Clientes Inactivos
                             </li>
-                             <p class="text-right">
-                                <a href="<?=base_url()?>clients" class="btn btn-large btn-info"><i class="icon-home icon-white"></i>Active Clients</a>
-                            </p>
                         </ol>
                     </div>
                 </div>
@@ -27,6 +22,9 @@
 
                 <div class="row">
                     <div class="col-lg-6">
+                        <p class="text-left">
+                            <a href="<?=base_url()?>clients" class="btn btn-large btn-success"><i class="icon-home icon-white"></i>Clientes Activos</a>
+                        </p>
                         <h2>Clientes</h2>
                         <div class="table-responsive">
                          <?php 
@@ -45,22 +43,20 @@
                                 <tbody>
                             <?php foreach ($query->result() as $opc)
                                      { ?>
-                                            <tr>
-                                                <td><?= $opc->nameClient?></td>
-                                                <td><?= $opc->status?></td>
-                                                <td><?= $opc->typeSector?></td>
-                                                <td><a href="<?=base_url()?>clients/runViewEditInactiveClient/<?=$opc->idClient?>" >Edit</a></td>
-                                                <td class="text-center text-danger">
-                                                    <a href="<?=base_url()?>clients/deleteInactiveClient/<?=$opc->idClient?>" class="confirmationDeleteClient">X</a>  
-                                                </td>
-                                            </tr>
-
-
-                              <?php } ?>           
+                                        <tr>
+                                            <td><?= $opc->nameClient?></td>
+                                            <td><?= $opc->status?></td>
+                                            <td><?= $opc->typeSector?></td>
+                                            <td><a href="<?=base_url()?>clients/runViewEditInactiveClient/<?=$opc->idClient?>" >Edit</a></td>
+                                            <td class="text-center text-danger">
+                                                <a href="<?=base_url()?>clients/deleteInactiveClient/<?=$opc->idClient?>" class="confirmationDeleteClient">X</a>  
+                                            </td>
+                                        </tr>
+                                  <?php } ?>           
                                 </tbody>
                             </table>
                      <?php }else{
-                              echo "<h5 class='text-danger'> No Hay Clientes Inactivos En El Sistema</h5>";
+                              echo "<h5 class='text-danger'> No Hay Clientes En Estado Inactivo En El Sistema</h5>";
                                 }
                             ?>  
                         </div>

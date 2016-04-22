@@ -38,11 +38,18 @@ class Invoice_model extends CI_Model {
 		else return false;
 	}
 
+	function getInvoiceId($idOrderShopping){
+		$this->db->where('idOrderShopping',$idOrderShopping);
+		$query = $this->db->get('invoices');
+		if($query->num_rows() >0) return $query->row();
+		else return false;
+	}
+
 	function updateInvoice($idInvoice,$data){
 		$info = array(
 			'noinvoice'=>$data['noinvoice'],
 			'status'=>$data['status'],
-
+			'idOrderShopping'=>$data['idOrderShopping']
 		 );
 		$this->db->where('idInvoice',$idInvoice);
 		$this->db->update('invoices',$info);

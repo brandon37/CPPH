@@ -31,7 +31,7 @@
                         <div class="table-responsive">
                         <?php 
                           if ($query){ ?>
-                            <table class="table table-striped">
+                            <table class="table table-striped table-hover">
                                 <thead>
                                     <tr>
                                         <th>Name</th>
@@ -56,7 +56,7 @@
                                           <td><a href="<?=base_url()?>projects/runViewEditProject/<?=$opc->idProject?>" >Edit</a>
                                           </td>
                                           <td class="text-center text-danger">
-                                              <a href="<?=base_url()?>projects/deleteProject/<?=$opc->idProject?>" class="confirmationDeleteProject">X</a>  
+                                              <a href="<?=base_url()?>projects/deleteProject/<?=$opc->idProject?>" class="confirmationDeleteInProject">X</a>  
                                           </td>
                                       </tr>         
                                 </tbody>

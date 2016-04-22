@@ -28,10 +28,10 @@
                 <div class="row">
                     <div class="col-lg-10">
                         <h2>Ordenes De Compras</h2>
-                        <div class="table-responsive">
+                        <div class="table-responsive ">
                 <?php 
                   if ($query){ ?>
-                            <table class="table table-striped">
+                            <table class="table table-striped table-hover">
                                 <thead class="text-center">
                                     <tr class="text-center">
                                         <th>Cliente</th>

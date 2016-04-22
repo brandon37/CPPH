@@ -71,13 +71,21 @@
                 }
              });
 
-            $('.confirmationDeleteProyect').on('click', function (e) {
+            $('.confirmationDeleteProject').on('click', function (e) {
                 e.preventDefault();
                 var result = confirm('Are you sure?');
                 if(result){
                     window.location = $(this).attr("href"); 
                 }
              });
+            $('.confirmationDeleteInProject').on('click', function (e) {
+                e.preventDefault();
+                var result = confirm('Are you sure?');
+                if(result){
+                    window.location = $(this).attr("href"); 
+                }
+             });
+            
 
             $('.confirmationDeleteordershopping').on('click', function (e) {
                 e.preventDefault();

@@ -34,10 +34,6 @@
                     <div class="col-lg-6">
                         <h2>Factura</h2>
                         <div class="table-responsive">
-                        <h1><?php 
-                          $date = date("Y") . "-" . date("m") . "-" . date("d");
-                                echo $date;
-                             ?></h1>
                <?php if ($query)
                         {?>
                             <table class="table table-hover table-striped">

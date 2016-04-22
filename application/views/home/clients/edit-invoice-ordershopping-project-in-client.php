@@ -57,7 +57,7 @@
                             <select name="status"  class="form-control" required>
                             <?php if($invoice->status == 'Pagado')
                                  { ?>
-                                    <option value="Pagado selected="Selected"">Pagado</option> 
+                                    <option value="Pagado" selected="Selected">Pagado</option> 
                                     <option value="No Pagado" >No Pagado</option> 
                                     
                              <?php } else 

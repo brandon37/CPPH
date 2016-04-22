@@ -94,6 +94,8 @@ class invoices extends CI_Controller {
         $this->runViewInvoiceOrderShoppingProjectClientInSector($data['idOrderShopping'], $data['idProject'], $data['idClient'], $data['idSector']);
       }else{
         $this->invoice_model->newinvoice($data);
+        $invoice = $this->invoice_model->getInvoiceId($data['idOrderShopping']);
+        $this->check_paidInvoice($invoice->idInvoice,$data['idOrderShopping']);
         redirect('invoices/runViewInvoiceOrderShoppingProjectClientInSector/'.$data['idOrderShopping'].'/'.$data['idProject'].'/'.$data['idClient'].'/'.$data['idSector']);
       }
     
@@ -113,6 +115,8 @@ class invoices extends CI_Controller {
         $this->runViewInvoiceOrderShoppingInProject($data['idOrderShopping'], $data['idProject']);
       }else{
         $this->invoice_model->newinvoice($data);
+        $invoice = $this->invoice_model->getInvoiceId($data['idOrderShopping']);
+        $this->check_paidInvoice($invoice->idInvoice,$data['idOrderShopping']);
         redirect('invoices/runViewInvoiceOrderShoppingInProject/'.$data['idOrderShopping'].'/'.$data['idProject']);
       }
   }
@@ -130,6 +134,8 @@ class invoices extends CI_Controller {
         $this->runViewInvoiceInOrderShopping($data['idOrderShopping']);
       }else{
         $this->invoice_model->newinvoice($data);
+        $invoice = $this->invoice_model->getInvoiceId($data['idOrderShopping']);
+        $this->check_paidInvoice($invoice->idInvoice,$data['idOrderShopping']);
         redirect('invoices/runViewInvoiceInOrderShopping/'.$data['idOrderShopping']);
       }
   }
@@ -149,6 +155,8 @@ class invoices extends CI_Controller {
         $this->runViewInvoiceOrderShoppingProjectInSector($data['idOrderShopping'],$data['idProject'],$data['idSector']);
       }else{
        $this->invoice_model->newinvoice($data);
+       $invoice = $this->invoice_model->getInvoiceId($data['idOrderShopping']);
+       $this->check_paidInvoice($invoice->idInvoice,$data['idOrderShopping']);
        redirect('invoices/runViewInvoiceOrderShoppingProjectInSector/'.$data['idOrderShopping'].'/'.$data['idProject'].'/'.$data['idSector']);
       }
   }
@@ -168,6 +176,8 @@ class invoices extends CI_Controller {
         $this->runViewInvoiceOrderShoppingProjectInClient($data['idOrderShopping'], $data['idProject'], $data['idClient']);
       }else{
         $this->invoice_model->newinvoice($data);
+        $invoice = $this->invoice_model->getInvoiceId($data['idOrderShopping']);
+        $this->check_paidInvoice($invoice->idInvoice,$data['idOrderShopping']);
         redirect('invoices/runViewInvoiceOrderShoppingProjectInClient/'.$data['idOrderShopping'].'/'.$data['idProject'].'/'.$data['idClient']);
       }
   }
@@ -271,6 +281,19 @@ class invoices extends CI_Controller {
             $this->ordershopping_model->updateOrderShopping($data['invoice']->idOrderShopping, $info);
           }
       }
+  }
+  function Check_deleteInvoice($idInvoice){
+    $data['invoice'] = $this->invoice_model->getinvoice($idInvoice);
+      $data['ordershopping'] = $this->ordershopping_model->getOrderShopping($data['invoice']->idOrderShopping);
+        $info = array(
+          'concept'=>$data['ordershopping']->concept,
+          'amount'=>$data['ordershopping']->amount,
+          'dateCreation'=>$data['ordershopping']->dateCreationOS,
+          'dateTermination'=>'',
+          'idProject'=>$data['ordershopping']->idProject,
+          'idDepartment'=>$data['ordershopping']->idDepartment
+         );
+        $this->ordershopping_model->updateOrderShopping($data['invoice']->idOrderShopping, $info);
   }
 
 /*
@@ -533,6 +556,7 @@ class invoices extends CI_Controller {
     $data['idUser'] =  $session_data['idUser'];
     $data['idInvoice'] = $this->uri->segment(3);
     $data['idOrderShopping'] = $this->uri->segment(4);
+    $this->Check_deleteInvoice($data['idInvoice']);
     $this->invoice_model->deleteinvoice($data['idInvoice']);
     redirect('invoices/runViewInvoiceInOrderShopping/'.$data['idOrderShopping']);
   }
@@ -544,6 +568,7 @@ class invoices extends CI_Controller {
     $data['idInvoice'] = $this->uri->segment(3);
     $data['idOrderShopping'] = $this->uri->segment(4);
     $data['idProject'] = $this->uri->segment(5);
+    $this->Check_deleteInvoice($data['idInvoice']);
     $this->invoice_model->deleteinvoice($data['idInvoice']);
     redirect('invoices/runViewInvoiceOrderShoppingInProject/'.$data['idOrderShopping'].'/'.$data['idProject']);
   }
@@ -556,6 +581,7 @@ class invoices extends CI_Controller {
     $data['idOrderShopping'] = $this->uri->segment(4);
     $data['idProject'] = $this->uri->segment(5);
     $data['idSector'] = $this->uri->segment(6);
+    $this->Check_deleteInvoice($data['idInvoice']);
     $this->invoice_model->deleteinvoice($data['idInvoice']);
     redirect('invoices/runViewInvoiceOrderShoppingProjectInSector/'.$data['idOrderShopping'].'/'.$data['idProject'].'/'.$data['idSector']);
   }
@@ -568,6 +594,7 @@ class invoices extends CI_Controller {
     $data['idOrderShopping'] = $this->uri->segment(4);
     $data['idProject'] = $this->uri->segment(5);
     $data['idClient'] = $this->uri->segment(6);
+    $this->Check_deleteInvoice($data['idInvoice']);
     $this->invoice_model->deleteinvoice($data['idInvoice']);
     redirect('invoices/runViewInvoiceOrderShoppingProjectInClient/'.$data['idOrderShopping'].'/'.$data['idProject'].'/'.$data['idClient']);
   }
@@ -581,6 +608,7 @@ class invoices extends CI_Controller {
     $data['idProject'] = $this->uri->segment(5);
     $data['idClient'] = $this->uri->segment(6);
     $data['idSector'] = $this->uri->segment(7);
+    $this->Check_deleteInvoice($data['idInvoice']);
     $this->invoice_model->deleteinvoice($data['idInvoice']);
     redirect('invoices/runViewInvoiceOrderShoppingProjectClientInSector/'.$data['idOrderShopping'].'/'.$data['idProject'].'/'.$data['idClient'].'/'.$data['idSector']);
   }

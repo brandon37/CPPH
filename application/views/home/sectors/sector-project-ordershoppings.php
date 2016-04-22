@@ -41,7 +41,7 @@
                         <?php 
                           if($query)
                             { ?>
-                                <table class="table table-striped">
+                                <table class="table table-striped table-hover">
                                     <thead class="text-center">
                                         <tr class="text-center">
                                             <th>Cliente</th>

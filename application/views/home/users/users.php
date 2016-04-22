@@ -28,7 +28,7 @@
                 <!-- /.row -->
 
 
-                <div class="container">
+              <!--  <div class="container">
                      
                      <div class="buscador">
                        <aside>
@@ -48,7 +48,7 @@
                           <div class="contenedor" id="contenedor"></div>
                        </div>
                      </aside>
-                     
+                    --> 
                     
                    
                    <div class="espacio"></div>

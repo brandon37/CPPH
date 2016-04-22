@@ -25,37 +25,51 @@
                         </ol>
                     </div>
                 </div>
-              <?= form_open('clients/updateInactiveClient/'.$id); ?>    
+              <?= form_open('clients/updateInactiveClient/'.$client->idClient); ?>    
                 <?php 
-                    if ($client){
-                       ?>
-                        <div class="col-xs-6 col-sm-6 well"> 
-                         <div class="form-group">
-                            <label for="clientname">NameClient:</label>
+                  if ($client){
+                     ?>
+                      <div class="col-xs-6 col-sm-6 well">    
+                        <div class="form-group">
+                            <label>Name Client:</label>
                             <?= form_error('clientname') ?>
                             <input type="text" size="20" id="clientname" name="clientname" placeholder="Name Client" class="form-clientname form-control" value="<?= $client->nameClient?>" required/>
                          </div>
                          <div class="form-group">
-                            <label for="text">Status:</label>
+                            <label>Status:</label>
                             <?= form_error('status') ?>
-                            <select name="status"  class="form-control" required>
-                                <option value="Activo">Activo</option> 
-                                <option value="Inactivo">Inactivo</option> 
-                          </select>
+                            <select name="status"  class="form-control" value="<?=$client->status ?>" required>
+                               <option value="Activo">Activo</option> 
+                               <option value="Inactivo">Inactivo</option> 
+                            </select>
                          </div>
-                          <div class="form-group">
+                         <div class="form-group">
                             <label for="sector">Sector:</label>
-                            <?= form_error('sector') ?>
-                            <input type="text" size="20" id="sector" name="typeSector" placeholder="Sector" class="form-sector form-control" value="<?= $client->typeSector?>" required/>
-                         </div>
-                         <button type="submit" class="btn btn-primary">Save</button> 
+                            <?= form_error('typeSector') ?>
+                            <select name="typeSector"  class="form-control" required>
+                             <option value="<?= $sector->typeSector ?>" selected="selected"><?= $sector->typeSector ?></option> 
+                                <?php 
+                                foreach ($sectors->result() as $opt) { 
+                                  if ($sector->typeSector != $opt->typeSector) 
+                                  {
+                                ?>
 
-                 </form>
-                    <?php 
-                    }else{
-                        redirect('clients/inactiveClients');
-                    }
-                ?>     
+                                    <option value="<?=$opt->typeSector ?>"><?=$opt->typeSector?></option> 
+                               <?php
+                                  }
+                                }
+                                ?>
+                            </select>
+                         </div>
+                         <button type="submit" class="btn btn-primary text-right">Save</button> 
+
+                   </form>
+                   </div>
+                      <?php
+                      }else{
+                          redirect('clients');
+                      }
+                ?>       
             </div> 
 
       </div>

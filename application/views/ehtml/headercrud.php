@@ -51,33 +51,7 @@
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
                
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
-                    <ul class="dropdown-menu alert-dropdown">
-                        <li>
-                            <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">View All</a>
-                        </li>
-                    </ul>
-                </li>
+                
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?= $nameUser ?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
@@ -85,7 +59,7 @@
                             <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
                         </li>
                         <li>
-                            <a href="<?= base_url()?>users/runViewChangeProfileUser"><i class="fa fa-fw fa-envelope"></i> Chang Profile</a>
+                            <a href="<?= base_url()?>users/runViewChangeProfileUser"><i class="fa fa-fw fa-gear"></i> Chang Profile</a>
                         </li>
                         <li>
                             <a href="<?=base_url()?>users/runViewChangePassUser"><i class="fa fa-fw fa-gear"></i> Change Pass</a>
@@ -125,10 +99,7 @@
                         <a href="<?=base_url()?>ordershopping"><i class="fa fa-fw fa-table"></i>Orden De Compra</a>
                     </li>
                     <li>
-                        <a href="<?=base_url()?>invoices"><i class="fa fa-fw fa-table"></i>Factura</a>
-                    </li>
-                    <li>
-                        <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Pagos</a>
+                        <a href="#"><i class="fa fa-fw fa-edit"></i> Pagos</a>
                     </li>
                 </ul>
             </div>

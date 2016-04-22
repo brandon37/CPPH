@@ -8,6 +8,7 @@ class Home extends CI_Controller {
    $this->load->model('client_model', '',TRUE);
    $this->load->model('projects_model','',TRUE);
    $this->load->model('user_model','',TRUE);
+   $this->load->model('ordershopping_model', '', TRUE);
  }
  
  function index()
@@ -21,6 +22,7 @@ class Home extends CI_Controller {
      $data['countClients'] = $this->client_model->getCountClients();
      $data['countProjects'] = $this->projects_model->getCountProjects();
      $data['countUsers'] = $this->user_model->getCountUsers();
+     $data['countPayments'] = $this->ordershopping_model->getPaidOrderShoppingProject();
      $this->load->view('ehtml/header',$data);
      $this->load->view('home/index');
      $this->load->view('ehtml/footer');

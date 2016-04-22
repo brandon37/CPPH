@@ -12,8 +12,6 @@
                     <ol class="breadcrumb">
                         <li>
                             <i class="fa fa-dashboard"></i>  <a href="<?=base_url()?>home">Dashboard </a>
-                            <i class="fa fa-table"> <a href="<?=base_url()?>users"> Usuarios </a></i> 
-            
                         </li>
                         <li class="active">
                             <i class="fa fa-edit">Editar Usuario</i>

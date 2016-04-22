@@ -72,6 +72,11 @@ class Projects_model extends CI_Model {
 		if($query->num_rows() >0) return $query;
 		else return false;
 	}
+	function paidClientProjectS($idClient){
+		$query = $this->db->query("SELECT (dateTermination)  FROM projects WHERE idClient='$idClient' AND dateTermination='' ");
+		if($query->num_rows() >0) return false;
+		else return true;
+	}
 
 	function no_page(){
 		$number = $this->db->query("SELECT count(*) as number FROM projects")->row()->number;

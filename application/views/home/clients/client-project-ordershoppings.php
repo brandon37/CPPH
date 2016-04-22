@@ -9,21 +9,21 @@
                          Control De Ordenes De Compras Del Proyecto <b class="text-primary"><?= $project->nameProject ?></b>
                         </h1>
                         <ol class="breadcrumb">
-                            <li>
-                                <i class="fa fa-dashboard"></i>  <a href="<?=base_url()?>home">Dashboard</a>
-                            </li>
+                          <li>
+                              <i class="fa fa-dashboard"></i>  <a href="<?=base_url()?>home">Dashboard</a>
+                          </li>
 
-                            <li>
-                               <i class="fa fa-table"> <a href="<?=base_url()?>clients"> Clientes </a></i> 
-                            </li>
+                          <li>
+                             <i class="fa fa-table"> <a href="<?=base_url()?>clients"> Clientes </a></i> 
+                          </li>
 
-                             <li>
-                                <i class="fa fa-table"> <a href="<?=base_url()?>projects/runViewClientProjects/<?= $idClient ?>">Proyectos del Cliente</a> </i>
-                             </li>
+                           <li>
+                              <i class="fa fa-table"> <a href="<?=base_url()?>projects/runViewClientProjects/<?= $idClient ?>">Proyectos del Cliente</a> </i>
+                           </li>
 
-                            <li class="active">
-                                <i class="fa fa-table"> Ordenes De Compras</i>
-                            </li>
+                          <li class="active">
+                              <i class="fa fa-table"> Ordenes De Compras</i>
+                          </li>
 
                        <p class="text-right">
                             <button type="button" class="btn btn-large btn-info" data-toggle="modal" data-target="#createordershopping" data-whatever="">New Ordershopping</button>
@@ -43,40 +43,38 @@
                             { ?>
                                 <table class="table table-striped">
                                     <thead class="text-center">
-                                        <tr class="text-center">
-                                            <th>Cliente</th>
-                                            <th>Proyecto</th>
-                                            <th>Departamento</th>
-                                            <th>Concepto</th>
-                                            <th>Monto</th>
-                                            <th>DC</th>
-                                            <th>DT</th>
-                                            <th>Factura</th>
-                                            <th>Edit</th>
-                                            <th >Delete</th>
-                                        </tr>
+                                      <tr class="text-center">
+                                        <th>Cliente</th>
+                                        <th>Proyecto</th>
+                                        <th>Departamento</th>
+                                        <th>Concepto</th>
+                                        <th>Monto</th>
+                                        <th>DC</th>
+                                        <th>DT</th>
+                                        <th>Factura</th>
+                                        <th>Edit</th>
+                                        <th >Delete</th>
+                                      </tr>
                                     </thead>
                                     <tbody>
-                                        <?php 
-                                            foreach ($query->result() as $opc) { ?>
-                                                <tr>
-                                                    <td><?= $opc->nameClient?></td>
-                                                    <td><?= $opc->nameProject?></td>
-                                                    <td><?= $opc->nameDepartment ?></td>
-                                                    <td><?= $opc->concept?></td>
-                                                    <td><?= $opc->amount?></td>
-                                                    <td><?= $opc->dateCreationOS?></td>
-                                                    <td><?= $opc->dateTerminationOS?></td>
-                                                    <td><a href="<?= base_url() ?>invoices/runViewInvoiceOrderShoppingProjectInClient/<?=$opc->idOrderShopping ?>/<?= $idProject ?>/<?=$idClient ?> ">Mostrar</a></td>
-                                                    <td><a href="<?=base_url()?>ordershopping/runViewEditOrderShoppingProjectInClient/<?=$opc->idOrderShopping?>/<?= $idProject?>/<?= $idClient?>" >Edit</a>
-                                                    </td>
-                                                    <td class="text-center text-danger">
-                                                        <a href="<?=base_url()?>ordershopping/deleteordershoppingProjectInClient/<?=$opc->idOrderShopping?>/<?= $idProject?>/<?=$idClient ?>" class="confirmationDeleteOrderShopping">X</a>  
-                                                    </td>
-                                                </tr>
-
-
-                                            <?php } ?>           
+                                      <?php 
+                                        foreach ($query->result() as $opc) { ?>
+                                          <tr>
+                                            <td><?= $opc->nameClient?></td>
+                                            <td><?= $opc->nameProject?></td>
+                                            <td><?= $opc->nameDepartment ?></td>
+                                            <td><?= $opc->concept?></td>
+                                            <td><?= $opc->amount?></td>
+                                            <td><?= $opc->dateCreationOS?></td>
+                                            <td><?= $opc->dateTerminationOS?></td>
+                                            <td><a href="<?= base_url() ?>invoices/runViewInvoiceOrderShoppingProjectInClient/<?=$opc->idOrderShopping ?>/<?= $idProject ?>/<?=$idClient ?> ">Mostrar</a></td>
+                                            <td><a href="<?=base_url()?>ordershopping/runViewEditOrderShoppingProjectInClient/<?=$opc->idOrderShopping?>/<?= $idProject?>/<?= $idClient?>" >Edit</a>
+                                            </td>
+                                            <td class="text-center text-danger">
+                                                <a href="<?=base_url()?>ordershopping/deleteordershoppingProjectInClient/<?=$opc->idOrderShopping?>/<?= $idProject?>/<?=$idClient ?>" class="confirmationDeleteOrderShopping">X</a>  
+                                            </td>
+                                          </tr>
+                                          <?php } ?>           
                                        
                                     </tbody>
                                 </table>

@@ -85,6 +85,11 @@ class Ordershopping_model extends CI_Model {
 		else return true;
 	}
 
+	function getPaidOrderShoppingProject(){
+		$query = $this->db->query("SELECT dateTerminationOS  FROM orderShoppings WHERE dateTerminationOS <> '' ");
+		 return $query->num_rows();
+	}
+
 	function get_pagination($number_per_page){
 		$this->db->join('projects', 'orderShoppings.idProject = projects.idProject');
 		$this->db->join('clients', 'projects.idClient = clients.idClient');
@@ -95,11 +100,5 @@ class Ordershopping_model extends CI_Model {
 	}
 	
 }
-
-
-
-
-
-
 
 ?>

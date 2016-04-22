@@ -5,12 +5,12 @@ class Users extends CI_Controller {
  function __construct()
  {
    parent::__construct();
-   $this->session_user();
    $this->load->model('user_model','',TRUE);
    $this->load->library('form_validation');
  }
 
  function index(){
+   $this->session_user();
    $session_data = $this->session->userdata('logged_in');
    $type = 'General';
    $data['nameUser'] = $session_data['nameUser'];
@@ -31,6 +31,7 @@ class Users extends CI_Controller {
   }
 
   function pagination(){
+     $this->session_user();
      $config['base_url'] = base_url()."users/index/";
      $config['total_rows'] = $this->user_model->no_page();
      $config['per_page'] = 5;
@@ -58,6 +59,20 @@ class Users extends CI_Controller {
 
   function session_user(){
     if($this->session->userdata('logged_in')){
+       $session_data = $this->session->userdata('logged_in');
+       $data['type'] = $session_data['type'];
+       if ($data['type'] != 'Admin') {
+         redirect('home');
+       }
+     }
+     else{
+        //If no session, redirect to login page
+       redirect('login', 'refresh');
+     }
+  }
+
+  function session_userAll(){
+    if($this->session->userdata('logged_in')){
        return TRUE;
      }
      else{
@@ -67,6 +82,7 @@ class Users extends CI_Controller {
   }
  
   function newUser(){
+    $this->session_user();
     $data = array(
     'nameUser'=>$this->input->post('username'),
     'email'=>$this->input->post('email'),
@@ -89,6 +105,7 @@ class Users extends CI_Controller {
   }
 
   function updateUser(){
+    $this->session_user();
     $data = array(
       'nameUser'=>$this->input->post('username'),
       'email'=>$this->input->post('email'),
@@ -111,6 +128,7 @@ class Users extends CI_Controller {
   }
 
   function form_validation_edit_user($data){
+    $this->session_user();
     $this->form_validation->set_rules('password', 'Password', 'trim|required|matches[passwordconf]|min_length[8]');
     $this->form_validation->set_rules('passwordconf', 'Password Confirmation', 'trim|required|min_length[8]');
 
@@ -129,6 +147,7 @@ class Users extends CI_Controller {
   }
 
   function runViewEditUser(){
+    $this->session_user();
     $session_data = $this->session->userdata('logged_in');
     $data['nameUser'] = $session_data['nameUser'];
     $data['idUser'] =  $session_data['idUser'];
@@ -144,6 +163,7 @@ class Users extends CI_Controller {
   }
 
   function runViewChangePassUser(){
+    $this->session_userAll();
     $session_data = $this->session->userdata('logged_in');
     $data['nameUser'] = $session_data['nameUser'];
     $data['idUser'] =  $session_data['idUser'];
@@ -158,6 +178,7 @@ class Users extends CI_Controller {
   }
 
   function runViewChangeProfileUser(){
+    $this->session_userAll();
     $session_data = $this->session->userdata('logged_in');
     $data['nameUser'] = $session_data['nameUser'];
     $data['idUser'] =  $session_data['idUser'];
@@ -172,12 +193,15 @@ class Users extends CI_Controller {
   }
 
   function deleteUser(){
+    $this->session_userAll();
+    $this->session_user();
     $id = $this->uri->segment(3);
     $this->user_model->deleteUser($id);
     redirect('users');
   }
 
   function updateUserPass(){
+    $this->session_userAll();
     $session_data = $this->session->userdata('logged_in');
       $data = array(
       'nameUser'=>$session_data['nameUser'],
@@ -200,6 +224,7 @@ class Users extends CI_Controller {
   }
 
   function updateUserProfile(){
+    $this->session_userAll();
     $session_data = $this->session->userdata('logged_in');
       $data = array(
       'nameUser'=>$this->input->post('username'),
@@ -253,6 +278,7 @@ class Users extends CI_Controller {
    }
 
   function check_oldpassword($oldpassword){
+    $this->session_userAll();
     $session_data = $this->session->userdata('logged_in');
     $oldpassword = $this->input->post('oldpassword');
     $id = $session_data['idUser'];

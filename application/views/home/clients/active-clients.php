@@ -17,8 +17,6 @@
                             </li>
 
                        <p class="text-right">
-                            <a href="<?=base_url()?>clients/inactiveClients" class="btn btn-large btn-info"><i class="icon-home icon-white"></i>Inactive Clients</a>
-                      
                             <button type="button" class="btn btn-large btn-info" data-toggle="modal" data-target="#createClientModal" data-whatever="">New Client</button>
                        </p>
                        
@@ -30,7 +28,11 @@
 
                 <div class="row">
                     <div class="col-lg-6">
+                     <p class="text-left">
+                            <a href="<?=base_url()?>clients/inactiveClients" class="btn btn-danger btn-info"><i class="icon-home icon-white"></i>Clientes Inactivos</a>               
+                       </p>
                         <h2>Clientes</h2>
+
                         <div class="table-responsive">
                       <?php 
                         if ($query)

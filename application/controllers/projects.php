@@ -294,7 +294,6 @@ function pagination(){
         
         $this->form_validation->set_rules('price', 'Price', 'required|numeric');
         $this->form_validation->set_rules('dateCreation','Date', 'required|callback_check_date');
-        $this->form_validation->set_rules('dateTermination','Date', 'required|callback_check_date');
         $this->form_validation->set_rules('nameClient', 'Name Client', 'required|callback_check_client');
         
         if($this->form_validation->run() == FALSE)
@@ -345,7 +344,6 @@ function pagination(){
         
         $this->form_validation->set_rules('price', 'Price', 'required|numeric');
         $this->form_validation->set_rules('dateCreation','Date', 'required|callback_check_date');
-        $this->form_validation->set_rules('dateTermination','Date', 'required|callback_check_date');
         $this->form_validation->set_rules('nameClient', 'Name Client', 'required|callback_check_client');
         
         if($this->form_validation->run() == FALSE)
@@ -357,6 +355,7 @@ function pagination(){
             $queryclient =  $this->client_model->getClientId($data['nameClient']);
             $data['idClient'] = $queryclient->idClient;
             $this->projects_model->updateProject($data['idProject'],$data);
+            redirect('clients/runViewClientProjectsInSector/'.$data['idClient']);
           }
 
      }
@@ -395,7 +394,6 @@ function pagination(){
         
         $this->form_validation->set_rules('price', 'Price', 'required|numeric');
         $this->form_validation->set_rules('dateCreation','Date', 'required|callback_check_date');
-        $this->form_validation->set_rules('dateTermination','Date', 'required|callback_check_date');
         $this->form_validation->set_rules('nameClient', 'Name Client', 'required|callback_check_client');
         
         if($this->form_validation->run() == FALSE)
@@ -406,9 +404,7 @@ function pagination(){
           {
             $queryclient =  $this->client_model->getClientId($data['nameClient']);
             $data['idClient'] = $queryclient->idClient;
-
             $this->projects_model->updateProject($data['idProject'],$data);
-
             $this->p($data['idProject'],$data);
             redirect('projects/runViewSectorProjects/'.$data['idSector']);
           }
@@ -447,7 +443,6 @@ function pagination(){
         
         $this->form_validation->set_rules('price', 'Price', 'required|numeric');
         $this->form_validation->set_rules('dateCreation','Date', 'required|callback_check_date');
-        $this->form_validation->set_rules('dateTermination','Date', 'required|callback_check_date');
         $this->form_validation->set_rules('nameClient', 'Name Client', 'required|callback_check_client');
         
         if($this->form_validation->run() == FALSE)
@@ -458,9 +453,7 @@ function pagination(){
           {
             $queryclient =  $this->client_model->getClientId($data['nameClient']);
             $data['idClient'] = $queryclient->idClient;
-
             $this->projects_model->updateProject($data['idProject'],$data);
-
             $this->p($data['idProject'],$data);
             redirect('clients/runViewClientProjects/'.$data['idClient']);
           }
@@ -516,11 +509,16 @@ function pagination(){
     $data['idUser'] =  $session_data['idUser'];
     $data['id'] = $this->uri->segment(3);
     $data['project'] = $this->projects_model->getProject($data['id']);
-    $data['client'] = $this->client_model->getAllActiveClients();
-    $this->load->view('ehtml/headercrud',$data);
-    $this->load->helper(array('form'));
-    $this->load->view('home/projects/edit-project',$data);
-    $this->load->view('ehtml/footercrud'); 
+    $data['client'] = $this->client_model->getAllClients();
+    if ($data['project']) {
+      $this->load->view('ehtml/headercrud',$data);
+      $this->load->helper(array('form'));
+      $this->load->view('home/projects/edit-project',$data);
+      $this->load->view('ehtml/footercrud'); 
+    }else{
+      redirect('projects');
+    }
+    
   }
 
   function runViewEditProjectInClient(){
@@ -530,11 +528,16 @@ function pagination(){
     $data['idProject'] = $this->uri->segment(3);
     $data['idClient'] = $this->uri->segment(4);
     $data['project'] = $this->projects_model->getProject($data['idProject']);
-    $data['client'] = $this->client_model->getAllActiveClients();
-    $this->load->view('ehtml/headercrud',$data);
-    $this->load->helper(array('form'));
-    $this->load->view('home/clients/edit-project',$data);
-    $this->load->view('ehtml/footercrud'); 
+    $data['client'] = $this->client_model->getAllClients();
+    if ($data['project']) {
+      $this->load->view('ehtml/headercrud',$data);
+      $this->load->helper(array('form'));
+      $this->load->view('home/clients/edit-project',$data);
+      $this->load->view('ehtml/footercrud');
+    }else{
+      redirect('clients');
+    }
+     
   }
 
   function runViewEditProjectInSector(){
@@ -544,11 +547,16 @@ function pagination(){
     $data['idProject'] = $this->uri->segment(3);
     $data['idSector'] =$this->uri->segment(4);
     $data['project'] = $this->projects_model->getProject($data['idProject']);
-    $data['client'] = $this->client_model->getAllActiveClients();
-    $this->load->view('ehtml/headercrud',$data);
-    $this->load->helper(array('form'));
-    $this->load->view('home/sectors/edit-project-in-sector',$data);
-    $this->load->view('ehtml/footercrud'); 
+    $data['client'] = $this->client_model->getAllClients();
+    if ($data['project']) {
+      $this->load->view('ehtml/headercrud',$data);
+      $this->load->helper(array('form'));
+      $this->load->view('home/sectors/edit-project-in-sector',$data);
+      $this->load->view('ehtml/footercrud'); 
+    }else{
+      redirect('sectors');
+    } 
+    
   }
 
   function runViewEditProjectClientInSector(){
@@ -559,11 +567,16 @@ function pagination(){
     $data['idClient'] = $this->uri->segment(4);
     $data['idSector'] =$this->uri->segment(5);
     $data['project'] = $this->projects_model->getProject($data['idProject']);
-    $data['client'] = $this->client_model->getAllActiveClients();
-    $this->load->view('ehtml/headercrud',$data);
-    $this->load->helper(array('form'));
-    $this->load->view('home/sectors/edit-project-client-in-sector',$data);
-    $this->load->view('ehtml/footercrud'); 
+    $data['client'] = $this->client_model->getAllClients();
+    if ($data['project']) {
+      $this->load->view('ehtml/headercrud',$data);
+      $this->load->helper(array('form'));
+      $this->load->view('home/sectors/edit-project-client-in-sector',$data);
+      $this->load->view('ehtml/footercrud'); 
+    }else{
+      redirect('sectors');
+    }
+  
   }
 
   function deleteProject(){
@@ -586,5 +599,6 @@ function pagination(){
     $this->projects_model->deleteproject($idProject);
     redirect('clients/runViewClientProjectsInSector/'.$idClient.'/'.$idSector);
   }
+   
 
 }
