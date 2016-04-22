@@ -80,8 +80,9 @@ class Ordershopping_model extends CI_Model {
 	}
 
 	function paidOrderShoppingProject($idProject){
-		$res = $this->db->query("SELECT (dateTerminationOS)  FROM orderShoppings WHERE idProject='$idProject' AND dateTerminationOS=' ' ");
-		return $res;
+		$query = $this->db->query("SELECT (dateTerminationOS)  FROM orderShoppings WHERE idProject='$idProject' AND dateTerminationOS='' ");
+		if($query->num_rows() >0) return false;
+		else return true;
 	}
 
 	function get_pagination($number_per_page){

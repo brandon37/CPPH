@@ -65,8 +65,8 @@
                                                     <td><?= $opc->nameDepartment ?></td>
                                                     <td><?= $opc->concept?></td>
                                                     <td><?= $opc->amount?></td>
-                                                    <td><?= $opc->dateCreation?></td>
-                                                    <td><?= $opc->dateTermination?></td>
+                                                    <td><?= $opc->dateCreationOS?></td>
+                                                    <td><?= $opc->dateTerminationOS?></td>
                                                     <td><a href="<?= base_url() ?>invoices/runViewInvoiceOrderShoppingProjectInClient/<?=$opc->idOrderShopping ?>/<?= $idProject ?>/<?=$idClient ?> ">Mostrar</a></td>
                                                     <td><a href="<?=base_url()?>ordershopping/runViewEditOrderShoppingProjectInClient/<?=$opc->idOrderShopping?>/<?= $idProject?>/<?= $idClient?>" >Edit</a>
                                                     </td>

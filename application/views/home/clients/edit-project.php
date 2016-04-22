@@ -19,7 +19,7 @@
                           </li>
 
                           <li>
-                             <i class="fa fa-table"> <a href="<?=base_url()?>clients/runViewClientProjects/<?=$idClient?>"> Proyectos Del Cliente </a></i> 
+                             <i class="fa fa-table"> <a href="<?=base_url()?>projects/runViewClientProjects/<?=$idClient?>"> Proyectos Del Cliente </a></i> 
                           </li>
                            
                           <li class="active">

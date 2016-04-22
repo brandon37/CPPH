@@ -51,6 +51,7 @@
                                 <thead>
                                     <tr>
                                         <th>Name</th>
+                                        <th>Status</th>
                                         <th>Edit</th>
                                         <th class="text-center">Delete</th>
                                     </tr>
@@ -61,6 +62,7 @@
                                           { ?>
                                             <tr>
                                                 <td><?= $opc->noInvoice?></td>
+                                                <td><?= $opc->status ?></td>
                                                 <td><a href="<?=base_url()?>invoices/runViewEditInvoiceOrderShoppingProjectClientInSector/<?=$opc->idInvoice?>/<?= $idOrderShopping ?>/<?= $idProject ?>/<?= $idClient ?>/<?= $idSector ?>" >Edit</a></td>
                                                 <td class="text-center text-danger">
                                                     <a href="<?=base_url()?>invoices/deleteInvoiceOrderShoppingProjectClientInSector/<?=$opc->idInvoice?>/<?= $idOrderShopping ?>/<?= $idProject ?>/<?= $idClient ?>/<?= $idSector ?>" class="confirmationDeleteInvoice">X</a>  

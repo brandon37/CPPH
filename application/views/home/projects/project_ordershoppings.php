@@ -103,9 +103,9 @@
                     <div class="modal-body">
                        <?= form_open('ordershopping/newOrderShoppingProject/'.$idProject) ?>
                           <div class="form-group">
-                               <?= form_error('idProject') ?>
-                               <input type="hidden" size="20" id="idProject" name="idProject" value="<?=
-                               $idProject?>" class="form-nameProject form-control" required/>
+                               <?= form_error('nameProject') ?>
+                               <input type="hidden" size="20" id="nameProject" name="nameProject" value="<?=
+                               $Project->nameProject ?>" class="form-nameProject form-control" required/>
                            </div>
                           <div class="form-group">
                            <?= form_error('nameDepartment') ?>

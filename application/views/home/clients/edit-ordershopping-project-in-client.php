@@ -18,9 +18,9 @@
                            <i class="fa fa-table"> <a href="<?=base_url()?>clients"> clientes</a></i> 
                         </li>
 
-                         <li>
-                            <i class="fa fa-table"> <a href="<?=base_url()?>clients/runViewClientProjects/<?= $idClient ?>">Proyectos del Cliente</a> </i>
-                         </li>
+                        <li>
+                            <i class="fa fa-table"> <a href="<?=base_url()?>projects/runViewClientProjects/<?= $idClient ?>">Proyectos del Cliente</a> </i>
+                        </li>
                          
                          <li>
                               <i class="fa fa-table"> <a href="<?=base_url()?>ordershopping/runViewProjectOrderShoppingsInClient/<?=$idProject?>/<?=$idClient ?>"> Ordenes De Compras</a> </i>
